@@ -1,0 +1,112 @@
+class cfgPatches
+{
+	class lt_template_base
+	{
+		name = "lt_template_base";
+		author = "Lowlands Tactical";
+		url = "http://lowtac.nl/";
+		requiredVersion = 1.0;
+		requiredAddons[] = {"A3_Characters_F_BLUFOR", "A3_Modules_F"};
+		units[] = {};
+		weapons[] = {};
+	};
+};
+
+#include "cfgFunctions.hpp"
+#include "cfg3DEN.hpp"
+#include "cfgVehicles.hpp"
+
+// Our added notifications for the safestart function
+class cfgNotifications
+{
+	class Alert
+	{
+		title = "ALERT";
+		description = "%1";
+		iconPicture = "\A3\ui_f\data\map\markers\military\warning_ca.paa";
+		duration = 3;
+		priority = 9;
+	};
+	class SafeStart
+	{
+		title = "SAFE START";
+		description = "%1";
+		iconPicture = "\A3\UI_F\data\IGUI\Cfg\Actions\settimer_ca.paa";
+		duration = 10;
+		priority = 0;
+	};
+	class SafeStartMissionStarting
+	{
+		title = "SAFE START";
+		description = "%1";
+		iconPicture = "\A3\UI_F\data\IGUI\Cfg\Actions\settimer_ca.paa";
+		duration = 3;
+		priority = 1;
+	};
+};
+
+// Root folder for our own modules
+class cfgFactionClasses
+{
+	class NO_CATEGORY;
+	class LT_missionModules : NO_CATEGORY
+	{
+		displayName = "Lowlands Tactical Modules";
+	};
+};
+
+// PostInit is loaded before the mission is loaded.
+class Extended_PostInit_EventHandlers
+{
+	class LT_menuPostInit_Admin
+	{
+		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\Admin.sqf'";
+	};
+	class LT_menuPostInit_versionCheck 
+	{
+		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\versionCheck.sqf'";
+	};
+};
+
+#include "LT_Tablet\Define_LT_Tablet.hpp"
+
+// Default mission debriefings
+class cfgDebriefing
+{
+	class End1
+	{
+		title = "Missie geslaagd!";
+		subtitle = "Goed werk!";
+		description = "De tegenstander zal nu wel 2 keer nadenken voordat ze met ons sollen!";
+	};
+	class End2
+	{
+		title = "Goed begin is het halve werk..";
+		subtitle = ".. Beetje jammer dat het maar de helft is!";
+		description = "Volgende keer gaan we wel alle doelstellingen halen?";
+	};
+	class End3
+	{
+		title = "Missie gefaald";
+		subtitle = "Jammer joh";
+		description = "Terug naar Kamp Holland";
+	};
+	class End4
+	{
+		title = "BLUFOR wins!";
+		subtitle = "Good job being total badasses BLUFOR!";
+		description = "You can laugh at everyone else now.";
+	};
+	class End5
+	{
+		title = "REDFOR wins!";
+		subtitle = "Good job being total badasses REDFOR!";
+		description = "You can laugh at everyone else now.";
+	};
+	class End6
+	{
+		title = "GREENFOR wins!";
+		subtitle = "Good job being total badasses GREENFOR!";
+		description = "You can laugh at everyone else now.";
+	};
+};
