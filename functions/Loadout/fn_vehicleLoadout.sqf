@@ -98,7 +98,7 @@ _itemNVG = [_itemNVG select 0, _itemNVG select 1,_itemNVG select 2];
 {
 	_itemNVG pushback _x;
 }forEach _wpnGLNVG;
-_itemNVGAmt resize [_itemNVG, 40];
+_itemNVGAmt resize [(count _itemNVG), 40];
 
 if ("lt_gear_nvg" call bis_fnc_getParamValue == 1) then {_wpnGLAmmo = _wpnGLNVG;};
 
