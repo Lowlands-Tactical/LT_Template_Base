@@ -79,6 +79,7 @@ _itemMedic = _items select 1;			// _itemsPackMedic
 _itemMedicAmt = [50,50,25,20,20,30,30,10,10,10,4];
 _itemRadio = _items select 2;			// _itemsRadio
 _itemSpecial = _items select 3;			// _itemsSpecial
+_itemsSpecialAmt = [2,2,2,20,10,5,5,40,40];
 _itemRole = _items select 4;			// _itemsRole
 _itemNVG = _items select 5;				// _itemsNVG
 _itemNVGAmt = [20,20,40];
@@ -212,21 +213,18 @@ switch (_loadout) do
 	};
 	case "Crate Explosives": 
 	{
-		_vehicle addItemCargoGlobal [_itemSpecial select 0, 2];
-		_vehicle addItemCargoGlobal [_itemSpecial select 1, 2];
-		_vehicle addItemCargoGlobal [_itemSpecial select 2, 2];
-		_vehicle addItemCargoGlobal [_itemSpecial select 3, 20];
-		_vehicle addItemCargoGlobal [_itemSpecial select 4, 10];
-		_vehicle addItemCargoGlobal [_itemSpecial select 5, 5];
+		{
+			_vehicle addItemCargoGlobal [_x, _itemsSpecialAmt select _forEachIndex];
+		}forEach _itemSpecial;
 	};
 	case "Crate Medical": 
 	{
-		for "_i" from 0 to 1 do 
 		{
-			{
-				_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
-			}forEach _itemMedic;
-		};
+			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
+		}forEach _itemMedic;
+		{
+			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
+		}forEach _itemMedic;
 	};
 	case "Crate Weapons": 
 	{
