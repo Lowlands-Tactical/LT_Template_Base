@@ -45,7 +45,6 @@ if ("lt_debug" call bis_fnc_getParamValue == 1) then
 [] remoteExec ["LT_fnc_AdminZeusModule", 2];
 
 
-
 // After respawn reassign all radios and channels
 waitUntil {([] call acre_api_fnc_isInitialized)};
 
@@ -87,9 +86,19 @@ if (_hasRadio) then
 	};
 };
 
+_unit setUnitTrait ["audibleCoef", 0.2];
+_unit setUnitTrait ["camouflageCoef", 0.2];
+_unit setUnitTrait ["loadCoef", 0.5];
+_role = _unit getVariable ["LT_unit_role", "custom"];
 [uniformContainer _unit, 50] remoteExec ["LT_fnc_resetMaxLoad"];
 [vestContainer _unit, 200] remoteExec ["LT_fnc_resetMaxLoad"];
-[backpackContainer _unit, 300] remoteExec ["LT_fnc_resetMaxLoad"];
+if (_role == "eng" OR _role == "medic") then 
+{
+	[backpackContainer _unit, 400] remoteExec ["LT_fnc_resetMaxLoad"];
+} else 
+{
+	[backpackContainer _unit, 300] remoteExec ["LT_fnc_resetMaxLoad"];
+};
 
 // Remove inventory from corpse
 removeAllWeapons _corpse;
