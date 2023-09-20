@@ -97,9 +97,10 @@ if (_activated) then
 		_className = configName _x;
 		if !(_className in _blackList) then 
 		{
+			_displayName = getText (configFile >> "CfgVehicles" >> _className >> "displayName");
 			_vehicleClass = getText (configFile >> "CfgVehicles" >> _className >> "vehicleClass");
 			_textSingular = getText (configFile >> "CfgVehicles" >> _className >> "textSingular");
-			if (_textSingular == "Infantry") then 
+			if (_textSingular == "Infantry" AND !(["Uniform", _displayName] call BIS_fnc_inString)) then 
 			{
 				_factionInfArr pushback _className;
 			};
@@ -206,24 +207,40 @@ if (_activated) then
 					{
 						for "_u" from 0 to _infSize do 
 						{
-							_unit = selectRandom _factionInfArr;
-							_unit createUnit [_spawnPos, _grp];
+							_unitClass = _factionInfArr call BIS_fnc_selectRandom;
+							_grp createUnit [_unitClass, _spawnPos,[],3,"NONE"];
 							sleep 0.3;
 						};
 					};
 					case "Vehicles": 
 					{
-						_vehCar = selectRandom _factionVehArr;
-						[_spawnPos, _spawnDir, _vehCar, _grp] call BIS_fnc_spawnVehicle;
+						_vehCar = _factionVehArr call BIS_fnc_selectRandom;
+						private _vehicleCar = [_spawnPos, _spawnDir, _vehCar, _grp] call BIS_fnc_spawnVehicle;
+						private _hasCargo = fullCrew[(_vehicleCar select 0),"cargo",true];
+						{
+							if (isNull (_x select 0)) then 
+							{
+								_unitClass = _factionInfArr call BIS_fnc_selectRandom;
+								_grp createUnit [_unitClass,_spawnPos,[],3,"CARGO"];
+							};
+						}forEach _hasCargo;
 					};
 					case "Mechanized": 
 					{
-						_vehMech = selectRandom _factionMechArr;
-						[_spawnPos, _spawnDir, _vehMech, _grp] call BIS_fnc_spawnVehicle;
+						_vehMech = _factionMechArr call BIS_fnc_selectRandom;
+						private _vehicleMech = [_spawnPos, _spawnDir, _vehMech, _grp] call BIS_fnc_spawnVehicle;
+						private _hasCargo = fullCrew[(_vehicleMech select 0),"cargo",true];
+						{
+							if (isNull (_x select 0)) then 
+							{
+								_unitClass = _factionInfArr call BIS_fnc_selectRandom;
+								_grp createUnit [_unitClass,_spawnPos,[],3,"CARGO"];
+							};
+						}forEach _hasCargo;
 					};
 					case "Armored": 
 					{
-						_vehArmor = selectRandom _factionArmorArr;
+						_vehArmor = _factionArmorArr call BIS_fnc_selectRandom;
 						[_spawnPos, _spawnDir, _vehArmor, _grp] call BIS_fnc_spawnVehicle;
 					};
 				};
