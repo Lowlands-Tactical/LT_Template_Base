@@ -32,7 +32,7 @@ diag_log "                              |__/ \_______/ \_______/   \___/  |__/ \
 private ["_lt_main","_action"];
 
 // Version build up (year.month.day.dayversion)
-lt_version = "V2023.09.09.001";
+lt_version = "V2023.09.20.001";
 publicVariable "lt_version";
 
 lt_staff = [
