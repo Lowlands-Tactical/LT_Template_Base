@@ -28,19 +28,9 @@ if (_helmet == "") exitWith
 if (_helmet IN _helmetsBuildinNVG) then 
 {
 	_result = true;
-	Diag_log format["[LT] (buildinNVG) helmet %1 has build in night vision", _helmet];
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemchat format["[LT] (buildinNVG) helmet %1 has build in night vision", _helmet];
-	};
 } else 
 {
 	_result = false;
-	Diag_log format["[LT] (buildinNVG) helmet %1 has NO build in night vision", _helmet];
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemchat format["[LT] (buildinNVG) helmet %1 has NO build in night vision", _helmet];
-	};
 };
 
 _result;
