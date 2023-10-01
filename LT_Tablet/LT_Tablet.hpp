@@ -12,7 +12,7 @@ class BB_LT_Tablet
 		{
 			idc = 599;
 			moving = 1;
-			//onLoad = "(_this # 0) ctrlEnable false;";
+			onLoad = "(_this # 0) ctrlEnable false;";
 		};
 	};
 	class controls 
@@ -240,7 +240,7 @@ class BB_LT_Tablet_Advanced
 		{
 			idc = 699;
 			moving = 1;
-			//onLoad = "(_this # 0) ctrlEnable false;";
+			onLoad = "(_this # 0) ctrlEnable false;";
 		};
 	};
 	class controls 
