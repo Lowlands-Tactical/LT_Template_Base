@@ -102,6 +102,5 @@ if (_role == "eng" OR _role == "medic") then
 
 // Remove inventory from corpse
 removeAllWeapons _corpse;
-removeAllItems _corpse;
 removeAllAssignedItems _corpse;
 deleteVehicle (nearestObject [_corpse, "WeaponHolderSimulated"]);
