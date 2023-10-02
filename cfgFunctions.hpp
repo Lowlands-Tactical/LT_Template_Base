@@ -59,41 +59,14 @@ class cfgRemoteExec
 		// 0= all machines 1= only clients 2= only server
 		mode = 2;
 		jip = 1;
-		class LT_fnc_safety
-		{
-			allowedTargets = 0;
-		};
-		class LT_fnc_safeStartLoop
-		{
-			allowedTargets = 0;
-		};
-		class LT_fnc_adminZeusModule
-		{
-			allowedTargets = 2;
-		};
-		class LT_fnc_prepPlayerLoadout
-		{
-			allowedTargets = 0;
-		};
-		class LT_fnc_prepVehicleLoadout
-		{
-			allowedTargets = 2;
-		};
-		class LT_fnc_VehicleLoadout
-		{
-			allowedTargets = 0;
-		};
-		class LT_fnc_resetMaxLoad
-		{
-			allowedTargets = 2;
-		};
-		class LT_fnc_buildinNVG
-		{
-			allowedTargets = 0;
-		};
-		class LT_fnc_ResupplyRequest
-		{
-			allowedTargets = 2;
-		};
+		class LT_fnc_safety				{allowedTargets = 0;};
+		class LT_fnc_safeStartLoop		{allowedTargets = 0;};
+		class LT_fnc_adminZeusModule	{allowedTargets = 2;};
+		class LT_fnc_prepPlayerLoadout	{allowedTargets = 0;};
+		class LT_fnc_prepVehicleLoadout	{allowedTargets = 2;};
+		class LT_fnc_VehicleLoadout		{allowedTargets = 0;};
+		class LT_fnc_resetMaxLoad		{allowedTargets = 2;};
+		class LT_fnc_buildinNVG			{allowedTargets = 0;};
+		class LT_fnc_ResupplyRequest	{allowedTargets = 2;};
 	};
 };
