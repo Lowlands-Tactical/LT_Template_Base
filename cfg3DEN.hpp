@@ -254,6 +254,7 @@ class Cfg3DEN
 						class LT_Role_Cr_Medium	{data = "Crate Medium";		text = "Medium Ammocrate";};
 						class LT_Role_Cr_Large	{data = "Crate Large";		text = "Large Ammocrate";};
 						class LT_Role_Cr_Explo	{data = "Crate Explosives";	text = "Explosives Crate";};
+						class LT_Role_Cr_Mine	{data = "Crate Mines";		text = "Mine Crate";};
 						class LT_Role_Cr_Medic	{data = "Crate Medical";	text = "Medical Crate";};
 						class LT_Role_Cr_Weapon	{data = "Crate Weapons";	text = "Weapons Crate";};
 						class LT_Role_Cr_NVG	{data = "Crate NVG";		text = "NVG Crate";};

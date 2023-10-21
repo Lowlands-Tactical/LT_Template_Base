@@ -79,10 +79,14 @@ _itemMedic = _items select 1;			// _itemsPackMedic
 _itemMedicAmt = [50,50,25,20,20,30,30,10,10,10,4];
 _itemRadio = _items select 2;			// _itemsRadio
 _itemSpecial = _items select 3;			// _itemsSpecial
-_itemsSpecialAmt = [2,2,2,20,10,5,5,40,40];
+_itemsSpecialAmt = [2,2,2,5,5,40,40];
 _itemRole = _items select 4;			// _itemsRole
 _itemNVG = _items select 5;				// _itemsNVG
 _itemNVGAmt = [20,20,40];
+_itemExpl = _items select 5;			// _itemEngExpl
+_itemExplAmt = [20,10];
+_itemMine = _items select 6;			// _itemEngMine
+_itemMineAmt = [20,10,10,10,5];
 
 _wpnRifle = _wpns select 0;				// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]
 _wpnRifleCr = _wpns select 1;			// [_rifleCrGL,_rifleCr_Mags,_rifleCr_Mags_Tr]
@@ -216,6 +220,18 @@ switch (_loadout) do
 		{
 			_vehicle addItemCargoGlobal [_x, _itemsSpecialAmt select _forEachIndex];
 		}forEach _itemSpecial;
+		{
+			_vehicle addItemCargoGlobal [_x, _itemExplAmt select _forEachIndex];
+		}forEach _itemExpl;
+	};
+	case "Crate Mines":
+	{
+		{
+			_vehicle addItemCargoGlobal [_x, _itemsSpecialAmt select _forEachIndex];
+		}forEach _itemSpecial;
+		{
+			_vehicle addItemCargoGlobal [_x, _itemMineAmt select _forEachIndex];
+		}forEach _itemMine;
 	};
 	case "Crate Medical": 
 	{

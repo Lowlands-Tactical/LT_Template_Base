@@ -87,6 +87,7 @@ _loadArr = [
 	"Crate Large",
 // Specific crates
 	"Crate Explosives",
+	"Crate Mines",
 	"Crate Medical",
 	"Crate Weapons",
 	"Crate Air",
