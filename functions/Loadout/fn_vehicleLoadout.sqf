@@ -83,9 +83,9 @@ _itemsSpecialAmt = [2,2,2,5,5,40,40];
 _itemRole = _items select 4;			// _itemsRole
 _itemNVG = _items select 5;				// _itemsNVG
 _itemNVGAmt = [20,20,40];
-_itemExpl = _items select 5;			// _itemEngExpl
+_itemExpl = _items select 6;			// _itemEngExpl
 _itemExplAmt = [20,10];
-_itemMine = _items select 6;			// _itemEngMine
+_itemMine = _items select 7;			// _itemEngMine
 _itemMineAmt = [20,10,10,10,5];
 
 _wpnRifle = _wpns select 0;				// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]

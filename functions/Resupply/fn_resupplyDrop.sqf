@@ -33,6 +33,7 @@ _nvg = "lt_gear_nvg" call bis_fnc_getParamValue;
 _crate = switch (_loadoutType) do 
 {
 	case "Crate Explosives": {"NLD_Ammo_Crate_Explosieven"};
+	case "Crate Mines": {"NLD_Ammo_Crate_Explosieven"};
 	case "Crate Medical": {"NLD_Ammo_Crate_Medisch"};
 	case "Crate Weapons": {"NLD_Ammo_Crate_Wapens"};
 	case "M2 HMG": {"B_G_HMG_02_high_F"};
