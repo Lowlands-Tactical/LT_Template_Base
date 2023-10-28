@@ -1,3 +1,5 @@
+#include "script_version.hpp"
+
 class cfgPatches
 {
 	class lt_template_base
@@ -5,10 +7,33 @@ class cfgPatches
 		name = "lt_template_base";
 		author = "Lowlands Tactical";
 		url = "http://lowtac.nl/";
-		requiredVersion = 1.0;
+		requiredVersion = 2.14;
 		requiredAddons[] = {"A3_Characters_F_BLUFOR", "A3_Modules_F"};
 		units[] = {};
 		weapons[] = {};
+		
+		//CBA versioning
+		version = VERSION;
+		versionStr = STR(VERSION_STR);
+		versionAR[] = {VERSION_AR};
+	};
+};
+
+class CfgSettings 
+{
+	class CBA 
+	{
+		class Versioning 
+		{
+			class LT_Base
+			{
+				main_addon = "LT_Template_Base";
+				class Dependancies 
+				{
+					LT_Base[] = {"LT_Template_Base", {VERSION_AR}, "true"};
+				};
+			};
+		};
 	};
 };
 
@@ -61,10 +86,6 @@ class Extended_PostInit_EventHandlers
 	class LT_menuPostInit_Admin
 	{
 		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\Admin.sqf'";
-	};
-	class LT_menuPostInit_versionCheck 
-	{
-		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\versionCheck.sqf'";
 	};
 };
 
