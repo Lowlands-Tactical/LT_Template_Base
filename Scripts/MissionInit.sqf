@@ -17,7 +17,7 @@ if ("lt_debug" call bis_fnc_getParamValue == 1) then
 };
 
 // Eject headless client
-if (!hasInterface && !isDedicated) exitWith {};
+//if (!hasInterface && !isDedicated) exitWith {};
 
 enableSaving [false, false];
 enableSentences false;
