@@ -39,7 +39,8 @@ lt_staff = [
 	"76561198042684200",	// Tybalty
 	"76561198028914656",	// Lonesentinel
 	"76561198014060493",	// R.Hoods
-	"76561197992586763"		// Brainless_Ben
+	"76561197992586763",	// Brainless_Ben
+	"76561198047491445" 	// Pekeru
 ];
 publicVariable "lt_staff";
 
