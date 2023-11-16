@@ -31,10 +31,6 @@ diag_log "                              |__/ \_______/ \_______/   \___/  |__/ \
 // ACE3 Menu for Lowlands Tactical
 private ["_lt_main","_action"];
 
-// Version build up (year.month.day.dayversion)
-lt_version = "V2023.09.20.001";
-publicVariable "lt_version";
-
 lt_staff = [
 	"76561198042684200",	// Tybalty
 	"76561198028914656",	// Lonesentinel
