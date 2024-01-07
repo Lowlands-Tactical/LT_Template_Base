@@ -25,10 +25,18 @@ private _insignia = [_corpse] call BIS_fnc_getUnitInsignia;
 	[_unit, _insignia] call BIS_fnc_setUnitInsignia;
 };
 
+// Wait until player is loaded
 if (vehicle player == player) then {
 	player switchMove "AmovPercMstpSrasWrflDnon_AmovPercMstpSlowWrflDnon";
 };
+_team = assignedTeam _corpse;
+player assignTeam _team;
 
+// reapply fatige and addactions
+if ("lt_fatigue_onoff" call bis_fnc_getParamValue == 0) then 
+{
+	player enableFatigue false;
+};
 player addAction [
 	"<t color='#FF0000'>Parachute</t>", 
 	"\lt_template_base\scripts\paradrop.sqf", 
@@ -43,7 +51,6 @@ if ("lt_debug" call bis_fnc_getParamValue == 1) then
 	systemChat "[LT] (Respawn) Reload zeus modules";
 };
 [] remoteExec ["LT_fnc_AdminZeusModule", 2];
-
 
 // After respawn reassign all radios and channels
 waitUntil {([] call acre_api_fnc_isInitialized)};
@@ -89,6 +96,7 @@ if (_hasRadio) then
 _unit setUnitTrait ["audibleCoef", 0.2];
 _unit setUnitTrait ["camouflageCoef", 0.2];
 _unit setUnitTrait ["loadCoef", 0.5];
+
 _role = _unit getVariable ["LT_unit_role", "custom"];
 [uniformContainer _unit, 50] remoteExec ["LT_fnc_resetMaxLoad"];
 [vestContainer _unit, 200] remoteExec ["LT_fnc_resetMaxLoad"];
