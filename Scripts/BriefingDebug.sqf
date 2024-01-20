@@ -11,11 +11,6 @@ Example:
 
 */
 
-Diag_log "[LT] (BriefingDebug) Briefing TriggerReveal Start";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemChat "[LT] (BriefingDebug) Briefing TriggerReveal Start";
-};
 if ("lt_debug" call bis_fnc_getParamValue == 0) exitWith 
 {
     Diag_log "[LT] (BriefingDebug) Debug OFF no trigger";
@@ -31,6 +26,7 @@ _allTriggers = allMissionObjects "EmptyDetector";
 {
     //SKIP MAP TRIGGER
     if (typeOf (synchronizedObjects _x select 0) isEqualTo "LocationArea_F") exitWith {};
+    if ("MAP" in (str _x)) exitWith {};
 
     //SETUP FOR SCRIPT
     _trigName = VehicleVarName _x;
@@ -81,19 +77,16 @@ _allTriggers = allMissionObjects "EmptyDetector";
     _briefing = _briefing + format
     [
         "<br/><font color='#FFBA26' size='14'>Trigger: %1</font><br/>
-        Trigger Name:<br/>
-        %2<br/>
-        Trigger Type:<br/>
-        %3<br/>
-        Trigger Activation<br/>
-        %4<br/><br/>
+        Trigger Name: %2<br/>
+        Trigger Type: %3<br/>
+        Trigger Activation: %4<br/>
         Trigger Statements:<br/>
         Condition:<br/>
-        %5<br/>
-        OnActivation<br/>
-        %6<br/>
-        OnDeactivation<br/>
-        %7<br/><br/>",
+        %5<br/><br/>
+        OnActivation:<br/>
+        %6<br/><br/>
+        OnDeactivation:<br/>
+        %7<br/><br/><br/>",
         _mkrName,_trigName,_trigType,_trigAct,_trigState select 0,_trigState select 1,_trigState select 2
     ];
 }forEach _allTriggers;
