@@ -17,7 +17,7 @@ waitUntil {sleep 0.5; !isNil "lt_crew"};
 if (lt_admin OR lt_crew) then 
 {
     // ADMIN BRIEFING
-    _briefing ="<br/><font size='18'>ADMIN SECTION</font><br/>This briefing section can only be seen by the current admin.<br/><br/>";
+    _briefing ="<br/><font color='#FFBA26' size='18'>ADMIN SECTION</font><br/>This briefing section can only be seen by the current admin.<br/><br/>";
 
     // Create array of tasks
     _tasks = player call BIS_fnc_tasksUnit;
@@ -40,7 +40,7 @@ if (lt_admin OR lt_crew) then
     };
     
     // forEach through _tasks and add description of task and the expressions for succeeded and failed in _briefing
-    _briefing = _briefing + "<font size='18'>Tasks</font><br/>";
+    _briefing = _briefing + "<font color='#FFBA26' size='18'>Tasks</font><br/>";
     if (count _tasks > 0) then 
     {
         {
@@ -50,7 +50,7 @@ if (lt_admin OR lt_crew) then
             _taskDescription = _taskDescriptionArray select 1;
             _briefing = _briefing + format 
             [
-                "<br/><font size='14'>Task: %2</font><br/>
+                "<br/><font color='#FFBA26' size='14'>Task: %2</font><br/>
                 Set state to: <executeClose expression=""[%1, 'Succeeded', %3] call LT_fnc_setTaskState;"">'Succeeded'</executeClose> 
                 or <executeClose expression=""[%1, 'Failed', %3] call LT_fnc_setTaskState;"">'Failed'</executeClose>
                 <br/><br/>",
@@ -64,7 +64,7 @@ if (lt_admin OR lt_crew) then
 
     // SAFE START SECTION
     _briefing = _briefing + "
-    <font size='18'>SAFE START CONTROL</font><br/>
+    <font color='#FFBA26' size='18'>SAFE START CONTROL</font><br/>
     |- <execute expression=""lt_param_timer = lt_param_timer + 1; publicVariable 'lt_param_timer'; hintSilent format ['Mission timer: %1', lt_param_timer];"">Increase Safe Start timer by 1 minute</execute><br/>
     
     |- <execute expression=""lt_param_timer = lt_param_timer - 1; publicVariable 'lt_param_timer'; hintSilent format ['Mission timer: %1', lt_param_timer];"">Decrease Safe Start timer by 1 minute</execute><br/>
