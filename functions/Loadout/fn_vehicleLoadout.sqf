@@ -118,37 +118,26 @@ switch (_loadout) do
 {
 	case "Crate Small": 
 	{
-		_vehicle addItemCargoGlobal [_wpnRifle select 1, 6];
-		_vehicle addItemCargoGlobal [_wpnRifle select 2, 2];
-		_vehicle addItemCargoGlobal [_wpnRifleCr select 1, 6];
-		_vehicle addItemCargoGlobal [_wpnRifleCr select 2, 2];
-		_vehicle addItemCargoGlobal [_wpnRifleMark select 1, 3];
+		_vehicle addItemCargoGlobal [_wpnRifle select 1, 8];
+		_vehicle addItemCargoGlobal [_wpnRifleCr select 1, 8];
+		_vehicle addItemCargoGlobal [_wpnRifleMark select 1, 4];
 		_vehicle addItemCargoGlobal [_wpnAR select 1, 3];
 		_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 3];
 		_vehicle addItemCargoGlobal [_wpnHG select 1, 2];
-		_vehicle addItemCargoGlobal [_wpnLnchr select 0, 2];
-		_vehicle addItemCargoGlobal [_wpnBino, 1];
 		_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
 		_vehicle addItemCargoGlobal [_itemRole select 2, 6];
 
-		if ((_wpnLnchr select 1) != "") then 
-		{
-			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 4];
-		};
-		if ((_wpnLnchr select 2) != "") then 
-		{
-			_vehicle addItemCargoGlobal [_wpnLnchr select 2, 4];
-		};
 		{
 			_vehicle addItemCargoGlobal [_x, 5];
 		}forEach _itemTrow;
 		{
-			_vehicle addItemCargoGlobal [_x, 10];
+			_vehicle addItemCargoGlobal [_x, 5];
 		}forEach _wpnGLAmmo;
 		{
-			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
+			_vehicle addItemCargoGlobal [_x, (round (_itemMedicAmt select _forEachIndex) /4)];
 		}forEach _itemMedic;
 	};
+
 	case "Crate Medium": 
 	{
 		_vehicle addItemCargoGlobal [_wpnRifle select 1, 30];
@@ -164,24 +153,23 @@ switch (_loadout) do
 		_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
 		_vehicle addItemCargoGlobal [_itemRole select 2, 12];
 
-		if ((_wpnLnchr select 1) != "") then 
-		{
-			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 6];
+		if ((_wpnLnchr select 1) != "") then {
+			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 4];
 		};
-		if ((_wpnLnchr select 2) != "") then 
-		{
-			_vehicle addItemCargoGlobal [_wpnLnchr select 2, 6];
+		if ((_wpnLnchr select 2) != "") then {
+			_vehicle addItemCargoGlobal [_wpnLnchr select 2, 4];
 		};
 		{
 			_vehicle addItemCargoGlobal [_x, 10];
 		}forEach _itemTrow;
 		{
-			_vehicle addItemCargoGlobal [_x, 15];
+			_vehicle addItemCargoGlobal [_x, 10];
 		}forEach _wpnGLAmmo;
 		{
-			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
+			_vehicle addItemCargoGlobal [_x, (round (_itemMedicAmt select _forEachIndex) /2)];
 		}forEach _itemMedic;
 	};
+
 	case "Crate Large": 
 	{
 		_vehicle addItemCargoGlobal [_wpnRifle select 1, 60];
@@ -197,12 +185,10 @@ switch (_loadout) do
 		_vehicle addItemCargoGlobal [_itemSpecial select 0, 2];
 		_vehicle addItemCargoGlobal [_itemRole select 2, 24];
 
-		if ((_wpnLnchr select 1) != "") then 
-		{
+		if ((_wpnLnchr select 1) != "") then {
 			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
 		};
-		if ((_wpnLnchr select 2) != "") then 
-		{
+		if ((_wpnLnchr select 2) != "") then {
 			_vehicle addItemCargoGlobal [_wpnLnchr select 2, 8];
 		};
 		{
@@ -215,6 +201,7 @@ switch (_loadout) do
 			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
 		}forEach _itemMedic;
 	};
+
 	case "Crate Explosives": 
 	{
 		{
@@ -224,6 +211,7 @@ switch (_loadout) do
 			_vehicle addItemCargoGlobal [_x, _itemExplAmt select _forEachIndex];
 		}forEach _itemExpl;
 	};
+
 	case "Crate Mines":
 	{
 		{
@@ -233,6 +221,7 @@ switch (_loadout) do
 			_vehicle addItemCargoGlobal [_x, _itemMineAmt select _forEachIndex];
 		}forEach _itemMine;
 	};
+
 	case "Crate Medical": 
 	{
 		{
@@ -242,6 +231,7 @@ switch (_loadout) do
 			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
 		}forEach _itemMedic;
 	};
+
 	case "Crate Weapons": 
 	{
 		_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnRifle select 0, 4];
@@ -252,15 +242,15 @@ switch (_loadout) do
 		_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnHG select 0, 6];
 		_vehicle addItemCargoGlobal [_wpnLnchr select 0, 8];
 		_vehicle addItemCargoGlobal [_wpnBino, 6];
-		if ((_wpnLnchr select 1) != "") then 
-		{
+
+		if ((_wpnLnchr select 1) != "") then {
 			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
 		};
-		if ((_wpnLnchr select 2) != "") then 
-		{
+		if ((_wpnLnchr select 2) != "") then {
 			_vehicle addItemCargoGlobal [_wpnLnchr select 2, 8];
 		};
 	};
+
 	case "Crate Air": 
 	{
 		_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnRifleAir select 0, 6];
@@ -270,6 +260,7 @@ switch (_loadout) do
 		_vehicle addItemCargoGlobal [_wpnBino, 4];
 		_vehicle addItemCargoGlobal [_itemRole select 0, 4];
 		_vehicle addItemCargoGlobal [_itemRole select 2, 4];
+
 		{
 			_vehicle addItemCargoGlobal [_x, 5];
 		}forEach _itemTrow;
@@ -277,6 +268,7 @@ switch (_loadout) do
 			_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
 		}forEach _itemMedic;
 	};
+
 	case "Crate Comms":
 	{
 		_vehicle addItemCargoGlobal [_itemRadio select 0, 10];
@@ -284,6 +276,7 @@ switch (_loadout) do
 		_vehicle addItemCargoGlobal [_itemRole select 0, 10];
 		_vehicle addItemCargoGlobal [_itemRole select 1, 5];
 	};
+
 	case "Crate NVG": 
 	{
 		{
