@@ -4,13 +4,20 @@ class cfgPatches
 {
 	class lt_template_base
 	{
-		name = "lt_template_base";
-		author = "Lowlands Tactical";
-		url = "http://lowtac.nl/";
-		requiredVersion = 2.14;
-		requiredAddons[] = {"A3_Characters_F_BLUFOR", "A3_Modules_F"};
-		units[] = {};
-		weapons[] = {};
+		name="lt_template_base";
+		author="Lowlands Tactical";
+		url="http://lowtac.nl/";
+		requiredVersion=2.14;
+		requiredAddons[]=
+		{
+			"A3_Characters_F_BLUFOR",
+			"A3_Modules_F",
+			"cba_main",
+			"ace_main",
+			"acre_main"
+		};
+		units[]={};
+		weapons[]={};
 		
 		//CBA versioning
 		version = VERSION;
