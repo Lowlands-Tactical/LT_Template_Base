@@ -290,7 +290,7 @@ switch (_loadout) do
 	{
 		_vehicle addItemCargoGlobal [_itemRole select 1, 2];
 		_vehicle addItemCargoGlobal [_itemRole select 3, 8];
-		_vehicle addItemCargoGlobal [_itemRole select 4, 2];
+		_vehicle addBackpackCargo [_itemRole select 4, 2];
 	};
 };
 
