@@ -41,7 +41,7 @@ _sideArr = ["WEST","EAST","GUER"];
 }forEach _sideArr;
 lbSetCurSel [620, 0];
 
-_loadArr = ["Empty","Custom","Crate Small","Crate Medium","Crate Large","Crate Explosives","Crate Mines","Crate Medical","Crate Weapons","Crate NVG","Crate Comms","Crate Air"]; //every case in LT_fnc_vehicleLoadout
+_loadArr = ["Empty","Custom","Crate Small","Crate Medium","Crate Large","Crate Explosives","Crate Mines","Crate Medical","Crate Weapons","Crate NVG","Crate Comms","Crate Air","Crate UAV"]; //every case in LT_fnc_vehicleLoadout
 {
 	lbAdd [621, _x];
 	lbSetData [621, _forEachIndex, _x];

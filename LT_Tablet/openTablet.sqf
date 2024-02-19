@@ -93,6 +93,7 @@ _loadArr = [
 	"Crate Air",
 	"Crate Comms",
 	"Crate NVG",
+	"Crate UAV",
 // Static weapons
 	"M2 HMG",
 	"Mk6 Morter",

@@ -152,6 +152,7 @@ switch (_loadout) do
 		_vehicle addItemCargoGlobal [_wpnBino, 2];
 		_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
 		_vehicle addItemCargoGlobal [_itemRole select 2, 12];
+		_vehicle addItemCargoGlobal [_itemRole select 3, 2];
 
 		if ((_wpnLnchr select 1) != "") then {
 			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 4];
@@ -184,6 +185,7 @@ switch (_loadout) do
 		_vehicle addItemCargoGlobal [_wpnBino, 4];
 		_vehicle addItemCargoGlobal [_itemSpecial select 0, 2];
 		_vehicle addItemCargoGlobal [_itemRole select 2, 24];
+		_vehicle addItemCargoGlobal [_itemRole select 3, 4];
 
 		if ((_wpnLnchr select 1) != "") then {
 			_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
@@ -282,6 +284,13 @@ switch (_loadout) do
 		{
 			_vehicle addItemCargoGlobal [_x, _itemNVGAmt select _forEachIndex];
 		}forEach _itemNVG;
+	};
+
+	case "Crate UAV":
+	{
+		_vehicle addItemCargoGlobal [_itemRole select 1, 2];
+		_vehicle addItemCargoGlobal [_itemRole select 3, 8];
+		_vehicle addItemCargoGlobal [_itemRole select 4, 2];
 	};
 };
 
