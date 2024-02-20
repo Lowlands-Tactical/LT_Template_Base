@@ -291,7 +291,7 @@ class Cfg3DEN
 						class LT_Load_Cr_NVG	{data = "Crate NVG";		text = "NVG Crate";};
 						class LT_Load_Cr_Comms 	{data = "Crate Comms";		text = "Communication Crate";};
 						class LT_Load_Cr_Air	{data = "Crate Air";		text = "Aircrew Ammocrate";};
-						class LT_Role_Cr_UAV	{data = "Crate UAV";		text = "UAV Crate";};
+						class LT_Load_Cr_UAV	{data = "Crate UAV";		text = "UAV Crate";};
 					};
 				};
 			};
