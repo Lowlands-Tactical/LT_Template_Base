@@ -32,29 +32,53 @@ _nvg = "lt_gear_nvg" call bis_fnc_getParamValue;
 // Extra crate check in case of special demand
 _crate = switch (_loadoutType) do 
 {
-	case "Crate Explosives": {"NLD_Ammo_Crate_Explosieven"};
-	case "Crate Mines": {"NLD_Ammo_Crate_Explosieven"};
-	case "Crate Medical": {"NLD_Ammo_Crate_Medisch"};
-	case "Crate Weapons": {"NLD_Ammo_Crate_Wapens"};
+//Base
 	case "M2 HMG": {"B_G_HMG_02_high_F"};
 	case "Mk6 Morter": {"B_T_Mortar_01_F"};
 	case "Remote Designator": {"B_W_Static_Designator_01_F"};
-	case "King Quad": {"NLD_Quad"};
+	case "Anti Tank": {""};
+	case "Artillery": {""};
+	case "King Quad": {"B_Quadbike_01_F"};
 	case "VW Amarok": {"NLD_Amarok"};
 	case "MB G280 CDI": {"NLD_WLD_MB_SF"};
 	case "Assault Boat": {"B_Boat_Transport_01_F"};
-	case "NLD RHIB": {"NLD_RHIB"};
-	case "FRISC Motorboat": {"NLD_FRISC"};
+	case "FRISC Motorboat": {"B_Boat_Armed_01_minigun_F"};
+//GM
+	case "K125 Motor":{"gm_ge_army_k125"};
+	case "Pkw 2 Beatle":{"gm_ge_army_typ1200_cargo"};
+	case "Pkw 8 VW":{"gm_ge_army_typ253_cargo"};
+	case "Jeep Cargo":{"gm_ge_army_iltis_cargo"};
+	case "Jeep MG3":{"gm_ge_army_iltis_mg3"};
+	case "Jeep LATGM":{"gm_ge_army_iltis_milan"};
+//VN
+	case "Anti Tank TOW":{"vn_b_army_static_tow"};
+	case "Howitser":{"vn_b_army_static_m101_02"};
+	case "Mortar":{"vn_b_army_static_mortar_m29"};
+	case "Jeep":{"vn_b_wheeled_m151_01"};
+	case "Jeep MG":{"vn_b_wheeled_m151_mg_02"};
+	case "Gun Boat":{"vn_b_boat_09_01"};
 	default {_crate};
 };
 _loadoutType = switch (_loadoutType) do 
 {
+//Base
 	case "King Quad": {"Crate Small"};
 	case "VW Amarok": {"Crate Medium"};
 	case "MB G280 CDI": {"Crate Medium"};
 	case "Assault Boat": {"Crate Small"};
 	case "NLD RHIB": {"Crate Medium"};
 	case "FRISC Motorboat": {"Crate Medium"};
+//GM
+	case "K125 Motor":{"Crate Small"};
+	case "Pkw 2 Beatle":{"Crate Small"};
+	case "Pkw 8 VW":{"Crate Small"};
+	case "Jeep Cargo":{"Crate Medium"};
+	case "Jeep MG3":{"Crate Medium"};
+	case "Jeep LATGM":{"Crate Medium"};
+//VN
+	case "Jeep":{"Crate Medium"};
+	case "Jeep MG":{"Crate Medium"};
+	case "Gun Boat":{"Crate Medium"};
 	default {_loadoutType};
 };
 

@@ -45,37 +45,18 @@ playerArr = [];
 lbSetCurSel [550,0];
 
 // Array with vehicles that can be chosen to spawn
-_vehArr = [
-	"NLD_C130H_VIV",
-	"NLD_CH47F_ViV",
-	"NLD_NH90",
-	"B_T_VTOL_01_vehicle_F",
+_vehArr = 
+[
 	"C_Plane_Civil_01_F",
-	"CUP_O_C47_SLA",
-	"CUP_C_AN2_AEROSCHROT_TK_CIV",
-	"CUP_C_MI6A_RU"
+	"B_T_VTOL_01_vehicle_F"
 ];
-{
-	_vehName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-	lbAdd [531, _vehName];
-	lbSetData [531, _forEachIndex, _x];
-}forEach _vehArr;
-lbSetCurSel [531,0];
 
 // Array with types of crates that wil be spawned
 _crateArr = [
-	"CUP_BOX_US_ARMY_Ammo_F",
 	"B_supplyCrate_F",
 	"I_E_CargoNet_01_ammo_F",
-	"C_IDAP_supplyCrate_F",
-	"NLD_Ammo_Crate_Munitie"
+	"C_IDAP_supplyCrate_F"
 ];
-{
-	_crateName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-	lbAdd [533, _crateName];
-	lbSetData [533, _forEachIndex, _x];
-}forEach _crateArr;
-lbSetCurSel [533,0];
 
 // Array with crate loadout is selected for the supply drop
 _loadArr = [
@@ -93,20 +74,99 @@ _loadArr = [
 	"Crate Air",
 	"Crate Comms",
 	"Crate NVG",
-	"Crate UAV",
-// Static weapons
-	"M2 HMG",
-	"Mk6 Morter",
-	"Remote Designator",
-// Land vehicles
-	"VW Amarok",
-	"MB G280 CDI",
-	"King Quad",
-// Water vehicles
-	"Assault Boat",
-	"NLD RHIB",
-	"FRISC Motorboat"
+	"Crate UAV"
 ];
+
+switch true do
+{
+	case ("CUP_Vehicles" in getMissionDLCs):
+	{
+		_vehArr append "CUP_O_C47_SLA";
+		_vehArr append "CUP_C_AN2_AEROSCHROT_TK_CIV";
+		_vehArr append "CUP_C_MI6A_RU";
+		_vehArr append "NLD_C130H_VIV";
+		_vehArr append "NLD_CH47F_ViV";
+		_vehArr append "NLD_NH90";
+
+		_crateArr append "CUP_BOX_US_ARMY_Ammo_F";
+		_crateArr append "NLD_Ammo_Crate_Munitie";
+		_crateArr append "NLD_Ammo_Crate_Explosieven";
+		_crateArr append "NLD_Ammo_Crate_Medisch";
+		_crateArr append "NLD_Ammo_Crate_Wapens";
+
+		_loadArr append "M2 HMG";
+		_loadArr append "Mk6 Morter";
+		_loadArr append "Remote Designator";
+		_loadArr append "King Quad";
+		_loadArr append "VW Amarok";
+		_loadArr append "MB G280 CDI";
+		_loadArr append "Assault Boat";
+		_loadArr append "FRISC Motorboat";
+	};
+	case ("GM" in getMissionDLCs):
+	{
+		_vehArr append "gm_ge_army_ch53g";
+		_vehArr append "gm_ge_army_ch53gs";
+		_vehArr append "gm_gc_airforce_mi2t";
+		_vehArr append "gm_ge_army_bo105m_vbh";
+		_vehArr append "gm_ge_airforce_do28d2";
+		_vehArr append "gm_gc_airforce_l410t";
+
+		_crateArr append "gm_ammobox_aluminium_01_empty";
+		_crateArr append "gm_fortification_crate_05";
+		_crateArr append "gm_ammobox_aluminium_04_empty";
+		_crateArr append "gm_fortification_crate_03";
+		_crateArr append "gm_ammobox_aluminium_02_empty";
+		_crateArr append "gm_fortification_crate_01";
+
+		_loadArr append "K125 Motor";
+		_loadArr append "Pkw 2 Beatle";
+		_loadArr append "Pkw 8 VW";
+		_loadArr append "Jeep Cargo";
+		_loadArr append "Jeep MG3";
+		_loadArr append "Jeep LATGM";
+	};
+	case ("VN" in getMissionDLCs):
+	{
+		_vehArr append "vn_b_air_ch47_03_01";
+		_vehArr append "vn_i_air_ch34_01_02";
+		_vehArr append "vn_o_air_mi2_01_01";
+		_vehArr append "vn_b_air_uh1b_01_01";
+
+		_crateArr append "vn_b_ammobox_kit_anzac";
+		_crateArr append "vn_o_ammobox_full_10";
+		_crateArr append "vn_b_ammobox_full_33";
+		_crateArr append "vn_o_ammobox_full_02";
+		_crateArr append "vn_b_ammobox_supply_12";
+		_crateArr append "vn_b_ammobox_full_10";
+
+		_loadArr append "Anti Tank TOW";
+		_loadArr append "Howitser";
+		_loadArr append "Mortar";
+		_loadArr append "Jeep";
+		_loadArr append "Jeep MG";
+		_loadArr append "Gun Boat";
+	};
+	case ("VNX" in getMissionDLCs):
+	{
+		_vehArr append "vnx_b_air_ac119_03_01";
+	};
+};
+
+{
+	_vehName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+	lbAdd [531, _vehName];
+	lbSetData [531, _forEachIndex, _x];
+}forEach _vehArr;
+lbSetCurSel [531,0];
+
+{
+	_crateName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+	lbAdd [533, _crateName];
+	lbSetData [533, _forEachIndex, _x];
+}forEach _crateArr;
+lbSetCurSel [533,0];
+
 {
 	_loadOutName = _x;
 	lbAdd [535, _loadOutName];
