@@ -56,8 +56,9 @@ while {true} do {
 				
 				uiSleep (_delay + 0.1);
 				//_newVehicle = _type createVehicle ASLToAGL [0,0,100];
-				_newVehicle = _type createVehicle [_position select 0, _position select 1, _position select 2 + 2.5];
-				//_newVehicle setPosASL _position;
+				//_newVehicle = _type createVehicle [_position select 0, _position select 1, _position select 2 + 2.5];
+				_newVehicle = createVehicle [_type, (ASLToATL _position), [], 0, "NONE"];
+				//_newVehicle setPosATL _position;
 				_newVehicle setDir _direction;
 
 				_newVehicle setVariable ["LT_veh_side", _ltVehSide];

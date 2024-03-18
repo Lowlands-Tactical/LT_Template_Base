@@ -89,7 +89,7 @@ if (getNumber (configFile >> "cfgvehicles" >> typeOf _vehicle >> "isUAV") > 0 &&
 _maxLoad = maxLoad _vehicle;
 
 _vehicleData = [
-	_delay, _init, _loadout, vehicleVarName _vehicle, getPosATL _vehicle, 
+	_delay, _init, _loadout, vehicleVarName _vehicle, getPosASL _vehicle, 
 	getDir _vehicle, typeOf _vehicle, _inventory, _savePaint, _paint, _parts, 
 	_deleteWreck, _limitEnabled,_savePylon, _pylons, _pylonPaths,
 	_ltDroneSide, _ltVehSide, _ltVehRole, _UAVCrew, _maxLoad
