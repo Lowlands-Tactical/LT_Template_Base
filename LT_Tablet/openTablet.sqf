@@ -81,75 +81,75 @@ switch true do
 {
 	case ("CUP_Vehicles" in getMissionDLCs):
 	{
-		_vehArr append "CUP_O_C47_SLA";
-		_vehArr append "CUP_C_AN2_AEROSCHROT_TK_CIV";
-		_vehArr append "CUP_C_MI6A_RU";
-		_vehArr append "NLD_C130H_VIV";
-		_vehArr append "NLD_CH47F_ViV";
-		_vehArr append "NLD_NH90";
+		_vehArr pushback "CUP_O_C47_SLA";
+		_vehArr pushback "CUP_C_AN2_AEROSCHROT_TK_CIV";
+		_vehArr pushback "CUP_C_MI6A_RU";
+		_vehArr pushback "NLD_C130H_VIV";
+		_vehArr pushback "NLD_CH47F_ViV";
+		_vehArr pushback "NLD_NH90";
 
-		_crateArr append "CUP_BOX_US_ARMY_Ammo_F";
-		_crateArr append "NLD_Ammo_Crate_Munitie";
-		_crateArr append "NLD_Ammo_Crate_Explosieven";
-		_crateArr append "NLD_Ammo_Crate_Medisch";
-		_crateArr append "NLD_Ammo_Crate_Wapens";
+		_crateArr pushback "CUP_BOX_US_ARMY_Ammo_F";
+		_crateArr pushback "NLD_Ammo_Crate_Munitie";
+		_crateArr pushback "NLD_Ammo_Crate_Explosieven";
+		_crateArr pushback "NLD_Ammo_Crate_Medisch";
+		_crateArr pushback "NLD_Ammo_Crate_Wapens";
 
-		_loadArr append "M2 HMG";
-		_loadArr append "Mk6 Morter";
-		_loadArr append "Remote Designator";
-		_loadArr append "King Quad";
-		_loadArr append "VW Amarok";
-		_loadArr append "MB G280 CDI";
-		_loadArr append "Assault Boat";
-		_loadArr append "FRISC Motorboat";
+		_loadArr pushback "M2 HMG";
+		_loadArr pushback "Mk6 Morter";
+		_loadArr pushback "Remote Designator";
+		_loadArr pushback "King Quad";
+		_loadArr pushback "VW Amarok";
+		_loadArr pushback "MB G280 CDI";
+		_loadArr pushback "Assault Boat";
+		_loadArr pushback "FRISC Motorboat";
 	};
 	case ("GM" in getMissionDLCs):
 	{
-		_vehArr append "gm_ge_army_ch53g";
-		_vehArr append "gm_ge_army_ch53gs";
-		_vehArr append "gm_gc_airforce_mi2t";
-		_vehArr append "gm_ge_army_bo105m_vbh";
-		_vehArr append "gm_ge_airforce_do28d2";
-		_vehArr append "gm_gc_airforce_l410t";
+		_vehArr pushback "gm_ge_army_ch53g";
+		_vehArr pushback "gm_ge_army_ch53gs";
+		_vehArr pushback "gm_gc_airforce_mi2t";
+		_vehArr pushback "gm_ge_army_bo105m_vbh";
+		_vehArr pushback "gm_ge_airforce_do28d2";
+		_vehArr pushback "gm_gc_airforce_l410t";
 
-		_crateArr append "gm_ammobox_aluminium_01_empty";
-		_crateArr append "gm_fortification_crate_05";
-		_crateArr append "gm_ammobox_aluminium_04_empty";
-		_crateArr append "gm_fortification_crate_03";
-		_crateArr append "gm_ammobox_aluminium_02_empty";
-		_crateArr append "gm_fortification_crate_01";
+		_crateArr pushback "gm_ammobox_aluminium_01_empty";
+		_crateArr pushback "gm_fortification_crate_05";
+		_crateArr pushback "gm_ammobox_aluminium_04_empty";
+		_crateArr pushback "gm_fortification_crate_03";
+		_crateArr pushback "gm_ammobox_aluminium_02_empty";
+		_crateArr pushback "gm_fortification_crate_01";
 
-		_loadArr append "K125 Motor";
-		_loadArr append "Pkw 2 Beatle";
-		_loadArr append "Pkw 8 VW";
-		_loadArr append "Jeep Cargo";
-		_loadArr append "Jeep MG3";
-		_loadArr append "Jeep LATGM";
+		_loadArr pushback "K125 Motor";
+		_loadArr pushback "Pkw 2 Beatle";
+		_loadArr pushback "Pkw 8 VW";
+		_loadArr pushback "Jeep Cargo";
+		_loadArr pushback "Jeep MG3";
+		_loadArr pushback "Jeep LATGM";
 	};
 	case ("VN" in getMissionDLCs):
 	{
-		_vehArr append "vn_b_air_ch47_03_01";
-		_vehArr append "vn_i_air_ch34_01_02";
-		_vehArr append "vn_o_air_mi2_01_01";
-		_vehArr append "vn_b_air_uh1b_01_01";
+		_vehArr pushback "vn_b_air_ch47_03_01";
+		_vehArr pushback "vn_i_air_ch34_01_02";
+		_vehArr pushback "vn_o_air_mi2_01_01";
+		_vehArr pushback "vn_b_air_uh1b_01_01";
 
-		_crateArr append "vn_b_ammobox_kit_anzac";
-		_crateArr append "vn_o_ammobox_full_10";
-		_crateArr append "vn_b_ammobox_full_33";
-		_crateArr append "vn_o_ammobox_full_02";
-		_crateArr append "vn_b_ammobox_supply_12";
-		_crateArr append "vn_b_ammobox_full_10";
+		_crateArr pushback "vn_b_ammobox_kit_anzac";
+		_crateArr pushback "vn_o_ammobox_full_10";
+		_crateArr pushback "vn_b_ammobox_full_33";
+		_crateArr pushback "vn_o_ammobox_full_02";
+		_crateArr pushback "vn_b_ammobox_supply_12";
+		_crateArr pushback "vn_b_ammobox_full_10";
 
-		_loadArr append "Anti Tank TOW";
-		_loadArr append "Howitser";
-		_loadArr append "Mortar";
-		_loadArr append "Jeep";
-		_loadArr append "Jeep MG";
-		_loadArr append "Gun Boat";
+		_loadArr pushback "Anti Tank TOW";
+		_loadArr pushback "Howitser";
+		_loadArr pushback "Mortar";
+		_loadArr pushback "Jeep";
+		_loadArr pushback "Jeep MG";
+		_loadArr pushback "Gun Boat";
 	};
 	case ("VNX" in getMissionDLCs):
 	{
-		_vehArr append "vnx_b_air_ac119_03_01";
+		_vehArr pushback "vnx_b_air_ac119_03_01";
 	};
 };
 
