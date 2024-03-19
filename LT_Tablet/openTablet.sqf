@@ -15,6 +15,8 @@ Buttons.sqf
 
 createDialog "BB_LT_Tablet";
 
+_lt_Loadout = getMissionConfigValue ["LT_Loadout_ID","BASE"];
+
 // Checks which button to show for the on/off state
 lt_param_timer = missionNameSpace getVariable ["lt_param_timer", 10];
 lt_fatigue_onoff = missionNameSpace getVariable ["lt_fatigue_onoff", 0];
@@ -77,9 +79,9 @@ _loadArr = [
 	"Crate UAV"
 ];
 
-switch true do
+switch (_lt_Loadout) do
 {
-	case ("CUP_Vehicles" in getMissionDLCs):
+	case "BASE":
 	{
 		_vehArr pushback "CUP_O_C47_SLA";
 		_vehArr pushback "CUP_C_AN2_AEROSCHROT_TK_CIV";
@@ -103,7 +105,7 @@ switch true do
 		_loadArr pushback "Assault Boat";
 		_loadArr pushback "FRISC Motorboat";
 	};
-	case ("GM" in getMissionDLCs):
+	case "GM":
 	{
 		_vehArr pushback "gm_ge_army_ch53g";
 		_vehArr pushback "gm_ge_army_ch53gs";
@@ -126,8 +128,9 @@ switch true do
 		_loadArr pushback "Jeep MG3";
 		_loadArr pushback "Jeep LATGM";
 	};
-	case ("VN" in getMissionDLCs):
+	case "VN":
 	{
+		_vehArr pushback "vnx_b_air_ac119_03_01";
 		_vehArr pushback "vn_b_air_ch47_03_01";
 		_vehArr pushback "vn_i_air_ch34_01_02";
 		_vehArr pushback "vn_o_air_mi2_01_01";
@@ -146,10 +149,6 @@ switch true do
 		_loadArr pushback "Jeep";
 		_loadArr pushback "Jeep MG";
 		_loadArr pushback "Gun Boat";
-	};
-	case ("VNX" in getMissionDLCs):
-	{
-		_vehArr pushback "vnx_b_air_ac119_03_01";
 	};
 };
 
