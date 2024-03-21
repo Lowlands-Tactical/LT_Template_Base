@@ -51,7 +51,7 @@ while {true} do {
 				if _deleteWreck then {
 					deleteVehicle _vehicle;
 				} else {
-					if (_vehicle distance (_position < 100)) then {deleteVehicle _vehicle};
+					if (_vehicle distance _position < 100) then {deleteVehicle _vehicle};
 				};
 				
 				uiSleep (_delay + 0.1);
