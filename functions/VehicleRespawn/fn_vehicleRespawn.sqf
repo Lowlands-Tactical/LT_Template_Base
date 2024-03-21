@@ -44,7 +44,7 @@ params [
 	["_delay", 5, [0]],
 	["_init", {}, [{}]],
 	["_respawnLimit", -1, [0]],
-	["_deleteWreck", false, [false]],
+	["_deleteWreck", true, [true]],
 	["_loadout", true, [true]],
 	["_savePaint", true, [true]],
 	["_savePylon", true, [true]]
