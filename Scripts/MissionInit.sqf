@@ -145,9 +145,13 @@ if (hasinterface) then
                 {
                     systemChat format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
                 };
-                ["west", "east", "resistance", "civ"] call acre_api_fnc_babelsetSpokenlanguages;
-                [true] call acre_api_fnc_setSpectator;
-                ["Initialize", [_unit, [], true]] call BIS_fnc_EGSpectator;
+                if (local _unit) then 
+                {
+                    hintSilent format ["%1 died and now is spectating", name _unit];
+                    ["west", "east", "resistance", "civ"] call acre_api_fnc_babelsetSpokenlanguages;
+                    [true] call acre_api_fnc_setSpectator;
+                    ["Initialize", [_unit, [], true]] call BIS_fnc_EGSpectator;
+                };
             }
         ];
     } else 
