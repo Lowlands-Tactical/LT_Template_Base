@@ -145,6 +145,7 @@ if (hasinterface) then
                 {
                     systemChat format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
                 };
+                //Because MPEventHandler MPKilled is executed globaly AND on evey client this makes sure its only on the client that died
                 if (local _unit) then 
                 {
                     hintSilent format ["%1 died and now is spectating", name _unit];
