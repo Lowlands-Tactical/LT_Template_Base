@@ -118,33 +118,8 @@ _lt_wpnTMP = switch (_side) do
 	case resistance: {_lt_wpn_green};
 };
 
-_lt_camo_params = [_unit,_lt_nvg,_lt_sr_radio,_lt_radiopack,_lt_camoTMP];
-_lt_wpn_params = [_unit,_lt_nvg,_lt_wpn_att,_lt_wpn_scope,_lt_wpnTMP];
-
-_camo = "";
-_weapon = "";
-
-switch (_lt_Loadout) do 
-{
-	case "BASE":
-	{
-		_camo = "\lt_template_gear\Loadout_BASE\prepLoadout_Gear.sqf";
-		_weapon = "\lt_template_gear\Loadout_BASE\prepLoadout_Weapon.sqf";
-	};
-	case "GM":
-	{
-		_camo = "\lt_template_gear\Loadout_GM\prepLoadout_Gear.sqf";
-		_weapon = "\lt_template_gear\Loadout_GM\prepLoadout_Weapon.sqf";
-	};
-	case "VN":
-	{
-		_camo = "\lt_template_gear_vn\Loadout_VN\prepLoadout_Gear.sqf";
-		_weapon = "\lt_template_gear_vn\Loadout_VN\prepLoadout_Weapon.sqf";
-	};
-};
-
-_camoHandle = _lt_camo_params execVM _camo;
+_camoHandle = [_unit,_lt_nvg,_lt_sr_radio,_lt_radiopack,_lt_camoTMP,_lt_Loadout] execVM "\lt_template_gear\Scripts\prepLoadout_Gear.sqf";
 waitUntil {uiSleep 0.3; scriptDone _camoHandle};
 
-_wpnHandle = _lt_wpn_params execVM _weapon;
+_wpnHandle = [_unit,_lt_nvg,_lt_wpn_att,_lt_wpn_scope,_lt_wpnTMP,_lt_Loadout] execVM "\lt_template_gear\Scripts\prepLoadout_Weapon.sqf";
 waitUntil {uiSleep 0.3; scriptDone _wpnHandle};
