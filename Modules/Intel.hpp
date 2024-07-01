@@ -18,7 +18,7 @@ class LT_Intel_Module: Module_F
             tooltip = "Name of the addaction";
             control = "EditShort";
             validate = "STRING";
-            defaultValue = "'Take Intel'"
+            defaultValue = "'Take Intel'";
         };
         class Intel_Titel: Default
         {
