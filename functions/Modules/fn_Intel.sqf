@@ -16,8 +16,17 @@ _logic = param [0,objNull,[objNull]];
 
 _objects = synchronizedObjects _logic;
 _intel = _objects select 0;
-removeAllActions _intel;
 
+if (isNil "_intel") exitWith
+{
+    Diag_log "[LT] (Intel) _intel == nil (JIP ErrorCatcher)";
+    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+    {
+        systemChat "[LT] (Intel) _intel == nil (JIP ErrorCatcher)";
+    };
+};
+
+removeAllActions _intel;
 _actionName = _logic getVariable ["Intel_ActionName", "Take Intel"];
 _titel = _logic getVariable ["Intel_Titel", "Titel"];
 _text = _logic getVariable ["Intel_Text", ""];
@@ -55,7 +64,7 @@ if (hasInterface) then
 
 // Create only curator visable marker with titelname on location
 _mkrCntVar = _fnc_scriptName + "_counter";
-_mkrCnt = if (isnil _mkrCntVar) then {-1} else {missionNameSpace getVariable _mkrCntVar};
+_mkrCnt = if (isNil _mkrCntVar) then {-1} else {missionNameSpace getVariable _mkrCntVar};
 _mkrCnt = _mkrCnt + 1;
 _mkrName = format ["IntelMarker_%1", _mkrCnt];
 missionNameSpace setVariable [_mkrCntVar, _mkrCnt];
