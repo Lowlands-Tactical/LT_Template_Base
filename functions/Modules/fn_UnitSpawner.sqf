@@ -98,26 +98,22 @@ if (_activated) then
 		if !(_className in _blackList) then 
 		{
 			_displayName = getText (configFile >> "CfgVehicles" >> _className >> "displayName");
-			_vehicleClass = getText (configFile >> "CfgVehicles" >> _className >> "vehicleClass");
 			_textSingular = getText (configFile >> "CfgVehicles" >> _className >> "textSingular");
 			if (_textSingular == "Infantry" AND !(["Uniform", _displayName] call BIS_fnc_inString)) then 
 			{
 				_factionInfArr pushback _className;
 			};
-			if (_vehicleClass == "Car" AND _textSingular == "MRAP" OR _textSingular == "Car") then 
+			if (_textSingular == "MRAP" OR _textSingular == "Car") then 
 			{
 				_factionVehArr pushback _className;
-				};
-			if (_vehicleClass == "Armored") then 
+			};
+			if (_textSingular == "APC") then 
 			{
-				if (_textSingular == "APC") then 
-				{
-					_factionMechArr pushback _className;
-				};
-				if (_textSingular == "Tank") then 
-				{
-					_factionArmorArr pushback _className;
-				};
+				_factionMechArr pushback _className;
+			};
+			if (_textSingular == "Tank") then 
+			{
+				_factionArmorArr pushback _className;
 			};
 		};
 	}forEach ("(getText (_x >> 'faction') == _faction)" configClasses (configfile >> "CfgVehicles"));
@@ -144,13 +140,19 @@ if (_activated) then
 	_waveAmt = if (_waves != -1) then {_waves} else {_maxAmt;};
 
 	Diag_Log format["[LT] (UnitSpawner) Faction:%1 FactionSide:%2 BlackList:%3",_faction, _factionSide, _blackList];
-	Diag_Log format["[LT] (UnitSpawner) InfantryClassArray:'%1' VehicleClassArray:'%2' MechanizedClassArray:'%3' ArmorClassArray:'%4'",_factionInfArr, _factionVehArr, _factionMechArr, _factionArmorArr];
+	Diag_Log format["[LT] (UnitSpawner) InfantryClassArray:'%1'",_factionInfArr];
+	Diag_Log format["[LT] (UnitSpawner) VehicleClassArray:'%1'",_factionVehArr];
+	Diag_Log format["[LT] (UnitSpawner) MechanizedClassArray:'%1'",_factionMechArr];
+	Diag_Log format["[LT] (UnitSpawner) ArmorClassArray:'%1'",_factionArmorArr];
 	Diag_Log format["[LT] (UnitSpawner) Max amount:%1  Wave amount:%2", _maxAmt, _waveAmt];
 	Diag_Log format["[LT] (UnitSpawner) TotalAmount:%1", _totalAmt];
 	if (["lt_debug",0] call bis_fnc_getParamValue == 1) then 
 	{
 		systemChat format["[LT] (UnitSpawner) Faction:%1 FactionSide:%2 BlackList:%3",_faction, _factionSide, _blackList];
-		systemChat format["[LT] (UnitSpawner) InfantryClassArray:'%1' VehicleClassArray:'%2' MechanizedClassArray:'%3' ArmorClassArray:'%4'",_factionInfArr, _factionVehArr, _factionMechArr, _factionArmorArr];
+		systemChat format["[LT] (UnitSpawner) InfantryClassArray:'%1'",_factionInfArr];
+		systemChat format["[LT] (UnitSpawner) VehicleClassArray:'%1'",_factionVehArr];
+		systemChat format["[LT] (UnitSpawner) MechanizedClassArray:'%1'",_factionMechArr];
+		systemChat format["[LT] (UnitSpawner) ArmorClassArray:'%1'",_factionArmorArr];
 		systemChat format["[LT] (UnitSpawner) Max amount:%1  Wave amount:%2", _maxAmt, _waveAmt];
 		systemChat format["[LT] (UnitSpawner) TotalAmount:%1", _totalAmt];
 	};
