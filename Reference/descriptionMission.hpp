@@ -2,7 +2,7 @@
     #define MISSION_FATIGUE 0
 #endif
 #ifndef MISSION_MARKERS
-    #define MISSION_MARKERS 0
+    #define MISSION_MARKERS 1
 #endif
 #ifndef MISSION_DEBUG
     #define MISSION_DEBUG 0

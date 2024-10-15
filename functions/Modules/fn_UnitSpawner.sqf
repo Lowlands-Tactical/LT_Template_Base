@@ -123,6 +123,10 @@ if (_activated) then
 	_maxAmt = selectMax [count _infAmt, count _vehAmt, count _mechAmt, count _armorAmt];
 	_totalAmt = [_infAmt, _vehAmt, _mechAmt, _armorAmt];
 	{
+		if (_waves != -1 && (count _x) != _waves) then
+		{
+			_x resize [_waves,(_x select 0)];
+		};
 		_maxAmt = _maxAmt;
 		if ((_x select 0) != -1) then {_x} else 
 		{
