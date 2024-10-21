@@ -48,7 +48,6 @@ if (_activated) then
 
 	Diag_Log format["[LT] (UnitSpawner) UnitSpawner Module:%1  Faction:%2  BlackList:%3", _logic, _faction, _blackList];
 	Diag_Log format["[LT] (UnitSpawner) Waypoints:%1  Lastwaypoint task:%2", _waypoints, _lastWaypoint];
-	Diag_Log format["[LT] (UnitSpawner) AllFactions: %1", _allFactions];
 	Diag_Log format["[LT] (UnitSpawner) Inf Amount:%1  Veh Amount:%2  Mech Amount:%3  Armor Amount:%4", _infAmt, _vehAmt, _mechAmt, _armorAmt];
 	Diag_Log format["[LT] (UnitSpawner) Inf Size:%1  Wave Amount:%2  Unit Cap:%3  Wave Delay:%4", _infSize, _waves, _unitCap, _waveDelay];
 	Diag_Log format["[LT] (UnitSpawner) CombatMode:%1  Behaviour:%2  Formation:%3  SpeedMode:%4", _combatMode, _behaviour, _formation, _speedMode];
@@ -56,7 +55,6 @@ if (_activated) then
 	{
 		systemChat format["[LT] (UnitSpawner) UnitSpawner Module:%1  Faction:%2  BlackList:%3", _logic, _faction, _blackList];
 		systemChat format["[LT] (UnitSpawner) Waypoints:%1  Lastwaypoint task:%2", _waypoints, _lastWaypoint];
-		systemChat format["[LT] (UnitSpawner) AllFactions: %1", _allFactions];
 		systemChat format["[LT] (UnitSpawner) Inf Amount:%1  Veh Amount:%2  Mech Amount:%3  Armor Amount:%4", _infAmt, _vehAmt, _mechAmt, _armorAmt];
 		systemChat format["[LT] (UnitSpawner) Inf Size:%1  Wave Amount:%2  Unit Cap:%3  Wave Delay:%4", _infSize, _waves, _unitCap, _waveDelay];
 		systemChat format["[LT] (UnitSpawner) CombatMode:%1  Behaviour:%2  Formation:%3  SpeedMode:%4", _combatMode, _behaviour, _formation, _speedMode];
@@ -66,18 +64,12 @@ if (_activated) then
 	if (_faction == "" OR !(_faction in _allFactions)) exitWith 
 	{
 		Diag_Log "[LT] (UnitSpawner) There is no faction selected or there is a typo";
-		if (["lt_debug",0] call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (UnitSpawner) There is no faction selected or there is a typo";
-		};
+		systemChat "[LT] (UnitSpawner) There is no faction selected or there is a typo";
 	};
 	if (_infSize <= 1) exitWith 
 	{
 		Diag_Log "[LT] (UnitSpawner) Infantry amount is to low";
-		if (["lt_debug",0] call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (UnitSpawner) Infantry amount is to low";
-		};
+		systemChat "[LT] (UnitSpawner) Infantry amount is to low";
 	};
 
 	// Waypoint postions
@@ -123,10 +115,6 @@ if (_activated) then
 	_maxAmt = selectMax [count _infAmt, count _vehAmt, count _mechAmt, count _armorAmt];
 	_totalAmt = [_infAmt, _vehAmt, _mechAmt, _armorAmt];
 	{
-		if (_waves != -1 && (count _x) != _waves) then
-		{
-			_x resize [_waves,(_x select 0)];
-		};
 		_maxAmt = _maxAmt;
 		if ((_x select 0) != -1) then {_x} else 
 		{
@@ -139,6 +127,10 @@ if (_activated) then
 		if ((count _x) != _maxAmt) then 
 		{
 			_x resize [_maxAmt, 0];
+		};
+		if (_waves != -1 && (count _x) != _waves) then
+		{
+			_x resize [_waves,(_x select 0)];
 		};
 	}forEach _totalAmt;
 	_waveAmt = if (_waves != -1) then {_waves} else {_maxAmt;};
@@ -198,9 +190,6 @@ if (_activated) then
 
 			for "_n" from 1 to _groupAmt do 
 			{
-				// Wait untill allUnits is below UnitCap
-				waitUntil {(_unitCap > (count allUnits))};
-
 				_infSize = _infSize -1;
 				_spawnDir = random[(getDir _logic) - 10, getDir _logic, (getDir _logic) + 10];
 				_spawnArea = _logic getPos [5, _spawnDir];

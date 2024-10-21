@@ -160,10 +160,6 @@ if (_activated) then
 	_maxAmt = selectMax [count _infAmt, count _vehAmt, count _mechAmt, count _armorAmt];
 	_totalAmt = [_infAmt, _vehAmt, _mechAmt, _armorAmt];
 	{
-		if (_waves != -1 && (count _x) != _waves) then
-		{
-			_x resize [_waves,(_x select 0)];
-		};
 		_maxAmt = _maxAmt;
 		if ((_x select 0) != -1) then {_x} else 
 		{
@@ -176,6 +172,10 @@ if (_activated) then
 		if ((count _x) != _maxAmt) then 
 		{
 			_x resize [_maxAmt, 0];
+		};
+		if (_waves != -1 && (count _x) != _waves) then
+		{
+			_x resize [_waves,(_x select 0)];
 		};
 	}forEach _totalAmt;
 	_waveAmt = if (_waves != -1) then {_waves} else {_maxAmt;};
@@ -229,12 +229,6 @@ if (_activated) then
 			
 			for "_n" from 1 to _groupAmt do 
 			{
-				// Wait untill allUnits is below UnitCap
-				if (_unitCap < (count allUnits)) then 
-				{
-					waitUntil {sleep 5;(_unitCap > (count allUnits));};
-				};
-				
 				_infSize = _infSize - 1;
 				_midSpawnDis = ((_maxSpawnDis + _minSpawnDis) / 2);
 				_spawnDis = random[_minSpawnDis, _midSpawnDis, _maxSpawnDis];
