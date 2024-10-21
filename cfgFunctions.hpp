@@ -33,6 +33,7 @@ class cfgFunctions
 	class Modules 
 	{
 		file = "\lt_template_base\functions\Modules";
+		class CustomCompSpawner {};
 		class Intel {};
 		class Resupply {};
 		class Defense {};

@@ -24,6 +24,7 @@ class CfgVehicles
 		};
 	};
 	
+	#include "\lt_template_base\Modules\CustomCompSpawner.hpp"
 	#include "\lt_template_base\Modules\Intel.hpp"
 	#include "\lt_template_base\Modules\Resupply.hpp"
 	#include "\lt_template_base\Modules\Defense.hpp"
