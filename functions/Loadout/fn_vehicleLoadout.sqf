@@ -133,6 +133,7 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 2];
 			_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemRole select 2, 6];
+			_vehicle addBackpackCargoGlobal [_itemRole select 4, 1];
 
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
@@ -160,6 +161,7 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemRole select 2, 12];
 			_vehicle addItemCargoGlobal [_itemRole select 3, 2];
+			_vehicle addBackpackCargoGlobal [_itemRole select 4, 2];
 
 			if ((_wpnLnchr select 1) != "") then {
 				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 4];
@@ -193,6 +195,7 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_itemSpecial select 0, 2];
 			_vehicle addItemCargoGlobal [_itemRole select 2, 24];
 			_vehicle addItemCargoGlobal [_itemRole select 3, 4];
+			_vehicle addBackpackCargoGlobal [_itemRole select 4, 4];
 
 			if ((_wpnLnchr select 1) != "") then {
 				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
@@ -295,9 +298,9 @@ if (_check == true) then
 
 		case "Crate UAV":
 		{
-			_vehicle addItemCargoGlobal [_itemRole select 1, 2];
+			_vehicle addItemCargoGlobal [_itemRole select 1, 4];
 			_vehicle addItemCargoGlobal [_itemRole select 3, 8];
-			_vehicle addBackpackCargo [_itemRole select 4, 2];
+			_vehicle addBackpackCargoGlobal [_itemRole select 4, 4];
 		};
 	};
 };
