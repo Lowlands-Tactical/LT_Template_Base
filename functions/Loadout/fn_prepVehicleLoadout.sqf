@@ -34,6 +34,15 @@ if (lt_vehicleGearIsSet == 1) then
 			if (_vehLoadout != "Custom") then 
 			{
 				[_x, _vehside, _vehLoadout] remoteExec ["LT_fnc_VehicleLoadout"];
+			}else
+			{
+				_vehRespawn = _x getVariable ["LT_veh_respawn", 0];
+				Diag_Log format["[LT] (prepLoadout) Vehicle: %1 has Respawn: %2", _x, _vehRespawn];
+				if (_vehRespawn != 0) then 
+				{
+					_x setVariable ["LT_veh_setRepawn", 1];
+					[_x, 15] call FRED_fnc_vehicleRespawn;
+				};
 			};
 		};
 
