@@ -389,36 +389,84 @@ switch (_code) do
     case "End1": // Missie geslaagd!
     {
         Diag_log "[LT] (Tablet) Mission ended (1)";
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [510, true];
+        ctrlShow [511, false];
+        hintSilent "Safe Start started!";
         "end1" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
     };
     case "End2": // Missie partial win
     {
         Diag_log "[LT] (Tablet) Mission ended (2)";
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [510, true];
+        ctrlShow [511, false];
+        hintSilent "Safe Start started!";
         "end2" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
     };
     case "End3": // Missie gefaald
     {
         Diag_log "[LT] (Tablet) Mission ended (3)";
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [510, true];
+        ctrlShow [511, false];
+        hintSilent "Safe Start started!";
         "end3" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
     };
     case "End4": // BLUEFOR Wins
     {
         Diag_log "[LT] (Tablet) Mission ended (4)";
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [510, true];
+        ctrlShow [511, false];
+        hintSilent "Safe Start started!";
         "end4" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
     };
     case "End5": // REDFOR Wins
     {
         Diag_log "[LT] (Tablet) Mission ended (5)";
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [510, true];
+        ctrlShow [511, false];
+        hintSilent "Safe Start started!";
         "end5" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
     };
     case "End6": // GREENFOR Wins
     {
         Diag_log "[LT] (Tablet) Mission ended (6)";
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [510, true];
+        ctrlShow [511, false];
+        hintSilent "Safe Start started!";
         "end6" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
     };
