@@ -95,13 +95,6 @@ class Extended_PreInit_Eventhandlers
 		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\Admin.sqf'";
 	};
 };
-/*class Extended_PostInit_Eventhandlers
-{
-	class LT_PostInit_Scripts
-	{
-		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\MissionInit.sqf'";
-	};
-};*/
 
 #include "LT_Tablet\Define_LT_Tablet.hpp"
 
