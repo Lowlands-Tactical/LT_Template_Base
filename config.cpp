@@ -88,13 +88,20 @@ class cfgFactionClasses
 };
 
 // PostInit is loaded before the mission is loaded.
-class Extended_PostInit_EventHandlers
+class Extended_PreInit_Eventhandlers
 {
-	class LT_menuPostInit_Admin
+	class LT_PreInit_Scripts
 	{
 		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\Admin.sqf'";
 	};
 };
+/*class Extended_PostInit_Eventhandlers
+{
+	class LT_PostInit_Scripts
+	{
+		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\MissionInit.sqf'";
+	};
+};*/
 
 #include "LT_Tablet\Define_LT_Tablet.hpp"
 
