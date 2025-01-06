@@ -87,12 +87,19 @@ class cfgFactionClasses
 	};
 };
 
-// PostInit is loaded before the mission is loaded.
+// Pre/PostInit is loaded before the mission is loaded.
 class Extended_PreInit_Eventhandlers
 {
-	class LT_PreInit_Scripts
+	class LT_menuPreInit
 	{
-		init = "call compile preprocessFileLineNumbers '\lt_template_base\Scripts\Admin.sqf'";
+		init = "call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
+	};
+};
+class Extended_PostInit_Eventhandlers
+{
+	class LT_menuPostInit
+	{
+		init = "call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
 	};
 };
 
