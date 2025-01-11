@@ -30,7 +30,16 @@ diag_log "                              |__/ \_______/ \_______/   \___/  |__/ \
 // ACE3 Menu for Lowlands Tactical
 private ["_lt_main","_action"];
 
-// PreCheck Admins
+//
+lt_staff = [
+	"76561198042684200",	// Tybalty
+	"76561198028914656",	// Lonesentinel
+	"76561198014060493",	// R.Hoods
+	"76561197992586763",	// Brainless_Ben
+	"76561198047491445" 	// Pekeru
+];
+publicVariable "lt_staff";
+
 lt_admin = (getPlayerUID player) in lt_staff;
 publicVariable "lt_admin";
 lt_crew = serverCommandAvailable "#kick";
