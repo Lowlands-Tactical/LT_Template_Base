@@ -41,9 +41,7 @@ lt_staff = [
 publicVariable "lt_staff";
 
 lt_admin = (getPlayerUID player) in lt_staff;
-publicVariable "lt_admin";
 lt_crew = serverCommandAvailable "#kick";
-publicVariable "lt_crew";
 
 // Adds ace options for admins and team leads when enabled
 if (missionNamespace getVariable ["ace_common", false]) then 
