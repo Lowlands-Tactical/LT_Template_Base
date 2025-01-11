@@ -15,6 +15,10 @@ params ["_newUnit", "_oldUnit", "_respawn", "_respawnDelay"];
 params ["_unit", "_corpse"];
 waitUntil {sleep 1; !isNull player;};
 
+// ResetLoadout
+_loadout = getUnitLoadout _corpse;
+_unit setUnitLoadout _loadout;
+
 // Reset Insignia
 private _insignia = [_corpse] call BIS_fnc_getUnitInsignia;
 [_unit, _insignia] spawn 
