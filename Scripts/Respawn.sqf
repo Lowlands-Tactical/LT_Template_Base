@@ -15,9 +15,11 @@ params ["_newUnit", "_oldUnit", "_respawn", "_respawnDelay"];
 params ["_unit", "_corpse"];
 waitUntil {sleep 1; !isNull player;};
 
-// ResetLoadout
-_loadout = getUnitLoadout _corpse;
-_unit setUnitLoadout _loadout;
+// Wait until player is loaded
+if (vehicle player == player) then {
+	player switchMove "AmovPercMstpSrasWrflDnon_AmovPercMstpSlowWrflDnon";
+};
+sleep 1;
 
 // Reset Insignia
 private _insignia = [_corpse] call BIS_fnc_getUnitInsignia;
@@ -29,10 +31,6 @@ private _insignia = [_corpse] call BIS_fnc_getUnitInsignia;
 	[_unit, _insignia] call BIS_fnc_setUnitInsignia;
 };
 
-// Wait until player is loaded
-if (vehicle player == player) then {
-	player switchMove "AmovPercMstpSrasWrflDnon_AmovPercMstpSlowWrflDnon";
-};
 _team = assignedTeam _corpse;
 player assignTeam _team;
 
@@ -113,6 +111,6 @@ if (_role == "eng" OR _role == "medic") then
 };
 
 // Remove inventory from corpse
-removeAllWeapons _corpse;
-removeAllAssignedItems _corpse;
-deleteVehicle (nearestObject [_corpse, "WeaponHolderSimulated"]);
+(removeAllWeapons _corpse);
+//(removeAllAssignedItems _corpse);
+(deleteVehicle (nearestObject [_corpse, "WeaponHolderSimulated"]));
