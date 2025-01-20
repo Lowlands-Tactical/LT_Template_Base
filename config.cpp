@@ -103,7 +103,7 @@ class Extended_PostInit_Eventhandlers
 	};
 };
 
-#include "LT_Tablet\Define_LT_Tablet.hpp"
+#include "Reference\Base_Define.hpp"
 
 // Default mission debriefings
 class cfgDebriefing

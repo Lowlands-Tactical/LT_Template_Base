@@ -1,3 +1,6 @@
+//Include base defines
+#include "..\Reference\Base_Define.hpp"
+
 //Build up of the dialog with every button/list/etc.
 class BB_LT_Tablet 
 {
