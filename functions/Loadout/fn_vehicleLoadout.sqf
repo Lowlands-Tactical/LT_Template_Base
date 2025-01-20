@@ -81,20 +81,38 @@ if (_check == true) then
 		case resistance: {LT_Weapons_Green};
 	};
 
+	// Select gear textures
+	LT_Loadout = getMissionConfigValue ["LT_Loadout_ID","BASE"];
+	_loadout = 0;
+	switch (LT_Loadout) do 
+	{
+		case "BASE": {
+			#include "\lt_template_gear\Loadout_BASE\SwitchGearBASE.sqf"
+		};
+		case "GM": {
+			_loadout = 1;
+			#include "\lt_template_gear\Loadout_GM\SwitchGearGM.sqf"
+		};
+		case "VN": {
+			_loadout = 2;
+			#include "\lt_template_gear\Loadout_VN\SwitchGearVN.sqf"
+		};
+	};
+
 	// Define item arrays and weapons
-	_itemTrow = _items select 0;			// _itemsTrow
-	_itemMedic = _items select 1;			// _itemsPackMedic
-	_itemMedicAmt = [50,50,25,20,20,30,30,10,10,10,4];
-	_itemRadio = _items select 2;			// _itemsRadio
-	_itemSpecial = _items select 3;			// _itemsSpecial
-	_itemsSpecialAmt = [2,2,2,5,5,40,40];
-	_itemRole = _items select 4;			// _itemsRole
-	_itemNVG = _items select 5;				// _itemsNVG
-	_itemNVGAmt = [20,20,40];
-	_itemExpl = _items select 6;			// _itemEngExpl
-	_itemExplAmt = [20,10];
-	_itemMine = _items select 7;			// _itemEngMine
-	_itemMineAmt = [20,10,10,10,5];
+	_itemsTrow = [_loadout, "Trow"] call LT_fnc_gearItems;
+	_itemsMedic = [_loadout, "Medic"] call LT_fnc_gearItems;
+	_itemsMedicAmt = [_loadout, "MedicAmt"] call LT_fnc_gearItems;
+	_itemsRadio = [_loadout, "Radio"] call LT_fnc_gearItems;
+	_itemsSpecial =	[_loadout, "Special"] call LT_fnc_gearItems;
+	_itemsSpecialAmt = [_loadout, "SpecialAmt"] call LT_fnc_gearItems;
+	_itemsNVG = _items select 0;			// _itemsNVG
+	_itemsNVGAmt = _items select 1;			// _itemsNVGAmt
+	_itemsRole = _items select 2;			// _itemsRole
+	_itemEngExpl = [_loadout, "Expl"] call LT_fnc_gearItems;
+	_itemEngExplAmt = [_loadout, "ExplAmt"] call LT_fnc_gearItems;
+	_itemEngMine = [_loadout, "Mine"] call LT_fnc_gearItems;
+	_itemEngMineAmt = [_loadout, "MineAmt"] call LT_fnc_gearItems;
 
 	_wpnRifle = _wpns select 0;				// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]
 	_wpnRifleCr = _wpns select 1;			// [_rifleCrGL,_rifleCr_Mags,_rifleCr_Mags_Tr]
@@ -107,11 +125,11 @@ if (_check == true) then
 	_wpnLnchr = _wpns select 7;				// [_launcher,_launcher_MagAA,_launcher_MagAT]
 	_wpnBino = _wpns select 8;				// _binocular
 
-	_itemNVG = [_itemNVG select 0, _itemNVG select 1,_itemNVG select 2];
+	_itemsNVG = [_itemsNVG select 0, _itemsNVG select 1,_itemsNVG select 2];
 	{
-		_itemNVG pushback _x;
+		_itemsNVG pushback _x;
 	}forEach _wpnGLNVG;
-	_itemNVGAmt resize [(count _itemNVG), 40];
+	_itemsNVGAmt resize [(count _itemsNVG), 40];
 
 	if ("lt_gear_nvg" call bis_fnc_getParamValue == 1) then {_wpnGLAmmo = _wpnGLNVG;};
 
@@ -131,19 +149,19 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 3];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 3];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 2];
-			_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
-			_vehicle addItemCargoGlobal [_itemRole select 2, 6];
-			_vehicle addBackpackCargoGlobal [_itemRole select 4, 1];
+			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
+			_vehicle addItemCargoGlobal [_itemsRole select 2, 6];
+			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 1];
 
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
-			}forEach _itemTrow;
+			}forEach _itemsTrow;
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
 			}forEach _wpnGLAmmo;
 			{
-				_vehicle addItemCargoGlobal [_x, (round (_itemMedicAmt select _forEachIndex) /4)];
-			}forEach _itemMedic;
+				_vehicle addItemCargoGlobal [_x, (ceil (_itemsMedicAmt select _forEachIndex) /4)];
+			}forEach _itemsMedic;
 		};
 
 		case "Crate Medium": 
@@ -158,10 +176,10 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 4];
 			_vehicle addItemCargoGlobal [_wpnLnchr select 0, 4];
 			_vehicle addItemCargoGlobal [_wpnBino, 2];
-			_vehicle addItemCargoGlobal [_itemSpecial select 0, 1];
-			_vehicle addItemCargoGlobal [_itemRole select 2, 12];
-			_vehicle addItemCargoGlobal [_itemRole select 3, 2];
-			_vehicle addBackpackCargoGlobal [_itemRole select 4, 2];
+			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
+			_vehicle addItemCargoGlobal [_itemsRole select 2, 12];
+			_vehicle addItemCargoGlobal [_itemsRole select 3, 2];
+			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 2];
 
 			if ((_wpnLnchr select 1) != "") then {
 				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 4];
@@ -171,13 +189,13 @@ if (_check == true) then
 			};
 			{
 				_vehicle addItemCargoGlobal [_x, 10];
-			}forEach _itemTrow;
+			}forEach _itemsTrow;
 			{
 				_vehicle addItemCargoGlobal [_x, 10];
 			}forEach _wpnGLAmmo;
 			{
-				_vehicle addItemCargoGlobal [_x, (round (_itemMedicAmt select _forEachIndex) /2)];
-			}forEach _itemMedic;
+				_vehicle addItemCargoGlobal [_x, (ceil (_itemsMedicAmt select _forEachIndex) /2)];
+			}forEach _itemsMedic;
 		};
 
 		case "Crate Large": 
@@ -192,10 +210,10 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnLnchr select 0, 8];
 			_vehicle addItemCargoGlobal [_wpnBino, 4];
-			_vehicle addItemCargoGlobal [_itemSpecial select 0, 2];
-			_vehicle addItemCargoGlobal [_itemRole select 2, 24];
-			_vehicle addItemCargoGlobal [_itemRole select 3, 4];
-			_vehicle addBackpackCargoGlobal [_itemRole select 4, 4];
+			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 2];
+			_vehicle addItemCargoGlobal [_itemsRole select 2, 24];
+			_vehicle addItemCargoGlobal [_itemsRole select 3, 4];
+			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
 
 			if ((_wpnLnchr select 1) != "") then {
 				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
@@ -205,43 +223,43 @@ if (_check == true) then
 			};
 			{
 				_vehicle addItemCargoGlobal [_x, 20];
-			}forEach _itemTrow;
+			}forEach _itemsTrow;
 			{
 				_vehicle addItemCargoGlobal [_x, 20];
 			}forEach _wpnGLAmmo;
 			{
-				_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
-			}forEach _itemMedic;
+				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
+			}forEach _itemsMedic;
 		};
 
 		case "Crate Explosives": 
 		{
 			{
 				_vehicle addItemCargoGlobal [_x, _itemsSpecialAmt select _forEachIndex];
-			}forEach _itemSpecial;
+			}forEach _itemsSpecial;
 			{
-				_vehicle addItemCargoGlobal [_x, _itemExplAmt select _forEachIndex];
-			}forEach _itemExpl;
+				_vehicle addItemCargoGlobal [_x, _itemEngExplAmt select _forEachIndex];
+			}forEach _itemEngExpl;
 		};
 
 		case "Crate Mines":
 		{
 			{
 				_vehicle addItemCargoGlobal [_x, _itemsSpecialAmt select _forEachIndex];
-			}forEach _itemSpecial;
+			}forEach _itemsSpecial;
 			{
-				_vehicle addItemCargoGlobal [_x, _itemMineAmt select _forEachIndex];
-			}forEach _itemMine;
+				_vehicle addItemCargoGlobal [_x, _itemEngMineAmt select _forEachIndex];
+			}forEach _itemEngMine;
 		};
 
 		case "Crate Medical": 
 		{
 			{
-				_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
-			}forEach _itemMedic;
+				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
+			}forEach _itemsMedic;
 			{
-				_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
-			}forEach _itemMedic;
+				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
+			}forEach _itemsMedic;
 		};
 
 		case "Crate Weapons": 
@@ -270,37 +288,37 @@ if (_check == true) then
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 20];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnBino, 4];
-			_vehicle addItemCargoGlobal [_itemRole select 0, 4];
-			_vehicle addItemCargoGlobal [_itemRole select 2, 4];
+			_vehicle addItemCargoGlobal [_itemsRole select 0, 4];
+			_vehicle addItemCargoGlobal [_itemsRole select 2, 4];
 
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
-			}forEach _itemTrow;
+			}forEach _itemsTrow;
 			{
-				_vehicle addItemCargoGlobal [_x, _itemMedicAmt select _forEachIndex];
-			}forEach _itemMedic;
+				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
+			}forEach _itemsMedic;
 		};
 
 		case "Crate Comms":
 		{
-			_vehicle addItemCargoGlobal [_itemRadio select 0, 10];
-			_vehicle addItemCargoGlobal [_itemRadio select 1, 10];
-			_vehicle addItemCargoGlobal [_itemRole select 0, 10];
-			_vehicle addItemCargoGlobal [_itemRole select 1, 5];
+			_vehicle addItemCargoGlobal [_itemsRadio select 0, 10];
+			_vehicle addItemCargoGlobal [_itemsRadio select 1, 10];
+			_vehicle addItemCargoGlobal [_itemsRole select 0, 10];
+			_vehicle addItemCargoGlobal [_itemsRole select 1, 5];
 		};
 
 		case "Crate NVG": 
 		{
 			{
-				_vehicle addItemCargoGlobal [_x, _itemNVGAmt select _forEachIndex];
-			}forEach _itemNVG;
+				_vehicle addItemCargoGlobal [_x, _itemsNVGAmt select _forEachIndex];
+			}forEach _itemsNVG;
 		};
 
 		case "Crate UAV":
 		{
-			_vehicle addItemCargoGlobal [_itemRole select 1, 4];
-			_vehicle addItemCargoGlobal [_itemRole select 3, 8];
-			_vehicle addBackpackCargoGlobal [_itemRole select 4, 4];
+			_vehicle addItemCargoGlobal [_itemsRole select 1, 4];
+			_vehicle addItemCargoGlobal [_itemsRole select 3, 8];
+			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
 		};
 	};
 };
