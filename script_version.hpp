@@ -1,5 +1,5 @@
 #define MAJOR 3
-#define MINOR 45
+#define MINOR 46
 #define BUILD 72
 
 #define VERSION MAJOR.MINOR
