@@ -19,7 +19,8 @@ Example:
 if (!isServer) exitWith {};
 
 _vehicle = param [0, objNull, [objNull]];
-_side = switch (_this select 1) do
+_sideCheck = param [1, west, [west]];
+_side = switch (_sideCheck) do
 {
 	case west;
 	case "WEST":{west};
@@ -31,6 +32,15 @@ _side = switch (_this select 1) do
 	case "CIV":{civilian};
 };
 _loadout = param [2, "", [""]];
+
+if !(_loadout isEqualType "") exitWith 
+{
+	Diag_Log format["[LT] (Loadout) Loadout is not STRING: %1 for Vehicle: %2", _loadout,name _vehicle];
+	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+	{
+		systemChat format["[LT] (Loadout) Loadout is not STRING: %1 for Vehicle: %2", _loadout,name _vehicle];
+	};
+};
 
 Diag_Log format["[LT] (Loadout) Vehicle %1 has side %2 and Loadout: %3",typeOf _vehicle, _side, _loadout];
 if ("lt_debug" call bis_fnc_getParamValue == 1) then 
@@ -53,7 +63,7 @@ if (_loadout == "Custom") then
 };
 
 // Add loadout by size to crate
-if (_check == true) then
+if (_check) then
 {
 	// Import variable attached to the group in fnc_ResupplyRequest
 	if (lt_playerCamoIsSet == 0) then 
@@ -83,36 +93,36 @@ if (_check == true) then
 
 	// Select gear textures
 	LT_Loadout = getMissionConfigValue ["LT_Loadout_ID","BASE"];
-	_loadout = 0;
+	_loadoutNr = 0;
 	switch (LT_Loadout) do 
 	{
 		case "BASE": {
 			#include "\lt_template_gear\Loadout_BASE\SwitchGearBASE.sqf"
 		};
 		case "GM": {
-			_loadout = 1;
+			_loadoutNr = 1;
 			#include "\lt_template_gear\Loadout_GM\SwitchGearGM.sqf"
 		};
 		case "VN": {
-			_loadout = 2;
+			_loadoutNr = 2;
 			#include "\lt_template_gear\Loadout_VN\SwitchGearVN.sqf"
 		};
 	};
 
 	// Define item arrays and weapons
-	_itemsTrow = [_loadout, "Trow"] call LT_fnc_gearItems;
-	_itemsMedic = [_loadout, "Medic"] call LT_fnc_gearItems;
-	_itemsMedicAmt = [_loadout, "MedicAmt"] call LT_fnc_gearItems;
-	_itemsRadio = [_loadout, "Radio"] call LT_fnc_gearItems;
-	_itemsSpecial =	[_loadout, "Special"] call LT_fnc_gearItems;
-	_itemsSpecialAmt = [_loadout, "SpecialAmt"] call LT_fnc_gearItems;
+	_itemsTrow = [_loadoutNr, "Trow"] call LT_fnc_gearItems;
+	_itemsMedic = [_loadoutNr, "Medic"] call LT_fnc_gearItems;
+	_itemsMedicAmt = [_loadoutNr, "MedicAmt"] call LT_fnc_gearItems;
+	_itemsRadio = [_loadoutNr, "Radio"] call LT_fnc_gearItems;
+	_itemsSpecial =	[_loadoutNr, "Special"] call LT_fnc_gearItems;
+	_itemsSpecialAmt = [_loadoutNr, "SpecialAmt"] call LT_fnc_gearItems;
 	_itemsNVG = _items select 0;			// _itemsNVG
 	_itemsNVGAmt = _items select 1;			// _itemsNVGAmt
 	_itemsRole = _items select 2;			// _itemsRole
-	_itemEngExpl = [_loadout, "Expl"] call LT_fnc_gearItems;
-	_itemEngExplAmt = [_loadout, "ExplAmt"] call LT_fnc_gearItems;
-	_itemEngMine = [_loadout, "Mine"] call LT_fnc_gearItems;
-	_itemEngMineAmt = [_loadout, "MineAmt"] call LT_fnc_gearItems;
+	_itemEngExpl = [_loadoutNr, "Expl"] call LT_fnc_gearItems;
+	_itemEngExplAmt = [_loadoutNr, "ExplAmt"] call LT_fnc_gearItems;
+	_itemEngMine = [_loadoutNr, "Mine"] call LT_fnc_gearItems;
+	_itemEngMineAmt = [_loadoutNr, "MineAmt"] call LT_fnc_gearItems;
 
 	_wpnRifle = _wpns select 0;				// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]
 	_wpnRifleCr = _wpns select 1;			// [_rifleCrGL,_rifleCr_Mags,_rifleCr_Mags_Tr]
@@ -344,4 +354,4 @@ if (_setRespawn == 0) then
 	};
 };
 
-true;
+_check;
