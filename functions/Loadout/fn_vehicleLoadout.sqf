@@ -19,7 +19,7 @@ Example:
 if (!isServer) exitWith {};
 
 _vehicle = param [0, objNull, [objNull]];
-_sideCheck = param [1, west, [west]];
+_sideCheck = param [1];
 _side = switch (_sideCheck) do
 {
 	case west;
