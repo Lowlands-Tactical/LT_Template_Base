@@ -5,7 +5,7 @@ class cfgFunctions
   {
     class template_base
     {
-      file = "\lt_template_base\functions";
+      file="\lt_template_base\functions";
       class adminZeusModule {};
       class deleteUnits {};
       class setWeather {};
@@ -15,24 +15,22 @@ class cfgFunctions
       class safety {};
       class safeStartLoop {};
     };
-	class Loadout
+	class Loadout_base
 	{
-		file = "\lt_template_base\functions\Loadout";
+		file="\lt_template_base\functions\Loadout";
 		class prepPlayerLoadout {};
 		class prepVehicleLoadout {};
 		class vehicleLoadout {};
-		class resetMaxLoad {};
-		class buildinNVG {};
 	};
 	class Resupply
 	{
-		file = "\lt_template_base\functions\Resupply";
+		file="\lt_template_base\functions\Resupply";
 		class resupplyRequest {};
       	class resupplyDrop {};
 	};
-	class Modules 
+	class Modules
 	{
-		file = "\lt_template_base\functions\Modules";
+		file="\lt_template_base\functions\Modules";
 		class CustomCompSpawner {};
 		class Intel {};
 		class Resupply {};
@@ -44,7 +42,7 @@ class cfgFunctions
   {
     class VehicleRespawn 
     {
-      file = "\lt_template_base\functions\VehicleRespawn";
+      file="\lt_template_base\functions\VehicleRespawn";
       class vehicleLoadout {};
       class vehicleMonitor {};
       class vehicleRespawn {};
@@ -55,19 +53,18 @@ class cfgFunctions
 // Defines the functions that can we remote executed and for whom.
 class cfgRemoteExec
 {
-	class LT
+	class Functions
 	{
 		// 0= all machines 1= only clients 2= only server
-		mode = 2;
-		jip = 1;
-		class LT_fnc_safety				{allowedTargets = 0;};
-		class LT_fnc_safeStartLoop		{allowedTargets = 0;};
-		class LT_fnc_adminZeusModule	{allowedTargets = 2;};
-		class LT_fnc_prepPlayerLoadout	{allowedTargets = 0;};
-		class LT_fnc_prepVehicleLoadout	{allowedTargets = 2;};
-		class LT_fnc_VehicleLoadout		{allowedTargets = 0;};
-		class LT_fnc_resetMaxLoad		{allowedTargets = 2;};
-		class LT_fnc_buildinNVG			{allowedTargets = 0;};
-		class LT_fnc_ResupplyRequest	{allowedTargets = 2;};
+		mode=2;
+		jip=1;
+		class LT_fnc_safety				{allowedTargets=0;};
+		class LT_fnc_safeStartLoop		{allowedTargets=0;};
+		class LT_fnc_adminZeusModule	{allowedTargets=2;};
+		class LT_fnc_prepPlayerLoadout	{allowedTargets=0;};
+		class LT_fnc_prepVehicleLoadout	{allowedTargets=2;};
+		class LT_fnc_VehicleLoadout		{allowedTargets=0;};
+		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
+		class LT_fnc_deleteUnits		{allowedTargets=2;};
 	};
 };
