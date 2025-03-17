@@ -91,6 +91,18 @@ class Cfg3DEN
 						condition = "objectVehicle";
 						typeName = "NUMBER";
 					};
+					class LT_veh_respawn_delay
+					{
+						displayName = "Vehicle respawn delay";
+						tooltip = "If the vehicle respawns set delay (default 15)";
+						property = "LT_veh_respawn_delay_ID";
+						control = "Edit";
+						expression = "_this setVariable ['LT_veh_respawn_delay',_value,true];";
+						validate = "number";
+						defaultValue = "15";
+						condition = "objectVehicle";
+						typeName = "NUMBER";
+					};
 					class LT_drone_side
 					{
 						displayName = "Select drone side";
