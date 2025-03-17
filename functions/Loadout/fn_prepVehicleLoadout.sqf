@@ -41,7 +41,9 @@ if (lt_vehicleGearIsSet == 1) then
 				if (_vehRespawn != 0) then 
 				{
 					_x setVariable ["LT_veh_setRepawn", 1];
-					[_x, 15] call FRED_fnc_vehicleRespawn;
+					_delay = _x getVariable ["LT_veh_respawn_delay",15];
+					if (_delay < 15) then {_delay = 15;};
+					[_x, _delay] call FRED_fnc_vehicleRespawn;
 				};
 			};
 		};
