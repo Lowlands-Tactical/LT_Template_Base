@@ -25,23 +25,38 @@ _sides = [west,east,resistance];
 	_aiUnit disableAI "all";
 	[_aiUnit] remoteExec ["LT_fnc_prepPlayerLoadout", 2];
 
-	if (side _aiUnit == west) then 
+	switch (side _aiUnit) do
 	{
-		waitUntil {sleep 1;!isNil "LT_Items_Blue";};
-		waitUntil {sleep 1;!isNil "LT_Weapons_Blue";};
-		[(group _aiUnit)] call LT_fnc_deleteUnits;
-	};
-	if (side _aiUnit == east) then 
-	{
-		waitUntil {sleep 1;!isNil "LT_Items_Red";};
-		waitUntil {sleep 1;!isNil "LT_Weapons_Red";};
-		[(group _aiUnit)] call LT_fnc_deleteUnits;
-	};
-	if (side _aiUnit == resistance) then 
-	{
-		waitUntil {sleep 1;!isNil "LT_Items_Green";};
-		waitUntil {sleep 1;!isNil "LT_Weapons_Green";};
-		[(group _aiUnit)] call LT_fnc_deleteUnits;
+		case west:
+		{
+			_aiUnit spawn 
+			{
+				waitUntil {sleep 1;!isNil "LT_Items_Blue";};
+				waitUntil {sleep 1;!isNil "LT_Weapons_Blue";};
+				//[(group _aiUnit)] call LT_fnc_deleteUnits;
+				[(group _this)] remoteExec ["LT_fnc_deleteUnits"];
+			};
+		};
+		case east:
+		{
+			_aiUnit spawn 
+			{
+				waitUntil {sleep 1;!isNil "LT_Items_Red";};
+				waitUntil {sleep 1;!isNil "LT_Weapons_Red";};
+				//[(group _aiUnit)] call LT_fnc_deleteUnits;
+				[(group _this)] remoteExec ["LT_fnc_deleteUnits"];
+			};
+		};
+		case resistance:
+		{
+			_aiUnit spawn 
+			{
+				waitUntil {sleep 1;!isNil "LT_Items_Green";};
+				waitUntil {sleep 1;!isNil "LT_Weapons_Green";};
+				//[(group _aiUnit)] call LT_fnc_deleteUnits;
+				[(group _this)] remoteExec ["LT_fnc_deleteUnits"];
+			};
+		};
 	};
 }forEach _sides;
 
