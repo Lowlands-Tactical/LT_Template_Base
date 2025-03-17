@@ -69,11 +69,17 @@ if (_check) then
 	if (lt_playerCamoIsSet == 0) then 
 	{
 		waitUntil {sleep 1; !isNil "LT_Items_Blue";};
+		LT_Items_Blue = missionNameSpace getVariable "LT_Items_Blue";
 		waitUntil {sleep 1; !isNil "LT_Weapons_Blue";};
+		LT_Weapons_Blue = missionNameSpace getVariable "LT_Weapons_Blue";
 		waitUntil {sleep 1; !isNil "LT_Items_Red";};
+		LT_Items_Red = missionNameSpace getVariable "LT_Items_Red";
 		waitUntil {sleep 1; !isNil "LT_Weapons_Red";};
+		LT_Weapons_Red = missionNameSpace getVariable "LT_Weapons_Red";
 		waitUntil {sleep 1; !isNil "LT_Items_Green";};
+		LT_Items_Green = missionNameSpace getVariable "LT_Items_Green";
 		waitUntil {sleep 1; !isNil "LT_Weapons_Green";};
+		LT_Weapons_Green = missionNameSpace getVariable "LT_Weapons_Green";
 		lt_playerCamoIsSet = 1;
 		publicVariable "lt_playerCamoIsSet";
 	};
@@ -96,16 +102,23 @@ if (_check) then
 	_loadoutNr = 0;
 	switch (LT_Loadout) do 
 	{
-		case "BASE": {
-			#include "\lt_template_gear\Loadout_BASE\SwitchGearBASE.sqf"
+		case "BASE":
+		{
+			_loadoutNr = 0;
+			//#include "\lt_template_gear\Loadout_BASE\SwitchGearBASE.sqf"
+			//#include "\lt_template_gear\Loadout_BASE\SwitchWeaponBASE.sqf"
 		};
-		case "GM": {
+		case "GM":
+		{
 			_loadoutNr = 1;
-			#include "\lt_template_gear\Loadout_GM\SwitchGearGM.sqf"
+			//#include "\lt_template_gear\Loadout_GM\SwitchGearGM.sqf"
+			//#include "\lt_template_gear\Loadout_GM\SwitchWeaponGM.sqf"
 		};
-		case "VN": {
+		case "VN":
+		{
 			_loadoutNr = 2;
-			#include "\lt_template_gear\Loadout_VN\SwitchGearVN.sqf"
+			//#include "\lt_template_gear\Loadout_VN\SwitchGearVN.sqf"
+			//#include "\lt_template_gear\Loadout_VN\SwitchWeaponVN.sqf"
 		};
 	};
 
@@ -127,12 +140,13 @@ if (_check) then
 	_wpnRifle = _wpns select 0;				// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]
 	_wpnRifleCr = _wpns select 1;			// [_rifleCrGL,_rifleCr_Mags,_rifleCr_Mags_Tr]
 	_wpnRifleMark = _wpns select 2;			// [_rifleMark, _rifleMark_Mags]
-	_wpnGLAmmo = _wpns select 3 select 0;	// [_itemsGL,_itemsGLNVG]
-	_wpnGLNVG = _wpns select 3 select 1;	// [_itemsGL,_itemsGLNVG]
+	_wpnGLAmmo = _wpns select 3 select 0;	// _itemsGL
+	_wpnGLNVG = _wpns select 3 select 1;	// _itemsGLNVG
 	_wpnRifleAir = _wpns select 4;			// [_rifleAir,_rifleAir_Mags]
 	_wpnAR = _wpns select 5;				// [_rifleAR,_rifleAR_Mags]
 	_wpnHG = _wpns select 6;				// [_handGun,_handGun_Mags]
-	_wpnLnchr = _wpns select 7;				// [_launcher,_launcher_MagAA,_launcher_MagAT]
+	_wpnLnchr = _wpns select 7 select 0;	// _launcher
+	_wpnLnchrAmmo = _wpns select 7 select 1;// [_launcherAmmo1,_launcherAmmo2, etc]
 	_wpnBino = _wpns select 8;				// _binocular
 
 	_itemsNVG = [_itemsNVG select 0, _itemsNVG select 1,_itemsNVG select 2];
@@ -184,19 +198,16 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 6];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 4];
-			_vehicle addItemCargoGlobal [_wpnLnchr select 0, 4];
+			_vehicle addItemCargoGlobal [_wpnLnchr, 4];
 			_vehicle addItemCargoGlobal [_wpnBino, 2];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 12];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 2];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 2];
 
-			if ((_wpnLnchr select 1) != "") then {
-				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 4];
-			};
-			if ((_wpnLnchr select 2) != "") then {
-				_vehicle addItemCargoGlobal [_wpnLnchr select 2, 4];
-			};
+			{
+				_vehicle addItemCargoGlobal [_x,4];
+			}forEach _wpnLnchrAmmo;
 			{
 				_vehicle addItemCargoGlobal [_x, 10];
 			}forEach _itemsTrow;
@@ -218,19 +229,16 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 20];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 10];
-			_vehicle addItemCargoGlobal [_wpnLnchr select 0, 8];
+			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
 			_vehicle addItemCargoGlobal [_wpnBino, 4];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 2];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 24];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 4];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
 
-			if ((_wpnLnchr select 1) != "") then {
-				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
-			};
-			if ((_wpnLnchr select 2) != "") then {
-				_vehicle addItemCargoGlobal [_wpnLnchr select 2, 8];
-			};
+			{
+				_vehicle addItemCargoGlobal [_x,8];
+			}forEach _wpnLnchrAmmo;
 			{
 				_vehicle addItemCargoGlobal [_x, 20];
 			}forEach _itemsTrow;
@@ -280,15 +288,12 @@ if (_check) then
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnRifleAir select 0, 6];
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnAR select 0, 2];
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnHG select 0, 6];
-			_vehicle addItemCargoGlobal [_wpnLnchr select 0, 8];
+			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
 			_vehicle addItemCargoGlobal [_wpnBino, 6];
 
-			if ((_wpnLnchr select 1) != "") then {
-				_vehicle addItemCargoGlobal [_wpnLnchr select 1, 8];
-			};
-			if ((_wpnLnchr select 2) != "") then {
-				_vehicle addItemCargoGlobal [_wpnLnchr select 2, 8];
-			};
+			{
+				_vehicle addItemCargoGlobal [_x,8];
+			}forEach _wpnLnchrAmmo;
 		};
 
 		case "Crate Air": 
@@ -349,7 +354,9 @@ if (_setRespawn == 0) then
 		if (_vehRespawn != 0) then 
 		{
 			_vehicle setVariable ["LT_veh_setRepawn", 1];
-			[_vehicle, 15] call FRED_fnc_vehicleRespawn;
+			_delay = _vehicle getVariable ["LT_veh_respawn_delay",15];
+			if (_delay < 15) then {_delay = 15;};
+			[_vehicle, _delay] call FRED_fnc_vehicleRespawn;
 		};
 	};
 };
