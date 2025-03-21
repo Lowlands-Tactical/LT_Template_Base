@@ -57,7 +57,13 @@ _vehArr =
 _crateArr = [
 	"B_supplyCrate_F",
 	"I_E_CargoNet_01_ammo_F",
-	"C_IDAP_supplyCrate_F"
+	"C_IDAP_supplyCrate_F",
+	"NAF_Crate_Medium",
+	"NAF_Crate_Small_Bwn",
+	"NAF_Crate_Small_Grn",
+	"NAF_Crate_Small_Gry",
+	"NAF_Crate_Small_Oli",
+	"NAF_Crate_Small_Tan"
 ];
 
 // Array with crate loadout is selected for the supply drop
@@ -83,25 +89,27 @@ switch (_lt_Loadout) do
 {
 	case "BASE":
 	{
-		_vehArr pushback "CUP_O_C47_SLA";
-		_vehArr pushback "CUP_C_AN2_AEROSCHROT_TK_CIV";
-		_vehArr pushback "CUP_C_MI6A_RU";
-		_vehArr pushback "NLD_C130H_VIV";
-		_vehArr pushback "NLD_CH47F_ViV";
-		_vehArr pushback "NLD_NH90";
+		_vehArr pushback "B_Heli_Transport_03_unarmed_F";
+		_vehArr pushback "B_Heli_Transport_01_F";
+		_vehArr pushback "B_A_Plane_Transport_01_infantry_tna_F";
+		_vehArr pushback "Aegis_C_Heli_Transport_02_VIP_F";
+		_vehArr pushback "O_T_Heli_Transport_04_box_F";
 
-		_crateArr pushback "CUP_BOX_US_ARMY_Ammo_F";
-		_crateArr pushback "NLD_Ammo_Crate_Munitie";
-		_crateArr pushback "NLD_Ammo_Crate_Explosieven";
-		_crateArr pushback "NLD_Ammo_Crate_Medisch";
-		_crateArr pushback "NLD_Ammo_Crate_Wapens";
+		_crateArr pushback "NAF_Crate_Medium_Expl";
+		_crateArr pushback "NAF_Crate_Medium_Medi";
+		_crateArr pushback "NAF_Crate_Medium_Ammo";
+		_crateArr pushback "NAF_Crate_Veh_Expl";
+		_crateArr pushback "NAF_Crate_Veh_Medi";
+		_crateArr pushback "NAF_Crate_Veh_Ammo";
 
 		_loadArr pushback "M2 HMG";
 		_loadArr pushback "Mk6 Morter";
 		_loadArr pushback "Remote Designator";
+		_loadArr pushback "Anti Tank";
+		_loadArr pushback "Artillery";
 		_loadArr pushback "King Quad";
-		_loadArr pushback "VW Amarok";
-		_loadArr pushback "MB G280 CDI";
+		_loadArr pushback "Amarok Green";
+		_loadArr pushback "Amarok Tan";
 		_loadArr pushback "Assault Boat";
 		_loadArr pushback "FRISC Motorboat";
 	};

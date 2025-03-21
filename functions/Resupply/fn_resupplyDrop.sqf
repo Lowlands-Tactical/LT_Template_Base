@@ -36,11 +36,11 @@ _crate = switch (_loadoutType) do
 	case "M2 HMG": {"B_G_HMG_02_high_F"};
 	case "Mk6 Morter": {"B_T_Mortar_01_F"};
 	case "Remote Designator": {"B_W_Static_Designator_01_F"};
-	case "Anti Tank": {""};
-	case "Artillery": {""};
+	case "Anti Tank": {"B_A_Static_AT_wdl_F"};
+	case "Artillery": {"RHS_M119_D"};
 	case "King Quad": {"B_Quadbike_01_F"};
-	case "VW Amarok": {"NLD_Amarok"};
-	case "MB G280 CDI": {"NLD_WLD_MB_SF"};
+	case "Amarok Green": {"NAF_Amarok_comms_nfpg"};
+	case "Amarok Tan": {"NAF_Amarok_comms_nfpt"};
 	case "Assault Boat": {"B_Boat_Transport_01_F"};
 	case "FRISC Motorboat": {"B_Boat_Armed_01_minigun_F"};
 //GM
@@ -63,8 +63,8 @@ _loadoutType = switch (_loadoutType) do
 {
 //Base
 	case "King Quad": {"Crate Small"};
-	case "VW Amarok": {"Crate Medium"};
-	case "MB G280 CDI": {"Crate Medium"};
+	case "Amarok Green": {"Crate Medium"};
+	case "Amarok Tan": {"Crate Medium"};
 	case "Assault Boat": {"Crate Small"};
 	case "NLD RHIB": {"Crate Medium"};
 	case "FRISC Motorboat": {"Crate Medium"};
