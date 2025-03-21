@@ -65,14 +65,15 @@ if ("lt_debug" call bis_fnc_getParamValue == 1) then
 
 // Define waypoints
 _wpHeight = 350;
-_wpStart = [_pos select 0, _pos select 1, _wpHeight];
+_wpHeightVeh = 900;
+_wpStart = [_pos select 0, _pos select 1, _wpHeightVeh];
 _wpNear = [_pos select 0, _pos select 1, _wpHeight];
 _wpDrop1 = [_pos select 0, _pos select 1, _wpHeight];
 _wpDrop2 = [_pos select 0, _pos select 1, _wpHeight];
 _wpDrop3 = [_pos select 0, _pos select 1, _wpHeight];
 _wpAfter = [_pos select 0, _pos select 1, _wpHeight];
 _wpReturn = [_pos select 0, _pos select 1, _wpHeight];
-_wpEnd = _wpStart;
+_wpEnd = [_pos select 0, _pos select 1, _wpHeight];
 
 if (_shift) then 
 {
@@ -84,14 +85,14 @@ if (_shift) then
 		{
 			systemChat "[LT] (Resupply) East > West";
 		};
-		_wpStart = [(_pos select 0) + 4000, (_pos select 1), _wpHeight];
+		_wpStart = [(_pos select 0) + 4000, (_pos select 1), _wpHeightVeh];
 		_wpNear = [(_pos select 0) + 100, (_pos select 1), _wpHeight];
 		_wpDrop1 = [(_pos select 0) - 5, (_pos select 1), _wpHeight];
 		_wpDrop2 = [(_pos select 0) - 15, (_pos select 1), _wpHeight];
 		_wpDrop3 = [(_pos select 0) - 25, (_pos select 1), _wpHeight];
 		_wpAfter = [(_pos select 0) - 500, (_pos select 1) - 50, _wpHeight];
 		_wpReturn = [(_pos select 0) + 1000, (_pos select 1) - 50, _wpHeight];
-		_wpEnd = _wpStart;
+		_wpEnd = [(_pos select 0) + 4000, (_pos select 1), _wpHeight];
 	} else 
 	{
 		// true-false
@@ -100,14 +101,14 @@ if (_shift) then
 		{
 			systemChat "[LT] (Resupply) West > East";
 		};
-		_wpStart = [(_pos select 0) - 4000, (_pos select 1), _wpHeight];
+		_wpStart = [(_pos select 0) - 4000, (_pos select 1), _wpHeightVeh];
 		_wpNear = [(_pos select 0) - 100, (_pos select 1), _wpHeight];
 		_wpDrop1 = [(_pos select 0) + 5, (_pos select 1), _wpHeight];
 		_wpDrop2 = [(_pos select 0) + 15, (_pos select 1), _wpHeight];
 		_wpDrop3 = [(_pos select 0) + 25, (_pos select 1), _wpHeight];
 		_wpAfter = [(_pos select 0) + 500, (_pos select 1) + 50, _wpHeight];
 		_wpReturn = [(_pos select 0) - 1000, (_pos select 1) + 50, _wpHeight];
-		_wpEnd = _wpStart;
+		_wpEnd = [(_pos select 0) - 4000, (_pos select 1), _wpHeight];
 	};
 } else 
 {
@@ -119,14 +120,14 @@ if (_shift) then
 		{
 			systemChat "[LT] (Resupply) North > South";
 		};
-		_wpStart = [(_pos select 0), (_pos select 1) + 4000, _wpHeight];
+		_wpStart = [(_pos select 0), (_pos select 1) + 4000, _wpHeightVeh];
 		_wpNear = [(_pos select 0), (_pos select 1) + 100, _wpHeight];
 		_wpDrop1 = [(_pos select 0), (_pos select 1) - 5, _wpHeight];
 		_wpDrop2 = [(_pos select 0), (_pos select 1) - 15, _wpHeight];
 		_wpDrop3 = [(_pos select 0), (_pos select 1) - 25, _wpHeight];
 		_wpAfter = [(_pos select 0) - 50, (_pos select 1) - 500, _wpHeight];
 		_wpReturn = [(_pos select 0) - 50, (_pos select 1) + 1000, _wpHeight];
-		_wpEnd = _wpStart;
+		_wpEnd = [(_pos select 0), (_pos select 1) + 4000, _wpHeight];
 	} else 
 	{
 		// false-false
@@ -135,14 +136,14 @@ if (_shift) then
 		{
 			systemChat "[LT] (Resupply) South > North";
 		};
-		_wpStart = [(_pos select 0), (_pos select 1) - 4000, _wpHeight];
+		_wpStart = [(_pos select 0), (_pos select 1) - 4000, _wpHeightVeh];
 		_wpNear = [(_pos select 0), (_pos select 1) - 100, _wpHeight];
 		_wpDrop1 = [(_pos select 0), (_pos select 1) + 5, _wpHeight];
 		_wpDrop2 = [(_pos select 0), (_pos select 1) + 15, _wpHeight];
 		_wpDrop3 = [(_pos select 0), (_pos select 1) + 25, _wpHeight];
 		_wpAfter = [(_pos select 0) + 50, (_pos select 1) + 500, _wpHeight];
 		_wpReturn = [(_pos select 0) + 50, (_pos select 1) - 1000, _wpHeight];
-		_wpEnd = _wpStart;
+		_wpEnd = [(_pos select 0), (_pos select 1) - 4000, _wpHeight];
 	};
 };
 _waypoints = [_wpNear, _wpDrop1, _wpDrop2, _wpDrop3, _wpAfter, _wpReturn, _wpEnd];
