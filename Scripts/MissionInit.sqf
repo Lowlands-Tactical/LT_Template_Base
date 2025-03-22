@@ -68,7 +68,7 @@ if (hasinterface) then
     };
     [player] remoteExec ["LT_fnc_prepPlayerLoadout", player];
     
-    _staffArray = missionNameSpace getVariable "lt_staff";
+    _staffArray = missionNameSpace getVariable ["lt_staff", []];
     _staffCheck = getPlayerUID player;
     if (didJIP) then 
     {
