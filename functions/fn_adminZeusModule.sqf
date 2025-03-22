@@ -17,7 +17,7 @@ Parameters:
 
 if (!isServer) exitWith {};
 
-_staffArray = missionNameSpace getVariable "lt_staff";
+_staffArray = missionNameSpace getVariable ["lt_staff",[]];
 waitUntil {sleep 0.5; !isNil "_staffArray"};
 {
     _staffObject = _x call BIS_fnc_getUnitByUID;

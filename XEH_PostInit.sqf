@@ -30,7 +30,7 @@ diag_log "                              |__/ \_______/ \_______/   \___/  |__/ \
 // ACE3 Menu for Lowlands Tactical
 private ["_lt_main","_action"];
 
-//
+//Staff array used for table ace action and admin briefing
 lt_staff = [
 	"76561198042684200",	// Tybalty
 	"76561198028914656",	// Lonesentinel
@@ -38,7 +38,7 @@ lt_staff = [
 	"76561197992586763",	// Brainless_Ben
 	"76561198047491445" 	// Pekeru
 ];
-publicVariable "lt_staff";
+missionNameSpace setVariable ["lt_staff",lt_staff,true];
 
 lt_admin = (getPlayerUID player) in lt_staff;
 lt_crew = serverCommandAvailable "#kick";
