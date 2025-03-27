@@ -14,11 +14,6 @@ onLoadIntroTime=0;
 //Respawn/Revive
 respawnVehicleDelay=10;
 respawnOnStart=-1;
-respawnTemplates[]=
-{
-	"Counter",
-	"Wave"
-};
 
 //Player's UI
 showHUD[]=
