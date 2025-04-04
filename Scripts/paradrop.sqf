@@ -28,6 +28,7 @@ if (local player) then
     waituntil {sleep 0.5; (getpos player select 2) < 200};
     _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
     _chute setPos (getPos player);
+    _chute setDir (getDir player);
     player moveInDriver _chute;
 
     waituntil {sleep 0.5; isTouchingGround player};
