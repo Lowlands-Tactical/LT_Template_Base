@@ -23,11 +23,13 @@ _briefing ="<br/><font color='#FFBA26' size='18'>DEBUG SECTION</font><br/>This b
 // REVEAL ALL TRIGGERS
 private ["_allTriggers"];
 _allTriggers = allMissionObjects "EmptyDetector";
-{
-    //SKIP MAP TRIGGER
-    if (typeOf (synchronizedObjects _x select 0) isEqualTo "LocationArea_F") exitWith {};
-    if ("MAP" in (str _x)) exitWith {};
 
+//SKIP MAP TRIGGER
+    //if !("MAP" in (str _x)) then {}; //inside forloop
+_mapTrig = _allTriggers findIf {"MAP" in (str _allTriggers)};
+_allTriggers deleteAt (_mapTrig + 1);
+
+{
     //SETUP FOR SCRIPT
     _trigName = VehicleVarName _x;
     _trigType = triggerType _x;
@@ -39,9 +41,8 @@ _allTriggers = allMissionObjects "EmptyDetector";
     _trigDir = _trigArea select 2;
     _trigRectangle = _trigArea select 3;
 
-    _mkrCntVar = "BriefingDebug" + "_counter";
-    _mkrCnt = if (isnil _mkrCntVar) then {-1} else {missionNameSpace getVariable _mkrCntVar};
-    _mkrCnt = _mkrCnt + 1;
+    _mkrCntVar = "BriefingDebug" + str _forEachIndex;
+    _mkrCnt = if (isnil _mkrCntVar) then {_forEachIndex} else {missionNameSpace getVariable _mkrCntVar};
     _mkrName = format["TrigMarker_%1", _mkrCnt];
     missionNameSpace setVariable [_mkrCntVar, _mkrCnt];
 
@@ -92,7 +93,7 @@ _allTriggers = allMissionObjects "EmptyDetector";
 }forEach _allTriggers;
 
 // CREATE DIARY Entry
-player createDiaryRecord ["Diary", ["H3 Debug Menu", _briefing]];
+player createDiaryRecord ["H3 Menu", ["H3 Debug Menu", _briefing]];
 
 Diag_log "[LT] (BriefingDebug) Briefing TriggerReveal Finish";
 if ("lt_debug" call bis_fnc_getParamValue == 1) then 
