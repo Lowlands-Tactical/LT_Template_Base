@@ -9,7 +9,7 @@ Adds the checklist to the briefing section for all players.
 */
 
 // Adds a checklist for everyone to see
-player createDiaryRecord ["Diary", ["Checklist","<br/>
+player createDiaryRecord ["H3 Menu", ["Checklist","<br/>
 <b>De PC/GC:</b><br/>
 - Is er een 2ic?<br/>
 - Is de intentie van de missie duidelijk?<br/>

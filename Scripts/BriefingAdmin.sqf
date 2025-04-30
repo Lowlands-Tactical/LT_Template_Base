@@ -77,7 +77,7 @@ if (lt_admin OR lt_crew) then
     ";
 
     // CREATE DIARY Entry
-    player createDiaryRecord ["Diary", ["H3 Admin Menu", _briefing]];
+    player createDiaryRecord ["H3 Menu", ["H3 Admin Menu", _briefing]];
     
     Diag_log "[LT] (BriefingAdmin) briefing finished";
     if ("lt_debug" call bis_fnc_getParamValue == 1) then 
