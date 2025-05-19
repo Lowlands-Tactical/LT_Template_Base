@@ -191,8 +191,12 @@ if (hasinterface) then
     waitUntil {uiSleep 0.5; scriptDone _adBrief};
     _chBrief = [] execVM "\lt_template_base\Scripts\Briefingchecklist.sqf";
     waitUntil {uiSleep 0.5; scriptDone _chBrief};
-    _dbBrief = [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
-    waitUntil {uiSleep 0.5; scriptDone _dbBrief};
+    
+    if ("lt_debug" call bis_fnc_getParamValue == 1) exitWith 
+    {
+        _dbBrief = [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
+        waitUntil {uiSleep 0.5; scriptDone _dbBrief};
+    };
 };
 
 Diag_log "[LT] (Mission) Mission init finished";

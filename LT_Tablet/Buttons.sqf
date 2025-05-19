@@ -300,6 +300,16 @@ switch (_code) do
         };
         closeDialog 0;
     };
+    case "DebugBriefing":
+    {
+        Diag_log "[LT] (Tablet) Add/Remove Debug";
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+        {
+            systemChat "[LT] (Tablet) Add/Remove Debug";
+        };
+        [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
+        closeDialog 0;
+    };
     case "Briefing": 
     {
         Diag_log "[LT] (Tablet) Reload admin briefing";

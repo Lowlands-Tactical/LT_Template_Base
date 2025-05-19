@@ -383,9 +383,9 @@ class BB_LT_Tablet_Advanced
 		{
 			idc = 624;
 			y = 0.34;
-			text = "Empty";
-			tooltip = "";
-			onButtonClick = "";
+			text = "Add/Remove Debug";
+			tooltip = "Add or Remove Debug Triggers and Briefing";
+			onButtonClick = "'DebugBriefing' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
 		class BB_ButtonBriefing : BB_ButtonEmpty02
 		{
