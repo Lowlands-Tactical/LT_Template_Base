@@ -221,6 +221,12 @@ if (_activated) then
 		};
 
 		{
+			// Wait untill allUnits is below UnitCap
+			if (_unitCap < (count allUnits)) then 
+			{
+				waitUntil {sleep 5;(_unitCap > (count allUnits));};
+			};
+			
 			_groupAmt = _x select 0;
 			_unitType = _x select 1;
 			_customPosArr = _x select 2;
