@@ -66,6 +66,7 @@ _itemArr = ["No Items","Yes Items"];
 	lbSetData [633, _forEachIndex, _x];
 }forEach _itemArr;
 
+//While tablet is over keep updating these fields
 while {!isNull findDisplay 600} do 
 {
 	_object = cursorObject;

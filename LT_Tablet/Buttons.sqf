@@ -86,6 +86,21 @@ switch (_code) do
         ctrlShow [517, false];
         hintsilent "Group teleport is Off";
     };
+    case "Zeus": 
+    {
+        closeDialog 0;
+        openCuratorInterface;
+        Diag_log format ["[LT] (Tablet) %1 Opened Zeus", name player];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then
+        {
+            systemChat format ["[LT] (Tablet) %1 Opened Zeus", name player];
+        };
+    };
+    case "MarkUnits": 
+    {
+        [] call alive_fnc_markUnits;
+        hintsilent "Units will be marked";
+    };
     case "Arsenal": 
     {
         [player, player, true] call ace_arsenal_fnc_openBox;
@@ -95,11 +110,6 @@ switch (_code) do
         {
             systemChat format["[LT] (Tablet) %1 Opened ACE Arsenal", name player];
         };
-    };
-    case "MarkUnits": 
-    {
-        [] call alive_fnc_markUnits;
-        hintsilent "Units will be marked";
     };
     case "Debug": 
     {
@@ -169,16 +179,6 @@ switch (_code) do
             systemChat format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
         };
         closeDialog 0;
-    };
-    case "Zeus": 
-    {
-        closeDialog 0;
-        openCuratorInterface;
-        Diag_log format ["[LT] (Tablet) %1 Opened Zeus", name player];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format ["[LT] (Tablet) %1 Opened Zeus", name player];
-        };
     };
     case "Drop": 
     {
@@ -404,8 +404,6 @@ switch (_code) do
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
         [true] remoteExec ["LT_fnc_safety",allPlayers];
         [] remoteExec ["LT_fnc_safeStartLoop"];
-        ctrlShow [510, true];
-        ctrlShow [511, false];
         hintSilent "Safe Start started!";
         "end1" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
@@ -418,8 +416,6 @@ switch (_code) do
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
         [true] remoteExec ["LT_fnc_safety",allPlayers];
         [] remoteExec ["LT_fnc_safeStartLoop"];
-        ctrlShow [510, true];
-        ctrlShow [511, false];
         hintSilent "Safe Start started!";
         "end2" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
@@ -432,8 +428,6 @@ switch (_code) do
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
         [true] remoteExec ["LT_fnc_safety",allPlayers];
         [] remoteExec ["LT_fnc_safeStartLoop"];
-        ctrlShow [510, true];
-        ctrlShow [511, false];
         hintSilent "Safe Start started!";
         "end3" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
@@ -446,8 +440,6 @@ switch (_code) do
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
         [true] remoteExec ["LT_fnc_safety",allPlayers];
         [] remoteExec ["LT_fnc_safeStartLoop"];
-        ctrlShow [510, true];
-        ctrlShow [511, false];
         hintSilent "Safe Start started!";
         "end4" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
@@ -460,8 +452,6 @@ switch (_code) do
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
         [true] remoteExec ["LT_fnc_safety",allPlayers];
         [] remoteExec ["LT_fnc_safeStartLoop"];
-        ctrlShow [510, true];
-        ctrlShow [511, false];
         hintSilent "Safe Start started!";
         "end5" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
@@ -474,10 +464,208 @@ switch (_code) do
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
         [true] remoteExec ["LT_fnc_safety",allPlayers];
         [] remoteExec ["LT_fnc_safeStartLoop"];
-        ctrlShow [510, true];
-        ctrlShow [511, false];
         hintSilent "Safe Start started!";
         "end6" remoteExecCall ["BIS_fnc_endMissionServer"];
         closeDialog 0; 
+    };
+    case "SafetyOffCrew": 
+    {
+        lt_param_timer = -1;
+        publicVariable "lt_param_timer";
+        ["SafeStartMissionStarting",["Mission starting now!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [false] remoteExec ["LT_fnc_safety",allPlayers];
+        ctrlShow [710, false];
+        ctrlShow [711, true];
+        hintsilent "Safe Start ended!";
+    };
+    case "SafetyOnCrew": 
+    {
+        lt_param_timer = 10;
+        publicVariable "lt_param_timer";
+        ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
+        [true] remoteExec ["LT_fnc_safety",allPlayers];
+        [] remoteExec ["LT_fnc_safeStartLoop"];
+        ctrlShow [710, true];
+        ctrlShow [711, false];
+        hintSilent "Safe Start started!";
+    };
+    case "FatigueOffCrew": 
+    {
+        lt_fatigue_onoff = 1;
+        publicVariable "lt_fatigue_onoff";
+        {_x enableFatigue false}forEach allPlayers;
+        ctrlShow [712, false];
+        ctrlShow [713, true];
+        hintsilent "Fatigue is Off";
+    };
+    case "FatigueOnCrew": 
+    {
+        lt_fatigue_onoff = 0;
+        publicVariable "lt_fatigue_onoff";
+        {_x enableFatigue true}forEach allPlayers;
+        ctrlShow [712, true];
+        ctrlShow [713, false];
+        hintSilent "Fatigue is On";
+    };
+    case "HideCrew": 
+    {
+        [player,true] remoteExec ["hideObjectGlobal",2];
+        ctrlShow [714, false];
+        ctrlShow [715, true];
+        hintsilent "You are hidden";
+    };
+    case "UnhideCrew": 
+    {
+        [player,false] remoteExec ["hideObjectGlobal",2];
+        ctrlShow [714, true];
+        ctrlShow [715, false];
+        hintsilent "You are visible";
+    };
+    case "GpTpOnCrew": 
+    {
+        lt_group_teleport = 1;
+        publicVariable "lt_group_teleport";
+        ctrlShow [716, false];
+        ctrlShow [717, true];
+        hintsilent "Group teleport is On";
+    };
+    case "GpTpOffCrew": 
+    {
+        lt_group_teleport = 0;
+        publicVariable "lt_group_teleport";
+        ctrlShow [716, true];
+        ctrlShow [717, false];
+        hintsilent "Group teleport is Off";
+    };
+    case "HealCrew": 
+    {
+        _index = lbCurSel 750;
+        _unit = playercrewArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        [_unit] call ace_medical_treatment_fnc_fullHealLocal;
+        [_unit, false] call ace_medical_status_fnc_setUnconsciousState;
+        Diag_log format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+        {
+            systemChat format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
+        };
+    };
+    case "TPtoMeCrew": 
+    {
+        _index = lbCurSel 750;
+        _unit = playercrewArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _vehUnit = vehicle _unit;
+        if (_vehUnit != _unit) then 
+        {
+            if (_unit == driver _vehUnit OR _unit == gunner _vehUnit OR _unit == commander _vehUnit) exitWith
+            {
+                hintSilent format["%1 is an important crew can't teleport"];
+            };
+            moveOut _unit;
+            _unit setVelocity [0,0,0];
+            _pos = getPosATL player;
+            _unit setPosATL _pos;
+        } else 
+        {
+            _pos = getPosATL player;
+            _unit setPosATL _pos;
+        };
+        Diag_log format ["[LT] (Tablet) %1 Teleported to %2", name _unit, name player];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then
+        {
+            systemChat format ["[LT] (Tablet) %1 Teleported to %2", name _unit, name player];
+        };
+        closeDialog 0;
+    };
+    case "TPtoTargetCrew": 
+    {
+        _index = lbCurSel 750;
+        _unit = playercrewArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _vehUnit = vehicle _unit;
+        if (_vehUnit != _unit) then 
+        {
+            _getInVeh = player moveInAny _vehUnit;
+            if (!_getInVeh) then 
+            {
+                _pos = getPos _vehUnit;
+                player setPosATL [_pos select 0, (_pos select 1) - 5, _pos select 2];
+            };
+        }else 
+        {
+            _pos = getPosATL _unit;
+            player setPosATL _pos;
+        };
+        Diag_log format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then
+        {
+            systemChat format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
+        };
+        closeDialog 0;
+    };
+    case "LoadoutCrew": 
+    {
+        _object = ctrlText 721;
+        if (_object == "No object detected") then 
+        {
+            Diag_log "[LT] (Tablet) nothing is found and could not be filled";
+            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+            {
+                systemChat "[LT] (Tablet) nothing is found and could not be filled";
+            };
+        }else 
+        {
+            _vehicle = cursorObject;
+            _side = (lbData [722, lbCurSel 722]);
+            _load = (lbData [723, lbCurSel 723]);
+            _vehicle setVariable ["LT_veh_side", _side, true];
+            _vehicle setVariable ["LT_veh_role", _load, true];
+            [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout"];
+
+            Diag_log format["[LT] (Tablet) %1 is being filled with %2", _vehicle, _load];
+            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+            {
+                systemChat format["[LT] (Tablet) %1 is being filled with %2", _vehicle, _load];
+            };
+        };
+        closeDialog 0;
+    };
+    case "SetValuesCrew": 
+    {
+        _index = lbCurSel 750;
+        _unit = playerAdvArr select _index; //playerArr is de array defined in openTablet.sqf
+        _role = _unit getVariable ["LT_unit_role", "lvdw"];
+        _gear = _unit getVariable ["LT_unit_gear", 1];
+        _item = _unit getVariable ["LT_unit_item", 1];
+
+        Diag_log format["[LT] (Tablet) %1 was role %2 consumables = %3 role items = %4", name _unit, _role, _gear, _item];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+        {
+            systemChat format["[LT] (Tablet) %1 was role %2 consumables = %3 role items = %4", name _unit, _role, _gear, _item];
+        };
+
+        _newRole = lbData [752, lbCurSel 752];
+        _newGear = lbCurSel 753;
+        _newItem = lbCurSel 754;
+        if (_role != _newRole) then {_unit setVariable ["LT_unit_role", _newRole, true]};
+        if (_gear != _newGear) then {_unit setVariable ["LT_unit_gear", _newGear, true]};
+        if (_item != _newItem) then {_unit setVariable ["LT_unit_item", _newItem, true]};
+
+        Diag_log format["[LT] (Tablet) %1 has role %2 consumables = %3 role items = %4", name _unit, _newRole, _newGear, _newItem];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+        {
+            systemChat format["[LT] (Tablet) %1 has role %2 consumables = %3 role items = %4", name _unit, _newRole, _newGear, _newItem];
+        };
+    };
+    case "PrepPlayerCrew": 
+    {
+        _index = lbCurSel 750;
+        _unit = playerAdvArr select _index; //playerAdvArr is de array defined in openTablet.sqf
+        [_unit] remoteExec ["LT_fnc_prepPlayerLoadout", _unit];
+        
+        Diag_log format["[LT] (Tablet) Reload prepPlayerloadout for Player:%1", name _unit];
+        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+        {
+            systemChat format["[LT] (Tablet) Reload prepPlayerloadout for Player:%1", name _unit];
+        };
+        closeDialog 0;
     };
 };

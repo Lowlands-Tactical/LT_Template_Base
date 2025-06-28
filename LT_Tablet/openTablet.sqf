@@ -193,6 +193,7 @@ lbSetCurSel [536,0];
 }forEach _loadArr;
 lbSetCurSel [537,0];
 
+//While tablet is over keep updating these fields
 while {!isNull findDisplay 500} do 
 {
 	_vehIndex = lbCurSel 531;

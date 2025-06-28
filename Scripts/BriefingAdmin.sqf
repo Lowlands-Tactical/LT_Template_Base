@@ -10,11 +10,13 @@ See Admin.sqf for the list.
 */
 
 lt_admin = missionNameSpace getVariable ["lt_admin", false];
-lt_crew = missionNameSpace getVariable ["lt_crew", false];
+lt_crewmin = missionNameSpace getVariable ["lt_crewmin", false];
+lt_logged = missionNameSpace getVariable ["lt_logged", false];
 waitUntil {sleep 0.5; !isNil "lt_admin"};
-waitUntil {sleep 0.5; !isNil "lt_crew"};
+waitUntil {sleep 0.5; !isNil "lt_crewmin"};
+waitUntil {sleep 0.5; !isNil "lt_logged"};
 
-if (lt_admin OR lt_crew) then 
+if (lt_admin OR lt_crewmin OR lt_logged) then 
 {
     // ADMIN BRIEFING
     _briefing ="<br/><font color='#FFBA26' size='18'>ADMIN SECTION</font><br/>This briefing section can only be seen by the current admin.<br/><br/>";
