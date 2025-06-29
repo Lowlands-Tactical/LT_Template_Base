@@ -245,7 +245,7 @@ if (_activated) then
 				{
 					case 0: {_defensePos getPos [_spawnDis, _spawnDir] };
 					case 1: {_defensePos getPos [_spawnDis, random 360];};
-					case 2: {_customPosArr call BIS_fnc_selectRandom;};
+					case 2: {getMarkerPos (_customPosArr call BIS_fnc_selectRandom);};
 				};
 
 				_spawnPos = _spawnArea findEmptyPosition [0, 40];
