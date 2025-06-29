@@ -148,12 +148,24 @@ if (_check) then
 	_wpnLnchr = _wpns select 7 select 0;	// _launcher
 	_wpnLnchrAmmo = _wpns select 7 select 1;// [_launcherAmmo1,_launcherAmmo2, etc]
 	_wpnBino = _wpns select 8;				// _binocular
+	_wpnAA = _wpns select 9 select 0;		// _launcherAA ""
+	_wpnAAAmmo = _wpns select 9 select 1;	// _launcherAA_Mags []
 
 	_itemsNVG = [_itemsNVG select 0, _itemsNVG select 1,_itemsNVG select 2];
 	{
 		_itemsNVG pushback _x;
 	}forEach _wpnGLNVG;
 	_itemsNVGAmt resize [(count _itemsNVG), 40];
+
+	//Check if AA Launcher is expendable or can be Reloaded
+	_AAAmmo = true;
+	_AAWeapon = 2;
+	if (_wpnAAAmmo isEqualTypeArray []) then 
+	{
+		Diag_Log format["[LT] (prepLoadout) AA Launcher:%1 is expendable", _wpnAA];
+		_AAAmmo = false;
+		_AAWeapon = 1;
+	};
 
 	if ("lt_gear_nvg" call bis_fnc_getParamValue == 1) then {_wpnGLAmmo = _wpnGLNVG;};
 
@@ -173,10 +185,19 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 3];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 3];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 2];
+			_vehicle addItemCargoGlobal [_wpnAA, ceil(_AAWeapon /2)];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 6];
+			_vehicle addItemCargoGlobal [_wpnAAAmmo select 0, 1];
+			_vehicle addItemCargoGlobal [_wpnAAAmmo select 1, 1];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 1];
 
+			if (_AAAmmo) then 
+			{
+				{
+					_vehicle addItemCargoGlobal [_x, ceil(_AAWeapon /2)];
+				}forEach _wpnAAAmmo;
+			};
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
 			}forEach _itemsTrow;
@@ -187,7 +208,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, (ceil (_itemsMedicAmt select _forEachIndex) /4)];
 			}forEach _itemsMedic;
 		};
-
 		case "Crate Medium": 
 		{
 			_vehicle addItemCargoGlobal [_wpnRifle select 1, 30];
@@ -199,12 +219,19 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 4];
 			_vehicle addItemCargoGlobal [_wpnLnchr, 4];
+			_vehicle addItemCargoGlobal [_wpnAA, _AAWeapon];
 			_vehicle addItemCargoGlobal [_wpnBino, 2];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 12];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 2];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 2];
 
+			if (_AAAmmo) then 
+			{
+				{
+					_vehicle addItemCargoGlobal [_x, _AAWeapon];
+				}forEach _wpnAAAmmo;
+			};
 			{
 				_vehicle addItemCargoGlobal [_x,4];
 			}forEach _wpnLnchrAmmo;
@@ -218,7 +245,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, (ceil (_itemsMedicAmt select _forEachIndex) /2)];
 			}forEach _itemsMedic;
 		};
-
 		case "Crate Large": 
 		{
 			_vehicle addItemCargoGlobal [_wpnRifle select 1, 60];
@@ -230,12 +256,19 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 20];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
+			_vehicle addItemCargoGlobal [_wpnAA, ceil(_AAWeapon *2)];
 			_vehicle addItemCargoGlobal [_wpnBino, 4];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 2];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 24];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 4];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
 
+			if (_AAAmmo) then 
+			{
+				{
+					_vehicle addItemCargoGlobal [_x, ceil(_AAWeapon *2)];
+				}forEach _wpnAAAmmo;
+			};
 			{
 				_vehicle addItemCargoGlobal [_x,8];
 			}forEach _wpnLnchrAmmo;
@@ -249,7 +282,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
 			}forEach _itemsMedic;
 		};
-
 		case "Crate Explosives": 
 		{
 			{
@@ -259,7 +291,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, _itemEngExplAmt select _forEachIndex];
 			}forEach _itemEngExpl;
 		};
-
 		case "Crate Mines":
 		{
 			{
@@ -269,7 +300,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, _itemEngMineAmt select _forEachIndex];
 			}forEach _itemEngMine;
 		};
-
 		case "Crate Medical": 
 		{
 			{
@@ -279,7 +309,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
 			}forEach _itemsMedic;
 		};
-
 		case "Crate Weapons": 
 		{
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnRifle select 0, 4];
@@ -289,13 +318,19 @@ if (_check) then
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnAR select 0, 2];
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnHG select 0, 6];
 			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
+			_vehicle addItemCargoGlobal [_wpnAA, ceil(_AAWeapon *2)];
 			_vehicle addItemCargoGlobal [_wpnBino, 6];
 
+			if (_AAAmmo) then 
+			{
+				{
+					_vehicle addItemCargoGlobal [_x, ceil(_AAWeapon *2)];
+				}forEach _wpnAAAmmo;
+			};
 			{
 				_vehicle addItemCargoGlobal [_x,8];
 			}forEach _wpnLnchrAmmo;
 		};
-
 		case "Crate Air": 
 		{
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnRifleAir select 0, 6];
@@ -313,7 +348,6 @@ if (_check) then
 				_vehicle addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
 			}forEach _itemsMedic;
 		};
-
 		case "Crate Comms":
 		{
 			_vehicle addItemCargoGlobal [_itemsRadio select 0, 10];
@@ -321,14 +355,12 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_itemsRole select 0, 10];
 			_vehicle addItemCargoGlobal [_itemsRole select 1, 5];
 		};
-
 		case "Crate NVG": 
 		{
 			{
 				_vehicle addItemCargoGlobal [_x, _itemsNVGAmt select _forEachIndex];
 			}forEach _itemsNVG;
 		};
-
 		case "Crate UAV":
 		{
 			_vehicle addItemCargoGlobal [_itemsRole select 1, 4];
@@ -340,7 +372,7 @@ if (_check) then
 
 sleep 0.2;
 
-[_vehicle, ((ceil loadabs _vehicle) +1000)] remoteExec ["LT_fnc_resetMaxLoad"];
+[_vehicle, ((ceil(loadabs _vehicle)) +1000)] remoteExec ["LT_fnc_resetMaxLoad"];
 
 sleep 0.2;
 
