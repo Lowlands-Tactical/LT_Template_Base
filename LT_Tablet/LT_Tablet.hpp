@@ -583,58 +583,46 @@ class BB_LT_Tablet_Crew
 		{
 			idc = 712;
 			y = 0.34;
-			text = "Disable Fatigue";
-			onButtonClick = "'FatigueOffCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			text = "Group Teleport On";
+			onButtonClick = "'GpTpOnCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
 		class BB_ButtonFatigueOn : BB_ButtonFatigueOff
 		{
 			idc = 713;
-			text = "Enable Fatigue";
-			onButtonClick = "'FatigueOnCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
-		};
-		class BB_ButtonHidePlayer : BB_ButtonFatigueOn
-		{
-			idc = 714;
-			y = 0.41;
-			text = "Hide Player";
-			onButtonClick = "'HideCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
-		};
-		class BB_ButtonUnhidePlayer : BB_ButtonHidePlayer
-		{
-			idc = 715;
-			text = "Unhide Player";
-			onButtonClick = "'UnhideCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
-		};
-		class BB_ButtonTpOn : BB_ButtonHidePlayer
-		{
-			idc = 716;
-			y = 0.48;
-			text = "Group Teleport On";
-			onButtonClick = "'GpTpOnCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
-		};
-		class BB_ButtonTpOff : BB_ButtonTpOn
-		{
-			idc = 717;
 			text = "Group Teleport Off";
 			onButtonClick = "'GpTpOffCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonZeus : BB_ButtonTpOn
+		class BB_ButtonEmpty02 : BB_ButtonFatigueOn
+		{
+			idc = 714;
+			y = 0.41;
+			text = "Spawn Crate";
+			onButtonClick = "'CreateCrateCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+		};
+		class BB_ButtonEmpty03 : BB_ButtonEmpty02
+		{
+			idc = 715;
+			y = 0.48;
+			text = "Empty";
+			onButtonClick = "";
+		};
+		class BB_ButtonEmpty04 : BB_ButtonEmpty03
+		{
+			idc = 716;
+			y = 0.55;
+			text = "Empty";
+			onButtonClick = "";
+		};
+		class BB_ButtonEmpty05 : BB_ButtonEmpty04
+		{
+			idc = 717;
+			y = 0.62;
+			text = "Empty";
+			onButtonClick = "";
+		};
+		class BB_ButtonEmpty06 : BB_ButtonEmpty05
 		{
 			idc = 718;
-			y = 0.55;
-			text = "Open Zeus";
-			onButtonClick = "'Zeus' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
-		};
-		class BB_ButtonMarkUnits : BB_ButtonZeus
-		{
-			idc = 719;
-			y = 0.62;
-			text = "Mark Units";
-			onButtonClick = "'MarkUnits' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
-		};
-		class BB_ButtonEmpty02 : BB_ButtonMarkUnits
-		{
-			idc = 720;
 			y = 0.69;
 			text = "Empty";
 			onButtonClick = "";
@@ -715,7 +703,7 @@ class BB_LT_Tablet_Crew
 			text = "GREENFOR Wins";
 			onButtonClick = "'End6' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEmpty03 : BB_ButtonEnd6
+		class BB_ButtonEmpty07 : BB_ButtonEnd6
 		{
 			idc = 731;
 			y = 0.69;

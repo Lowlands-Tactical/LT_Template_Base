@@ -489,38 +489,6 @@ switch (_code) do
         ctrlShow [711, false];
         hintSilent "Safe Start started!";
     };
-    case "FatigueOffCrew": 
-    {
-        lt_fatigue_onoff = 1;
-        publicVariable "lt_fatigue_onoff";
-        {_x enableFatigue false}forEach allPlayers;
-        ctrlShow [712, false];
-        ctrlShow [713, true];
-        hintsilent "Fatigue is Off";
-    };
-    case "FatigueOnCrew": 
-    {
-        lt_fatigue_onoff = 0;
-        publicVariable "lt_fatigue_onoff";
-        {_x enableFatigue true}forEach allPlayers;
-        ctrlShow [712, true];
-        ctrlShow [713, false];
-        hintSilent "Fatigue is On";
-    };
-    case "HideCrew": 
-    {
-        [player,true] remoteExec ["hideObjectGlobal",2];
-        ctrlShow [714, false];
-        ctrlShow [715, true];
-        hintsilent "You are hidden";
-    };
-    case "UnhideCrew": 
-    {
-        [player,false] remoteExec ["hideObjectGlobal",2];
-        ctrlShow [714, true];
-        ctrlShow [715, false];
-        hintsilent "You are visible";
-    };
     case "GpTpOnCrew": 
     {
         lt_group_teleport = 1;
@@ -540,7 +508,7 @@ switch (_code) do
     case "HealCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playercrewArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _unit = playercrewArr select _index; //playercrewArr is de array defined in openTabletCrew.sqf
         [_unit] call ace_medical_treatment_fnc_fullHealLocal;
         [_unit, false] call ace_medical_status_fnc_setUnconsciousState;
         Diag_log format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
@@ -552,7 +520,7 @@ switch (_code) do
     case "TPtoMeCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playercrewArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _unit = playercrewArr select _index; //playercrewArr is de array defined in openTabletCrew.sqf
         _vehUnit = vehicle _unit;
         if (_vehUnit != _unit) then 
         {
@@ -579,7 +547,7 @@ switch (_code) do
     case "TPtoTargetCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playercrewArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _unit = playercrewArr select _index; //playercrewArr is de array defined in openTabletCrew.sqf
         _vehUnit = vehicle _unit;
         if (_vehUnit != _unit) then 
         {
@@ -631,7 +599,7 @@ switch (_code) do
     case "SetValuesCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerAdvArr select _index; //playerArr is de array defined in openTablet.sqf
+        _unit = playercrewArr select _index; //playercrewArr is de array defined in openTablet.sqf
         _role = _unit getVariable ["LT_unit_role", "lvdw"];
         _gear = _unit getVariable ["LT_unit_gear", 1];
         _item = _unit getVariable ["LT_unit_item", 1];
@@ -658,7 +626,7 @@ switch (_code) do
     case "PrepPlayerCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerAdvArr select _index; //playerAdvArr is de array defined in openTablet.sqf
+        _unit = playercrewArr select _index; //playercrewArr is de array defined in openTablet.sqf
         [_unit] remoteExec ["LT_fnc_prepPlayerLoadout", _unit];
         
         Diag_log format["[LT] (Tablet) Reload prepPlayerloadout for Player:%1", name _unit];
@@ -667,5 +635,9 @@ switch (_code) do
             systemChat format["[LT] (Tablet) Reload prepPlayerloadout for Player:%1", name _unit];
         };
         closeDialog 0;
+    };
+    case "CreateCrateCrew": 
+    {
+        createVehicle ["NAF_Crate_Medium",(getPos Player)];
     };
 };

@@ -18,13 +18,10 @@ _ctrl = (findDisplay 700) displayCtrl 750;
 
 // Checks which button to show for the on/off state
 lt_param_timer = missionNameSpace getVariable ["lt_param_timer", 10];
-lt_fatigue_onoff = missionNameSpace getVariable ["lt_fatigue_onoff", 0];
 lt_group_teleport = missionNameSpace getVariable ["lt_group_teleport", 0];
 
 if (lt_param_timer > 1) then {ctrlShow [711,false]} else {ctrlShow [710,false]};
-if (lt_fatigue_onoff == 1) then {ctrlShow [712,false]} else {ctrlShow [713,false]};
-if (isObjectHidden player) then {ctrlShow [714,false]} else {ctrlShow [715,false]};
-if (lt_group_teleport == 1) then {ctrlShow [716,false]} else {ctrlShow [717,false]};
+if (lt_group_teleport == 1) then {ctrlShow [712,false]} else {ctrlShow [713,false]};
 
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
@@ -100,7 +97,7 @@ while {!isNull findDisplay 700} do
 	};
 
 	_index = lbCurSel 750;
-	_player = playerAdvArr select _index;
+	_player = playercrewArr select _index;
 	_playerRole = _player getVariable ["LT_unit_role", "custom"];
 	_playerGear = _player getVariable ["LT_unit_gear", 1];
 	_playerItem = _player getVariable ["LT_unit_item", 1];
