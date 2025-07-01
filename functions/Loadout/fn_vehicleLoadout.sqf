@@ -102,24 +102,9 @@ if (_check) then
 	_loadoutNr = 0;
 	switch (LT_Loadout) do 
 	{
-		case "BASE":
-		{
-			_loadoutNr = 0;
-			//#include "\lt_template_gear\Loadout_BASE\SwitchGearBASE.sqf"
-			//#include "\lt_template_gear\Loadout_BASE\SwitchWeaponBASE.sqf"
-		};
-		case "GM":
-		{
-			_loadoutNr = 1;
-			//#include "\lt_template_gear\Loadout_GM\SwitchGearGM.sqf"
-			//#include "\lt_template_gear\Loadout_GM\SwitchWeaponGM.sqf"
-		};
-		case "VN":
-		{
-			_loadoutNr = 2;
-			//#include "\lt_template_gear\Loadout_VN\SwitchGearVN.sqf"
-			//#include "\lt_template_gear\Loadout_VN\SwitchWeaponVN.sqf"
-		};
+		case "BASE":{_loadoutNr = 0;};
+		case "GM":{_loadoutNr = 1;};
+		case "VN":{_loadoutNr = 2;};
 	};
 
 	// Define item arrays and weapons
@@ -148,7 +133,7 @@ if (_check) then
 	_wpnLnchr = _wpns select 7 select 0;	// _launcher
 	_wpnLnchrAmmo = _wpns select 7 select 1;// [_launcherAmmo1,_launcherAmmo2, etc]
 	_wpnBino = _wpns select 8;				// _binocular
-	_wpnAA = _wpns select 9 select 0;		// _launcherAA ""
+	_wpnAA = _wpns select 9 select 0;		// _launcherAA [""]
 	_wpnAAAmmo = _wpns select 9 select 1;	// _launcherAA_Mags []
 	_wpnHeavy = _wpns select 10 select 0;	// [_heavyAR]
 	_wpnHeavyAmmo = _wpns select 10 select 1;// _heavyAR_Mags
@@ -187,19 +172,19 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 3];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 3];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 2];
-			_vehicle addItemCargoGlobal [_wpnAA, ceil(_AAWeapon /2)];
+			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 6];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 6];
-			_vehicle addItemCargoGlobal [_wpnAAAmmo select 0, 1];
-			_vehicle addItemCargoGlobal [_wpnAAAmmo select 1, 1];
-			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 6];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 1];
 
 			if (_AAAmmo) then 
 			{
 				{
-					_vehicle addItemCargoGlobal [_x, ceil(_AAWeapon /2)];
+					_vehicle addItemCargoGlobal [_x, (ceil(_AAWeapon /2))];
 				}forEach _wpnAAAmmo;
+			}else 
+			{
+				_vehicle addItemCargoGlobal [_wpnAA, 2];
 			};
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
@@ -222,20 +207,22 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 4];
 			_vehicle addItemCargoGlobal [_wpnLnchr, 4];
-			_vehicle addItemCargoGlobal [_wpnAA, _AAWeapon];
+			_vehicle addItemCargoGlobal [_wpnHeavy, 1];
+			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 7];
 			_vehicle addItemCargoGlobal [_wpnBino, 2];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 1];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 12];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 2];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 2];
-			_vehicle addItemCargoGlobal [_wpnHeavy select 0, 1];
-			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 7];
 
 			if (_AAAmmo) then 
 			{
 				{
 					_vehicle addItemCargoGlobal [_x, _AAWeapon];
 				}forEach _wpnAAAmmo;
+			}else 
+			{
+				_vehicle addItemCargoGlobal [_wpnAA, 4];
 			};
 			{
 				_vehicle addItemCargoGlobal [_x,4];
@@ -261,20 +248,22 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 20];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
-			_vehicle addItemCargoGlobal [_wpnAA, ceil(_AAWeapon *2)];
+			_vehicle addItemCargoGlobal [_wpnHeavy, 2];
+			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 14];
 			_vehicle addItemCargoGlobal [_wpnBino, 4];
 			_vehicle addItemCargoGlobal [_itemsSpecial select 0, 2];
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 24];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 4];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
-			_vehicle addItemCargoGlobal [_wpnHeavy select 0, 2];
-			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 14];
 
 			if (_AAAmmo) then 
 			{
 				{
-					_vehicle addItemCargoGlobal [_x, ceil(_AAWeapon *2)];
+					_vehicle addItemCargoGlobal [_x, (ceil(_AAWeapon *2))];
 				}forEach _wpnAAAmmo;
+			}else 
+			{
+				_vehicle addItemCargoGlobal [_wpnAA, 8];
 			};
 			{
 				_vehicle addItemCargoGlobal [_x,8];
@@ -325,9 +314,9 @@ if (_check) then
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnAR select 0, 2];
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnHG select 0, 6];
 			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
-			_vehicle addItemCargoGlobal [_wpnAA, ceil(_AAWeapon *2)];
+			_vehicle addItemCargoGlobal [_wpnAA, 4];
 			_vehicle addItemCargoGlobal [_wpnBino, 6];
-			_vehicle addItemCargoGlobal [_wpnHeavy select 0, 2];
+			_vehicle addItemCargoGlobal [_wpnHeavy, 2];
 		};
 		case "Crate Air": 
 		{
