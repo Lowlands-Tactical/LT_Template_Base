@@ -535,9 +535,9 @@ class BB_LT_Tablet_Crew
 			idc = 704;
 			x = 0.34;
 			w = 0.20;
-			text = "Open Debug console";
-			tooltip = "Open Debug console";
-			onButtonClick = "'Debug' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			text = "Lege knop";
+			tooltip = "Dit doet niks";
+			onButtonClick = "";
 		};
 		class BB_ButtonHeal : BB_ButtonDebug
 		{
