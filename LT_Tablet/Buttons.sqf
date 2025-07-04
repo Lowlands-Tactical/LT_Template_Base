@@ -137,7 +137,7 @@ switch (_code) do
         {
             if (_unit == driver _vehUnit OR _unit == gunner _vehUnit OR _unit == commander _vehUnit) exitWith
             {
-                hintSilent format["%1 is an important crew can't teleport"];
+                hintSilent format["%1 is an important crew can't teleport", name _unit];
             };
             moveOut _unit;
             _unit setVelocity [0,0,0];
@@ -526,7 +526,7 @@ switch (_code) do
         {
             if (_unit == driver _vehUnit OR _unit == gunner _vehUnit OR _unit == commander _vehUnit) exitWith
             {
-                hintSilent format["%1 is an important crew can't teleport"];
+                hintSilent format["%1 is an important crew can't teleport", name _unit];
             };
             moveOut _unit;
             _unit setVelocity [0,0,0];
