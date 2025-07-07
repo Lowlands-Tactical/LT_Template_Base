@@ -114,29 +114,29 @@ if (_check) then
 	_itemsRadio = [_loadoutNr, "Radio"] call LT_fnc_gearItems;
 	_itemsSpecial =	[_loadoutNr, "Special"] call LT_fnc_gearItems;
 	_itemsSpecialAmt = [_loadoutNr, "SpecialAmt"] call LT_fnc_gearItems;
-	_itemsNVG = _items select 0;			// _itemsNVG
-	_itemsNVGAmt = _items select 1;			// _itemsNVGAmt
-	_itemsRole = _items select 2;			// _itemsRole
+	_itemsNVG = _items select 0;					// _itemsNVG
+	_itemsNVGAmt = _items select 1;					// _itemsNVGAmt
+	_itemsRole = _items select 2;					// _itemsRole
 	_itemEngExpl = [_loadoutNr, "Expl"] call LT_fnc_gearItems;
 	_itemEngExplAmt = [_loadoutNr, "ExplAmt"] call LT_fnc_gearItems;
 	_itemEngMine = [_loadoutNr, "Mine"] call LT_fnc_gearItems;
 	_itemEngMineAmt = [_loadoutNr, "MineAmt"] call LT_fnc_gearItems;
 
-	_wpnRifle = _wpns select 0;				// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]
-	_wpnRifleCr = _wpns select 1;			// [_rifleCrGL,_rifleCr_Mags,_rifleCr_Mags_Tr]
-	_wpnRifleMark = _wpns select 2;			// [_rifleMark, _rifleMark_Mags]
-	_wpnGLAmmo = _wpns select 3 select 0;	// _itemsGL
-	_wpnGLNVG = _wpns select 3 select 1;	// _itemsGLNVG
-	_wpnRifleAir = _wpns select 4;			// [_rifleAir,_rifleAir_Mags]
-	_wpnAR = _wpns select 5;				// [_rifleAR,_rifleAR_Mags]
-	_wpnHG = _wpns select 6;				// [_handGun,_handGun_Mags]
-	_wpnLnchr = _wpns select 7 select 0;	// _launcher
-	_wpnLnchrAmmo = _wpns select 7 select 1;// [_launcherAmmo1,_launcherAmmo2, etc]
-	_wpnBino = _wpns select 8;				// _binocular
-	_wpnAA = _wpns select 9 select 0;		// _launcherAA [""]
-	_wpnAAAmmo = _wpns select 9 select 1;	// _launcherAA_Mags []
-	_wpnHeavy = _wpns select 10 select 0;	// [_heavyAR]
-	_wpnHeavyAmmo = _wpns select 10 select 1;// _heavyAR_Mags
+	_wpnRifle = _wpns select 0;						// [_rifleGL,_rifle_Mags,_rifle_Mags_Tr]
+	_wpnRifleCr = _wpns select 1;					// [_rifleCrGL,_rifleCr_Mags,_rifleCr_Mags_Tr]
+	_wpnRifleMark = _wpns select 2;					// [_rifleMark, _rifleMark_Mags]
+	_wpnGLAmmo = _wpns select 3 select 0;			// _itemsGL
+	_wpnGLNVG = _wpns select 3 select 1;			// _itemsGLNVG
+	_wpnRifleAir = _wpns select 4;					// [_rifleAir,_rifleAir_Mags]
+	_wpnAR = _wpns select 5;						// [_rifleAR,_rifleAR_Mags]
+	_wpnHG = _wpns select 6;						// [_handGun,_handGun_Mags]
+	_wpnAT = _wpns select 7;						// _launcherAT
+	_wpnATAmmo = (_wpnAT select 1);					// _launcherAT_Mags
+	_wpnBino = _wpns select 8;						// _binocular
+	_wpnAA = _wpns select 9;						// _launcherAA
+	_wpnAAAmmo = (_wpnAA select 1);					// _launcherAA_Mags
+	_wpnHeavy = _wpns select 10 select 0;			// [_heavyAR]
+	_wpnHeavyAmmo = _wpns select 10 select 1;		// _heavyAR_Mags
 
 	_itemsNVG = [_itemsNVG select 0, _itemsNVG select 1,_itemsNVG select 2];
 	{
@@ -144,15 +144,11 @@ if (_check) then
 	}forEach _wpnGLNVG;
 	_itemsNVGAmt resize [(count _itemsNVG), 40];
 
-	//Check if AA Launcher is expendable or can be Reloaded
-	_AAAmmo = true;
-	_AAWeapon = 2;
-	if (_wpnAAAmmo isEqualTypeArray []) then 
-	{
-		Diag_Log format["[LT] (prepLoadout) AA Launcher:%1 is expendable", _wpnAA];
-		_AAAmmo = false;
-		_AAWeapon = 1;
-	};
+	//Check if (AA) Launcher is expendable or can be Reloaded
+	_wpnLauncher = if (count (_wpnAT select 1) > 1) then {true;}else{false;};
+	_wpnLnchrAT = [(_wpnAT select 0),"","","",[(_wpnAT select 1 select 0),1],[],""];
+	_wpnLauncherAA = if (count (_wpnAA select 1) > 1) then {true;}else{false;};
+	_wpnLnchrAA = [(_wpnAA select 0),"","","",[(_wpnAA select 1 select 0),1],[],""];
 
 	if ("lt_gear_nvg" call bis_fnc_getParamValue == 1) then {_wpnGLAmmo = _wpnGLNVG;};
 
@@ -177,14 +173,25 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_itemsRole select 2, 6];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 1];
 
-			if (_AAAmmo) then 
+			if (_wpnLauncher) then 
 			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 1];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 1];
 				{
-					_vehicle addItemCargoGlobal [_x, (ceil(_AAWeapon /2))];
-				}forEach _wpnAAAmmo;
-			}else 
+					_vehicle addItemCargoGlobal [_x, 2];
+				}forEach _wpnATAmmo;
+			};
+			if (_wpnLauncherAA) then 
 			{
-				_vehicle addItemCargoGlobal [_wpnAA, 2];
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 1];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 1];
+				{
+					_vehicle addItemCargoGlobal [_x, 2];
+				}forEach _wpnAAAmmo;
 			};
 			{
 				_vehicle addItemCargoGlobal [_x, 5];
@@ -206,7 +213,6 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 6];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 4];
-			_vehicle addItemCargoGlobal [_wpnLnchr, 4];
 			_vehicle addItemCargoGlobal [_wpnHeavy, 1];
 			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 7];
 			_vehicle addItemCargoGlobal [_wpnBino, 2];
@@ -215,18 +221,26 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 2];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 2];
 
-			if (_AAAmmo) then 
+			if (_wpnLauncher) then 
 			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 4];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 2];
 				{
-					_vehicle addItemCargoGlobal [_x, _AAWeapon];
-				}forEach _wpnAAAmmo;
-			}else 
-			{
-				_vehicle addItemCargoGlobal [_wpnAA, 4];
+					_vehicle addItemCargoGlobal [_x, 4];
+				}forEach _wpnATAmmo;
 			};
+			if (_wpnLauncherAA) then 
 			{
-				_vehicle addItemCargoGlobal [_x,4];
-			}forEach _wpnLnchrAmmo;
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 4];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 2];
+				{
+					_vehicle addItemCargoGlobal [_x, 4];
+				}forEach _wpnAAAmmo;
+			};
 			{
 				_vehicle addItemCargoGlobal [_x, 10];
 			}forEach _itemsTrow;
@@ -247,7 +261,6 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_wpnAR select 1, 10];
 			_vehicle addItemCargoGlobal [_wpnRifleAir select 1, 20];
 			_vehicle addItemCargoGlobal [_wpnHG select 1, 10];
-			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
 			_vehicle addItemCargoGlobal [_wpnHeavy, 2];
 			_vehicle addItemCargoGlobal [_wpnHeavyAmmo, 14];
 			_vehicle addItemCargoGlobal [_wpnBino, 4];
@@ -256,18 +269,26 @@ if (_check) then
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 4];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
 
-			if (_AAAmmo) then 
+			if (_wpnLauncher) then 
 			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 8];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 4];
 				{
-					_vehicle addItemCargoGlobal [_x, (ceil(_AAWeapon *2))];
-				}forEach _wpnAAAmmo;
-			}else 
-			{
-				_vehicle addItemCargoGlobal [_wpnAA, 8];
+					_vehicle addItemCargoGlobal [_x, 8];
+				}forEach _wpnATAmmo;
 			};
+			if (_wpnLauncherAA) then 
 			{
-				_vehicle addItemCargoGlobal [_x,8];
-			}forEach _wpnLnchrAmmo;
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 8];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 4];
+				{
+					_vehicle addItemCargoGlobal [_x, 8];
+				}forEach _wpnAAAmmo;
+			};
 			{
 				_vehicle addItemCargoGlobal [_x, 20];
 			}forEach _itemsTrow;
@@ -313,10 +334,23 @@ if (_check) then
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnRifleAir select 0, 6];
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnAR select 0, 2];
 			_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnHG select 0, 6];
-			_vehicle addItemCargoGlobal [_wpnLnchr, 8];
-			_vehicle addItemCargoGlobal [_wpnAA, 4];
 			_vehicle addItemCargoGlobal [_wpnBino, 6];
 			_vehicle addItemCargoGlobal [_wpnHeavy, 2];
+
+			if (_wpnLauncher) then 
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 6];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 6];
+			};
+			if (_wpnLauncherAA) then 
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 6];
+			}else
+			{
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 6];
+			};
 		};
 		case "Crate Air": 
 		{
