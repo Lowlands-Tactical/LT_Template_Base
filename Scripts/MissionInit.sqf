@@ -51,6 +51,7 @@ if (isServer) then
         systemChat "[LT] (Mission) loading server Gear/Weapons";
     };
     [] execVM "\lt_template_base\Scripts\prepLoadout_Server.sqf";
+    //[] execVM "\lt_template_base\Scripts\setLowtacFaces.sqf";
     [] remoteExec ["LT_fnc_prepVehicleLoadout", 2];
 };
 
