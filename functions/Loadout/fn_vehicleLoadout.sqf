@@ -146,9 +146,9 @@ if (_check) then
 	_itemsNVGAmt resize [(count _itemsNVG), 40];
 
 	//Check if (AA) Launcher is expendable or can be Reloaded
-	_wpnLauncher = if (count (_wpnAT select 1) > 1) then {true;}else{false;};
+	_wpnLauncher = if (count (_wpnAT select 1) > 1) then {false;}else{true;};
 	_wpnLnchrAT = [(_wpnAT select 0),"","","",[(_wpnAT select 1 select 0),1],[],""];
-	_wpnLauncherAA = if (count (_wpnAA select 1) > 1) then {true;}else{false;};
+	_wpnLauncherAA = if (count (_wpnAA select 1) > 1) then {false;}else{true;};
 	_wpnLnchrAA = [(_wpnAA select 0),"","","",[(_wpnAA select 1 select 0),1],[],""];
 
 	if ("lt_gear_nvg" call bis_fnc_getParamValue == 1) then {_wpnGLAmmo = _wpnGLNVG;};
@@ -176,7 +176,7 @@ if (_check) then
 
 			if (_wpnLauncher) then 
 			{
-				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 1];
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 2];
 			}else
 			{
 				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAT, 1];
@@ -186,7 +186,7 @@ if (_check) then
 			};
 			if (_wpnLauncherAA) then 
 			{
-				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 1];
+				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 2];
 			}else
 			{
 				_vehicle addWeaponWithAttachmentsCargoGlobal [_wpnLnchrAA, 1];
