@@ -16,7 +16,9 @@ Example:
 
 // Teleport your group to a position on the map
 private ["_count"];
-params ["_pos", [0,0,0], [[0,0,0]]];
+params [
+  ["_pos", [0,0,0], [[0,0,0]]]
+];
 
 player setPos _pos;
 _count = 0;
