@@ -640,4 +640,37 @@ switch (_code) do
     {
         createVehicle ["NAF_Crate_Medium",(getPos Player)];
     };
+    case "MedicPackCrew": 
+    {
+        _lt_Loadout = getMissionConfigValue ["LT_Loadout_ID","BASE"];
+        _loadout = switch (_lt_Loadout) do 
+        {
+            case "BASE":{0};
+            case "GM":{1};
+            case "VN":{2};
+            case "40K":{3};
+        };
+        _itemsPackMedic = [_loadout, "Medic"] call LT_fnc_gearItems;
+        _itemsPackMedicAmt = [_loadout, "MedicAmt"] call LT_fnc_gearItems;
+        _backpack = createVehicle ["NAF_TacticalPack_blk",(getPos Player)];
+        {
+			_backpack addItemCargoGlobal [_x, _itemsPackMedicAmt select _forEachIndex];
+		}forEach _itemsPackMedic;
+    };
+    case "JTACPackCrew": 
+    {
+        _backpackJTAC = if (isClass(configFile >> "CfgPatches" >> "BB_RQ11B_Raven")) then 
+        {
+            "BB_RQ11B_Backpack";
+        }else
+        {
+            switch (side _unit) do 
+            {
+                case west: {"B_UAV_01_backpack_F"};
+                case east: {"O_UAV_01_backpack_F"};
+                case resistance: {"I_UAV_01_backpack_F"};
+            };
+	    };
+        _backpackJTAC createVehicle (getPos Player);
+    };
 };

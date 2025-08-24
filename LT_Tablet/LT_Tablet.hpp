@@ -592,28 +592,28 @@ class BB_LT_Tablet_Crew
 			text = "Group Teleport Off";
 			onButtonClick = "'GpTpOffCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEmpty02 : BB_ButtonFatigueOn
+		class BB_ButtonSpwnCrate : BB_ButtonFatigueOn
 		{
 			idc = 714;
 			y = 0.41;
 			text = "Spawn Crate";
 			onButtonClick = "'CreateCrateCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEmpty03 : BB_ButtonEmpty02
+		class BB_ButtonSpwnMed : BB_ButtonSpwnCrate
 		{
 			idc = 715;
 			y = 0.48;
-			text = "Empty";
-			onButtonClick = "";
+			text = "Spawn Medic pack";
+			onButtonClick = "'MedicPackCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEmpty04 : BB_ButtonEmpty03
+		class BB_ButtonSpwnDrone : BB_ButtonSpwnMed
 		{
 			idc = 716;
 			y = 0.55;
-			text = "Empty";
-			onButtonClick = "";
+			text = "Spawn JTAC pack";
+			onButtonClick = "'JTACPackCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEmpty05 : BB_ButtonEmpty04
+		class BB_ButtonEmpty05 : BB_ButtonSpwnDrone
 		{
 			idc = 717;
 			y = 0.62;
