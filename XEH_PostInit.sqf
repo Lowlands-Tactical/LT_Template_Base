@@ -39,7 +39,7 @@ lt_staff = [
 ];
 missionNameSpace setVariable ["lt_staff",lt_staff,true];
 lt_crew = [
-	//"76561198010219180",	// PingWing
+	"76561198010219180",	// PingWing
 	"76561198047657052",	// DM3002X
 	"76561198047491445" 	// Pekeru
 ];
