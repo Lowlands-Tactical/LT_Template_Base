@@ -297,7 +297,13 @@ if (_activated) then
 				_grp setFormation _formation;
 				_grp setSpeedMode _speedMode;
 
-				[_grp, _searchArea, _searchAreaSize] call CBA_fnc_taskAttack;
+				if (_unitType == "Infantry") then 
+				{
+					[_grp, getMarkerPos _searchArea] spawn lambs_wp_fnc_taskAssault;
+				}else
+				{
+					[_grp, getMarkerPos _searchArea, _searchAreaSize] call CBA_fnc_taskAttack;
+				};
 			};
 		}forEach _spawnAmount;
 
