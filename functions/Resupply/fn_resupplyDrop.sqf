@@ -95,14 +95,14 @@ _locVeh = [(position _veh) select 0, (position _veh) select 1, ((position _veh) 
 // Define dropped object
 private _dropObj = createVehicle [_crate, _locVeh, [], 0, "CAN_COLLIDE"];
 _dropObj setVelocity (velocity _veh);
-_dropObj setDir (direction _veh);
+//_dropObj setDir (direction _veh);
 _dropObj allowDamage false;
 uiSleep 0.3;
 
 // Define chute
 private _spnChut = createVehicle [_chute, position _dropObj, [], 0, "NONE"];
 _spnChut setVelocity (velocity _dropObj);
-_spnChut setDir (direction _dropObj);
+//_spnChut setDir (direction _dropObj);
 _dropObj attachTo [_spnChut, [0,0,-1]];
 _dropObjAtt = [];
 
