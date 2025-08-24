@@ -55,7 +55,7 @@ _loadArr = ["Empty","Custom","Crate Small","Crate Medium","Crate Large","Crate E
 }forEach _loadArr;
 lbSetCurSel [723,0];
 
-_roleArr = ["com","sql","jtac","ftl","gren","comms","rifl","riflat","dmr","ar","aar","medic","eng","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"];
+_roleArr = ["com","sql","jtac","ftl","gren","comms","rifl","riflat","riflaa","dmr","ar","aar","medic","eng","hmg","hmga","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"];
 {
 	lbAdd [752, _x];
 	lbSetData [752, _forEachIndex, _x];
