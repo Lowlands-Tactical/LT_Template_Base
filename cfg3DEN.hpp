@@ -181,17 +181,20 @@ class Cfg3DEN
 						class LT_Role_COMMS		{data = "comms";	text = "Radioman (GM & VN)";};
 						class LT_Role_RIFL 		{data = "rifl";		text = "Rifleman";};
 						class LT_Role_RIFLAT 	{data = "riflat";	text = "Rifleman (AT)";};
-						class LT_Role_DMR		{data = "dmr";		text = "Marksman (DMR)";}
+						class LT_Role_RIFLAA	{data = "riflaa";	text = "Rifleman (AA)";};
+						class LT_Role_DMR		{data = "dmr";		text = "Marksman (DMR)";};
 						class LT_Role_AR 		{data = "ar";		text = "Automatic rifleman";};
 						class LT_Role_AAR 		{data = "aar";		text = "Assistant automatic rifleman";};
 						class LT_Role_MEDIC 	{data = "medic";	text = "Medic";};
 						class LT_Role_ENG 		{data = "eng";		text = "Engineer";};
-						class LT_Role_VHCO 		{data = "vhco";		text = "Vehicle commander";};
-						class LT_Role_VHGU 		{data = "vhgu";		text = "Vehicle gunner";};
-						class LT_Role_VHDR 		{data = "vhdr";		text = "Vehicle driver (repair)";};
+						class LT_Role_HMG		{data = "hmg";		text = "Heavy Machine Gunner";};
+						class LT_Role_HMGA		{data = "hmga";		text = "Assistant Heavy Machine Gunner";};
+						class LT_Role_VHCO 		{data = "vhco";		text = "Vehicle commander (repair)";};
+						class LT_Role_VHGU 		{data = "vhgu";		text = "Vehicle gunner (repair)";};
+						class LT_Role_VHDR 		{data = "vhdr";		text = "Vehicle driver (medic)";};
 						class LT_Role_PILOT 	{data = "pilot";	text = "Air vehicle pilot (repair)";};
-						class LT_Role_CREW 		{data = "crew";		text = "Air vehicle crew";};
-						class LT_Role_JET 		{data = "jet";		text = "Air vehicle jet";};
+						class LT_Role_CREW 		{data = "crew";		text = "Air vehicle crew (medic)";};
+						class LT_Role_JET 		{data = "jet";		text = "Air vehicle jet (medic)";};
 						class LT_Role_LVDW 		{data = "lvdw";		text = "Lul van de week";};
 					};
 				};
