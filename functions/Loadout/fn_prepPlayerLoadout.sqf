@@ -69,7 +69,7 @@ if ("lt_debug" call bis_fnc_getParamValue == 1) then
 _lt_sr_radio = switch (_lt_SrTMP) do 
 {
 	case 0: {["NONE"]}; //Nobody get ShortRange
-	case 1: {["com","sql","jtac","ftl","gren","comms","rifl","riflat","dmr","ar","aar","medic","eng","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"]};
+	case 1: {["com","sql","jtac","ftl","gren","comms","rifl","riflat","riflaa","dmr","ar","aar","medic","eng","hmg","hmga","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"]};
 	case 2: {["com","sql"]};
 	case 3: {["com","sql","ftl"]};
 	case 4: {["com","sql","ftl","medic"]};
