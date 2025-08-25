@@ -93,23 +93,23 @@ _veh = vehicle _pilot;
 _locVeh = [(position _veh) select 0, (position _veh) select 1, ((position _veh) select 2) -25];
 
 // Define dropped object
-private _dropObj = createVehicle [_crate, _locVeh, [], 0, "CAN_COLLIDE"];
+private _dropObj = createVehicle [_crate, _locVeh, [], 0, "NONE"];
 _dropObj setVelocity (velocity _veh);
-//_dropObj setDir (direction _veh);
+_dropObj setDir (direction _veh);
 _dropObj allowDamage false;
 uiSleep 0.3;
 
 // Define chute
 private _spnChut = createVehicle [_chute, position _dropObj, [], 0, "NONE"];
 _spnChut setVelocity (velocity _dropObj);
-//_spnChut setDir (direction _dropObj);
+_spnChut setDir (direction _dropObj);
 _dropObj attachTo [_spnChut, [0,0,-1]];
 _dropObjAtt = [];
 
 // Checks if mission is in day or night and attaches the right smoke/light
 if (sunOrMoon == 1) then 
 {
-	_smoke = createVehicle ["SmokeShellOrange", [0,0,0], [], 0, ""];
+	_smoke = createVehicle ["SmokeShellOrange", [0,0,0], [], 0, "NONE"];
 	_smoke attachTo [_dropObj, [0,0,0]];
 	_dropObjAtt pushback _smoke;
 } else 
