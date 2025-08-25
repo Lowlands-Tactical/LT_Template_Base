@@ -636,11 +636,11 @@ switch (_code) do
         };
         closeDialog 0;
     };
-    case "CreateCrateCrew": 
+    case "CreateCrate": 
     {
         createVehicle ["NAF_Crate_Medium",(getPos Player)];
     };
-    case "MedicPackCrew": 
+    case "MedicPack": 
     {
         _lt_Loadout = getMissionConfigValue ["LT_Loadout_ID","BASE"];
         _loadout = switch (_lt_Loadout) do 
@@ -657,20 +657,21 @@ switch (_code) do
 			_backpack addItemCargoGlobal [_x, _itemsPackMedicAmt select _forEachIndex];
 		}forEach _itemsPackMedic;
     };
-    case "JTACPackCrew": 
+    case "JTACPack": 
     {
-        _backpackJTAC = if (isClass(configFile >> "CfgPatches" >> "BB_RQ11B_Raven")) then 
+        _backpackJTAC = "";
+        if (isClass(configFile >> "CfgPatches" >> "BB_RQ11B_Raven")) then 
         {
-            "BB_RQ11B_Backpack";
+            _backpackJTAC = "BB_RQ11B_Backpack";
         }else
         {
-            switch (side _unit) do 
+            switch (side player) do 
             {
-                case west: {"B_UAV_01_backpack_F"};
-                case east: {"O_UAV_01_backpack_F"};
-                case resistance: {"I_UAV_01_backpack_F"};
+                case west: {_backpackJTAC = "B_UAV_01_backpack_F"};
+                case east: {_backpackJTAC = "O_UAV_01_backpack_F"};
+                case resistance: {_backpackJTAC = "I_UAV_01_backpack_F"};
             };
 	    };
-        _backpackJTAC createVehicle (getPos Player);
+        createVehicle [_backpackJTAC,(getPos Player)];
     };
 };
