@@ -308,28 +308,28 @@ class BB_LT_Tablet_Advanced
 			text = "Missie gefaald";
 			onButtonClick = "'End3' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEnd4 : BB_ButtonEnd3
+		class BB_ButtonSpwnCrate : BB_ButtonEnd3
 		{
 			idc = 613;
 			y = 0.48;
-			text = "BLUEFOR Wins";
-			onButtonClick = "'End4' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			text = "Spawn Crate";
+			onButtonClick = "'CreateCrate' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEnd5 : BB_ButtonEnd4
+		class BB_ButtonSpwnMed : BB_ButtonSpwnCrate
 		{
 			idc = 614;
 			y = 0.55;
-			text = "REDFOR Wins";
-			onButtonClick = "'End5' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			text = "Spawn Medic pack";
+			onButtonClick = "'MedicPack' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEnd6 : BB_ButtonEnd5
+		class BB_ButtonSpwnJTAC : BB_ButtonSpwnMed
 		{
 			idc = 615;
 			y = 0.62;
-			text = "GREENFOR Wins";
-			onButtonClick = "'End6' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			text = "Spawn JTAC pack";
+			onButtonClick = "'JTACPack' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonReturn : BB_ButtonEnd6
+		class BB_ButtonReturn : BB_ButtonSpwnJTAC
 		{
 			idc = 616;
 			y = 0.69;
@@ -597,21 +597,21 @@ class BB_LT_Tablet_Crew
 			idc = 714;
 			y = 0.41;
 			text = "Spawn Crate";
-			onButtonClick = "'CreateCrateCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			onButtonClick = "'CreateCrate' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
 		class BB_ButtonSpwnMed : BB_ButtonSpwnCrate
 		{
 			idc = 715;
 			y = 0.48;
 			text = "Spawn Medic pack";
-			onButtonClick = "'MedicPackCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			onButtonClick = "'MedicPack' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
 		class BB_ButtonSpwnDrone : BB_ButtonSpwnMed
 		{
 			idc = 716;
 			y = 0.55;
 			text = "Spawn JTAC pack";
-			onButtonClick = "'JTACPackCrew' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
+			onButtonClick = "'JTACPack' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
 		class BB_ButtonEmpty05 : BB_ButtonSpwnDrone
 		{
