@@ -105,6 +105,7 @@ if (_check) then
 		case "BASE":{_loadoutNr = 0;};
 		case "GM":{_loadoutNr = 1;};
 		case "VN":{_loadoutNr = 2;};
+		case "40K":{_loadoutNr = 3;};
 	};
 
 	// Define item arrays and weapons
@@ -134,6 +135,7 @@ if (_check) then
 	_wpnATAmmo = (_wpnAT select 1);					// _launcherAT_Mags
 	_wpnBino = _wpns select 8 select 0;				// _binocular
 	_wpnBinoPlus = _wpns select 8 select 1;			// _binocularPlus
+	_wpnBinoPlusBat = _wpns select 8 select 2;			// _binocularPlusBat
 	_wpnAA = _wpns select 9;						// _launcherAA
 	_wpnAAAmmo = (_wpnAA select 1);					// _launcherAA_Mags
 	_wpnHeavy = _wpns select 10 select 0;			// [_heavyAR]
@@ -373,6 +375,7 @@ if (_check) then
 		case "Crate Comms":
 		{
 			_vehicle addItemCargoGlobal [_wpnBinoPlus, 10];
+			_vehicle addItemCargoGlobal [_wpnBinoPlusBat, 10];
 			_vehicle addItemCargoGlobal [_itemsRadio select 0, 10];
 			_vehicle addItemCargoGlobal [_itemsRadio select 1, 10];
 			_vehicle addItemCargoGlobal [_itemsRole select 0, 10];
@@ -387,6 +390,7 @@ if (_check) then
 		case "Crate UAV":
 		{
 			_vehicle addItemCargoGlobal [_wpnBinoPlus, 8];
+			_vehicle addItemCargoGlobal [_wpnBinoPlusBat, 8];
 			_vehicle addItemCargoGlobal [_itemsRole select 1, 4];
 			_vehicle addItemCargoGlobal [_itemsRole select 3, 8];
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
