@@ -674,4 +674,14 @@ switch (_code) do
 	    };
         createVehicle [_backpackJTAC,(getPos Player)];
     };
+    case "lvdwFlag":
+    {
+        {
+            _role = _x getVariable ["LT_unit_role", "custom"];
+            if (_role == "lvdw") then 
+            {
+                _x ForceFlagTexture "";
+            };
+        }forEach allPlayers;
+    };
 };

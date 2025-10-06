@@ -419,13 +419,13 @@ class BB_LT_Tablet_Advanced
 			tooltip = "Reset Supplydrop value in case of unexpected error";
 			onButtonClick = "'DropReset' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonEmpty01 : BB_ButtonDropReset
+		class BB_RemoveLVDWFlag : BB_ButtonDropReset
 		{
 			idc = 629;
 			y = 0.69;
-			text = "Empty";
-			tooltip = "";
-			onButtonClick = "";
+			text = "Remove LVDW Vlag";
+			tooltip = "Remove the flag from slot LVDW";
+			onButtonClick = "'lvdwFlag' execVM '\lt_template_base\LT_Tablet\Buttons.sqf'";
 		};
 		class BB_ListAdvUnits : BB_ListBase
 		{
