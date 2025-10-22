@@ -100,14 +100,48 @@ _unit setUnitTrait ["camouflageCoef", 0.2];
 _unit setUnitTrait ["loadCoef", 0.5];
 
 _role = _unit getVariable ["LT_unit_role", "custom"];
+_roleCrew = ["Crew"] call LT_fnc_rolesArray;
 [uniformContainer _unit, 50] remoteExec ["LT_fnc_resetMaxLoad"];
 [vestContainer _unit, 200] remoteExec ["LT_fnc_resetMaxLoad"];
-if (_role == "eng" OR _role == "medic") then 
+
+switch (_role) do 
 {
-	[backpackContainer _unit, 400] remoteExec ["LT_fnc_resetMaxLoad"];
-} else 
-{
-	[backpackContainer _unit, 300] remoteExec ["LT_fnc_resetMaxLoad"];
+	case (_role IN _roleCrew): 
+	{
+		[backpackContainer _unit, 200] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "jtac": 
+	{
+		[backpackContainer _unit, 400] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "eng": 
+	{
+		[backpackContainer _unit, 400] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "medic":
+	{
+		[backpackContainer _unit, 450] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "riflat":
+	{
+		[backpackContainer _unit, 650] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "riflaa":
+	{
+		[backpackContainer _unit, 650] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "aar":
+	{
+		[backpackContainer _unit, 500] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	case "hmga":
+	{
+		[backpackContainer _unit, 500] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
+	default 
+	{
+		[backpackContainer _unit, 300] remoteExec ["LT_fnc_resetMaxLoad"];
+	};
 };
 
 // Remove inventory from corpse
