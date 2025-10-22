@@ -307,7 +307,8 @@ switch (_code) do
         {
             systemChat "[LT] (Tablet) Add/Remove Debug";
         };
-        [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
+        ["\lt_template_base\Scripts\BriefingDebug.sqf"] remoteExec ["execVM",0];
+        //[] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
         closeDialog 0;
     };
     case "Briefing": 
