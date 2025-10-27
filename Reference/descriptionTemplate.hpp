@@ -66,12 +66,11 @@ class DifficultyOverride
 };
 disableChannels[]=
 {
-	0,2,4,5
+	2,4,5
 };
 enableDebugConsole[]=
 {
 	"76561198042684200",	// Tybalty
-	"76561198028914656",	// L0nesentinel
 	"76561198014060493",	// R.Hoods
 	"76561197992586763"		// Brainless_Ben
 };
