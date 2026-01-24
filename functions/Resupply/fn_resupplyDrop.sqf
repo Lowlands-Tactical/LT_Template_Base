@@ -94,10 +94,10 @@ _locVeh = [(position _veh) select 0, (position _veh) select 1, ((position _veh) 
 
 // Define dropped object
 private _dropObj = createVehicle [_crate, _locVeh, [], 0, "NONE"];
-_dropObj setVelocity (velocity _veh);
+_dropObj setVelocity [(((velocity _veh) select 0) / 2),(((velocity _veh) select 1) / 2),((velocity _veh) select 2)-25];
 _dropObj setDir (direction _veh);
 _dropObj allowDamage false;
-uiSleep 0.3;
+uiSleep 0.7;
 
 // Define chute
 private _spnChut = createVehicle [_chute, position _dropObj, [], 0, "NONE"];
@@ -140,7 +140,7 @@ if (sunOrMoon == 1) then
 waitUntil 
 {
 	sleep 3;
-	(((position _dropObj select 2) < 1) OR (velocity _dropObj select 2) == 0);
+	(((position _dropObj select 2) < 1));
 };
 
 [_dropObj, _dropObjAtt, _crate, _spnChut, _loadoutType, _nvg, _side] spawn 
