@@ -12,10 +12,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={26718.398,38.624538,24634.291};
-		dir[]={0.8648054,-0.41229203,-0.28701454};
-		up[]={0.39149773,0.91091835,-0.129932};
-		aside[]={-0.31501815,2.4494984e-06,-0.94917953};
+		pos[]={26735.346,45.445507,24649.225};
+		dir[]={0.61544478,-0.40321878,-0.67723787};
+		up[]={0.27118015,0.91510153,-0.29840767};
+		aside[]={-0.74006706,2.4484325e-07,-0.67254126};
 	};
 };
 binarizationWanted=0;
@@ -86,13 +86,17 @@ addons[]=
 	"ace_disposable",
 	"ace_nlaw",
 	"ace_overpressure",
-	"ace_realisticweights"
+	"ace_realisticweights",
+	"A3_Weapons_F_Machineguns_Zafir",
+	"A3_Weapons_F_Acc",
+	"ace_scopes",
+	"cba_jam"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=47;
+		items=49;
 		class Item0
 		{
 			className="A3_Structures_F_Mil";
@@ -414,6 +418,20 @@ class AddonsMetaData
 			name="ACE3 - Realistic Weights";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
+		};
+		class Item47
+		{
+			className="ace_scopes";
+			name="ACE3 - Scopes";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item48
+		{
+			className="cba_jam";
+			name="Community Base Addons - Joint Ammo Magazines";
+			author="CBA Team";
+			url="https://www.github.com/CBATeam/CBA_A3";
 		};
 	};
 };
@@ -22331,8 +22349,8 @@ class Intro
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={26765.998,22.197002,24598.43};
-						angles[]={0,0.52838176,0};
+						position[]={26765.998,22.196905,24598.43};
+						angles[]={0,0.52838099,0};
 					};
 					side="West";
 					flags=5;
@@ -22452,7 +22470,7 @@ class Intro
 					};
 					id=13947;
 					type="NAF_Support_AMort_nfpg";
-					atlOffset=9.9182129e-05;
+					atlOffset=1.9073486e-06;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -22601,7 +22619,20 @@ class Intro
 								};
 							};
 						};
-						nAttributes=4;
+						class Attribute4
+						{
+							property="acre_sys_radio_edenSetup";
+							expression="_this setVariable [""acre_sys_radio_setup"", _value, true]";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="[[""ACRE_PRC343"",[1,1]],[""ACRE_PRC152"",1],[""ACRE_PRC117F"",1]]";
+								};
+							};
+						};
+						nAttributes=5;
 					};
 				};
 				class Item2
@@ -23720,7 +23751,7 @@ class Intro
 			flags=6;
 			class Attributes
 			{
-				init="this spawn { " \n "    _tgs=[t7,t8,t9]; " \n "    while {alive _this && alive (_tgs#0) && alive (_tgs#1) && alive (_tgs#2)} do  " \n "    { " \n "        _t = (selectRandom _tgs); " \n "        _this doTarget _t; " \n "        sleep 0.5; " \n "        gl action [""useWeapon"", _this, gunner _this, 0]; " \n "        sleep 15; " \n "        _this doWatch _t " \n "    }; " \n "};";
+				init="this spawn {  " \n "    _tgs=[t7,t8,t9]; " \n "    (gunner _this) action [""SwitchWeapon"", vehicle (gunner _this), gunner _this, 5]; " \n "    sleep 3;  " \n "    while {alive _this && alive (_tgs#0) && alive (_tgs#1) && alive (_tgs#2)} do   " \n "    {  " \n "        _t = (selectRandom _tgs);  " \n "        _this doTarget _t;  " \n "        sleep 0.5;  " \n "        gl action [""useWeapon"", _this, gunner _this, 0];  " \n "        sleep 15;  " \n "        _this doWatch _t  " \n "    };  " \n "};";
 				name="g3";
 			};
 			id=13949;
@@ -23792,30 +23823,9 @@ class Intro
 						name="g4";
 						class Inventory
 						{
-							class primaryWeapon
-							{
-								name="arifle_NAF_C8NLD_ACO_pointer";
-								optics="optic_NAF_Colt";
-								flashlight="acc_NAF_Colt_pointer";
-								firemode="arifle_NAF_C8NLD_ACO_pointer:Single";
-								class primaryMuzzleMag
-								{
-									name="30Rnd_556x45_Stanag_green";
-									ammoLeft=30;
-								};
-							};
 							class secondaryWeapon
 							{
 								name="launch_NLAW_F";
-							};
-							class handgun
-							{
-								name="hgun_Pistol_heavy_01_F";
-								class primaryMuzzleMag
-								{
-									name="11Rnd_45ACP_Mag";
-									ammoLeft=15;
-								};
 							};
 							class uniform
 							{
@@ -23823,14 +23833,8 @@ class Intro
 								isBackpack=0;
 								class MagazineCargo
 								{
-									items=2;
+									items=1;
 									class Item0
-									{
-										name="30Rnd_556x45_Stanag_green";
-										count=3;
-										ammoLeft=30;
-									};
-									class Item1
 									{
 										name="SmokeShell";
 										count=1;
@@ -23853,26 +23857,14 @@ class Intro
 								isBackpack=0;
 								class MagazineCargo
 								{
-									items=4;
+									items=2;
 									class Item0
-									{
-										name="30Rnd_556x45_Stanag_green";
-										count=2;
-										ammoLeft=30;
-									};
-									class Item1
-									{
-										name="11Rnd_45ACP_Mag";
-										count=2;
-										ammoLeft=15;
-									};
-									class Item2
 									{
 										name="SmokeShellGreen";
 										count=1;
 										ammoLeft=1;
 									};
-									class Item3
+									class Item1
 									{
 										name="Chemlight_green";
 										count=2;
@@ -24253,29 +24245,13 @@ class Intro
 						name="g5";
 						class Inventory
 						{
-							class primaryWeapon
-							{
-								name="arifle_NAF_C8NLD_ACO_pointer";
-								optics="optic_NAF_Colt";
-								flashlight="acc_NAF_Colt_pointer";
-								firemode="arifle_NAF_C8NLD_ACO_pointer:Single";
-								class primaryMuzzleMag
-								{
-									name="30Rnd_556x45_Stanag_green";
-									ammoLeft=30;
-								};
-							};
 							class secondaryWeapon
 							{
-								name="launch_NLAW_F";
-							};
-							class handgun
-							{
-								name="hgun_Pistol_heavy_01_F";
+								name="ACE_launch_NLAW_ready_F";
 								class primaryMuzzleMag
 								{
-									name="11Rnd_45ACP_Mag";
-									ammoLeft=15;
+									name="NLAW_F";
+									ammoLeft=1;
 								};
 							};
 							class uniform
@@ -24284,14 +24260,8 @@ class Intro
 								isBackpack=0;
 								class MagazineCargo
 								{
-									items=2;
+									items=1;
 									class Item0
-									{
-										name="30Rnd_556x45_Stanag_green";
-										count=3;
-										ammoLeft=30;
-									};
-									class Item1
 									{
 										name="SmokeShell";
 										count=1;
@@ -24314,26 +24284,14 @@ class Intro
 								isBackpack=0;
 								class MagazineCargo
 								{
-									items=4;
+									items=2;
 									class Item0
-									{
-										name="30Rnd_556x45_Stanag_green";
-										count=2;
-										ammoLeft=30;
-									};
-									class Item1
-									{
-										name="11Rnd_45ACP_Mag";
-										count=2;
-										ammoLeft=15;
-									};
-									class Item2
 									{
 										name="SmokeShellGreen";
 										count=1;
 										ammoLeft=1;
 									};
-									class Item3
+									class Item1
 									{
 										name="Chemlight_green";
 										count=2;
@@ -24718,6 +24676,106 @@ class Intro
 					flags=3;
 					class Attributes
 					{
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_NAF_C7NLD_ACO_pointer";
+								optics="optic_NAF_Colt";
+								flashlight="acc_NAF_Colt_pointer";
+								firemode="arifle_NAF_C7NLD_ACO_pointer:Single";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_556x45_Stanag_green";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=3;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=5;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=6;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Shades_Black";
+							headgear="NAF_H_Helmet_nfpg";
+						};
 					};
 					id=14046;
 					type="NAF_Soldier_nfpg";
@@ -24851,6 +24909,105 @@ class Intro
 					flags=3;
 					class Attributes
 					{
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_NAF_C7NLD_ACO_pointer";
+								optics="optic_NAF_Colt";
+								flashlight="acc_NAF_Colt_pointer";
+								firemode="arifle_NAF_C7NLD_ACO_pointer:Single";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_556x45_Stanag_green";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=3;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=5;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=6;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							headgear="NAF_H_Helmet_nfpg";
+						};
 					};
 					id=14048;
 					type="NAF_Soldier_nfpg";
@@ -24987,7 +25144,7 @@ class Intro
 					};
 					id=14823;
 					type="NAF_Soldier_nfpg";
-					atlOffset=-1.9073486e-06;
+					atlOffset=4.3869019e-05;
 				};
 				class Item1
 				{
@@ -24998,13 +25155,13 @@ class Intro
 						angles[]={0.035988688,2.2544594,0.046635196};
 					};
 					side="West";
-					flags=6;
+					flags=2;
 					class Attributes
 					{
 					};
 					id=14824;
 					type="NAF_Soldier_nfpg";
-					atlOffset=-1.9073486e-06;
+					atlOffset=2.4541225;
 				};
 				class Item2
 				{
@@ -25015,13 +25172,12 @@ class Intro
 						angles[]={0.035988688,2.2544594,0.046635196};
 					};
 					side="West";
-					flags=4;
 					class Attributes
 					{
 					};
 					id=14825;
 					type="NAF_Soldier_nfpg";
-					atlOffset=-1.9073486e-06;
+					atlOffset=2.4541225;
 				};
 				class Item3
 				{
@@ -25200,6 +25356,7 @@ class Intro
 					};
 					id=14092;
 					type="NAF_Soldier_nfpg";
+					atlOffset=-3.8146973e-06;
 				};
 				class Item1
 				{
@@ -25321,6 +25478,7 @@ class Intro
 				};
 			};
 			id=14090;
+			atlOffset=-0.00044250488;
 		};
 		class Item12
 		{
@@ -25337,6 +25495,7 @@ class Intro
 			};
 			id=14091;
 			type="NAF_Amarok_comms_nfpg";
+			atlOffset=-0.00044250488;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -25693,6 +25852,105 @@ class Intro
 					flags=3;
 					class Attributes
 					{
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_NAF_C7NLD_ACO_pointer";
+								optics="optic_NAF_Colt";
+								flashlight="acc_NAF_Colt_pointer";
+								firemode="arifle_NAF_C7NLD_ACO_pointer:Single";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_556x45_Stanag_green";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=3;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrierSpec_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=5;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=6;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							headgear="NAF_H_Helmet_nfpg";
+						};
 					};
 					id=14118;
 					type="NAF_Soldier_UAV_nfpg";
@@ -25826,6 +26084,100 @@ class Intro
 					flags=3;
 					class Attributes
 					{
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_NAF_C7NLD_ACO_pointer";
+								optics="optic_NAF_Colt";
+								flashlight="acc_NAF_Colt_pointer";
+								firemode="arifle_NAF_C7NLD_ACO_pointer:Single";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_556x45_Stanag_green";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVTV_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=3;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=4;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=2;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Aviator";
+							headgear="NAF_H_MilCap_nfpg";
+						};
 					};
 					id=14120;
 					type="NAF_Soldier_lite_nfpg";
@@ -25959,9 +26311,96 @@ class Intro
 					flags=7;
 					class Attributes
 					{
-						init="this spawn { " \n "    _tgs=[t1,t2,t3]; " \n "    while {alive _this && alive (_tgs#0) && alive (_tgs#1) && alive (_tgs#2)} do  " \n "    { " \n "        _t = (selectRandom _tgs); " \n "        _this doTarget _t; " \n "        sleep 0.5; " \n "        gl action [""useWeapon"", vehicle _this, _this, 2]; " \n "        sleep 5; " \n "        _this doWatch _t " \n "    }; " \n "};";
+						init="this spawn { " \n "    _tgs=[t1,t2,t3]; " \n "    while {alive _this && alive (_tgs#0) && alive (_tgs#1) && alive (_tgs#2)} do  " \n "    { " \n "        _t = (selectRandom _tgs); " \n "        _this doTarget _t; " \n "        sleep 0.5; " \n "        gl action [""useWeapon"", vehicle _this, _this, 1]; " \n "        sleep 5; " \n "        _this doWatch _t " \n "    }; " \n "};";
 						name="g1";
 						stance="Down";
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="LMG_Zafir_ARCO_F";
+								optics="optic_Arco";
+								firemode="LMG_Zafir_ARCO_F:FullAuto";
+								class primaryMuzzleMag
+								{
+									name="150Rnd_762x54_Box";
+									ammoLeft=150;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=4;
+									class Item0
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="150Rnd_762x54_Box";
+										count=2;
+										ammoLeft=150;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="rhs_googles_yellow";
+							headgear="NAF_H_Helmet_nfpg";
+						};
 					};
 					id=13999;
 					type="NAF_Heavygunner_nfpg";
@@ -26087,6 +26526,94 @@ class Intro
 					flags=5;
 					class Attributes
 					{
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_NAF_C8NLD_ACO_pointer";
+								optics="optic_NAF_Colt";
+								flashlight="acc_NAF_Colt_pointer";
+								firemode="arifle_NAF_C8NLD_ACO_pointer:Single";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_556x45_Stanag_green";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=3;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=3;
+									class Item0
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item1
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Aviator";
+							headgear="NAF_H_MilCap_nfpg";
+						};
 					};
 					id=14001;
 					type="NAF_Officer_nfpg";
@@ -26258,9 +26785,96 @@ class Intro
 					flags=7;
 					class Attributes
 					{
-						init="this spawn { " \n "    _tgs=[t4,t5,t6]; " \n "    while {alive _this && alive (_tgs#0) && alive (_tgs#1) && alive (_tgs#2)} do  " \n "    { " \n "        _t = (selectRandom _tgs); " \n "        _this doTarget _t; " \n "        sleep 0.5; " \n "        gl action [""useWeapon"", vehicle _this, _this, 2]; " \n "        sleep 5; " \n "        _this doWatch _t " \n "    }; " \n "};";
+						init="this spawn { " \n "    _tgs=[t4,t5,t6]; " \n "    while {alive _this && alive (_tgs#0) && alive (_tgs#1) && alive (_tgs#2)} do  " \n "    { " \n "        _t = (selectRandom _tgs); " \n "        _this doTarget _t; " \n "        sleep 0.5; " \n "        gl action [""useWeapon"", vehicle _this, _this, 1]; " \n "        sleep 5; " \n "        _this doWatch _t " \n "    }; " \n "};";
 						name="g2";
 						stance="Down";
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="LMG_Zafir_ARCO_F";
+								optics="optic_Arco";
+								firemode="LMG_Zafir_ARCO_F:FullAuto";
+								class primaryMuzzleMag
+								{
+									name="150Rnd_762x54_Box";
+									ammoLeft=150;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=4;
+									class Item0
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="150Rnd_762x54_Box";
+										count=2;
+										ammoLeft=150;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="rhs_googles_orange";
+							headgear="NAF_H_Helmet_nfpg";
+						};
 					};
 					id=13997;
 					type="NAF_Heavygunner_nfpg";
@@ -26386,6 +27000,94 @@ class Intro
 					flags=5;
 					class Attributes
 					{
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_NAF_C8NLD_ACO_pointer";
+								optics="optic_NAF_Colt";
+								flashlight="acc_NAF_Colt_pointer";
+								firemode="arifle_NAF_C8NLD_ACO_pointer:Single";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_556x45_Stanag_green";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=15;
+								};
+							};
+							class uniform
+							{
+								typeName="NAF_U_GVT_nfpg";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_556x45_Stanag_green";
+										count=3;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="NAF_V_PlateCarrier1_nfpm";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=3;
+									class Item0
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=15;
+									};
+									class Item1
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Aviator";
+							headgear="NAF_H_MilCap_nfpg";
+						};
 					};
 					id=14003;
 					type="NAF_Officer_nfpg";
