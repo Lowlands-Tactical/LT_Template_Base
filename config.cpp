@@ -44,18 +44,22 @@ class CfgSettings
 	};
 };
 
-class cfgMainMenuSpotlight
+class cfgAddons
 {
-	class JoinServer
-	{
-		text = "Lowlands Tactical Server";
-		picture = "LT_Template_Base\logos\lowtac-server-banner.paa";
-		action = "connectToServer ['arma3.lowtac.nl', 2302, 'TacLow']";
-		actionText = "Join the Lowtac Server";
-		condition = "true";
-	};
+    class PreloadAddons
+    {
+        class LT
+        {
+            list[]=
+            {
+                "lt_template_base",
+                "lt_template_gear"
+            };
+        };
+    };
 };
 
+#include "cfgMissions.hpp"
 #include "cfgFunctions.hpp"
 #include "cfg3DEN.hpp"
 #include "cfgVehicles.hpp"
