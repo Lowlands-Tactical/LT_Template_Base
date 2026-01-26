@@ -37,5 +37,9 @@ enableSaving [ false, false ];
     //--- RandomPos3
     {
         ["InitDummy",["Altis",[26731.2,24617.5,5.75008],101.225,0.7,[-14.4763,0],0,0,720,0.3,1,1,0,1]] call bis_fnc_camera;
+    },
+    //--- AR Baan
+    {
+        ["InitDummy",["Altis",[26833.3,24520.3,4.44752],219.95,0.75,[-12.3396,0],0,0,720,0.3,1,1,0,1]] call bis_fnc_camera;
     }
 ] call BIS_fnc_initWorldScene;
