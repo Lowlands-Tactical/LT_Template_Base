@@ -59,7 +59,18 @@ class cfgAddons
     };
 };
 
-#include "cfgMissions.hpp"
+class cfgMainMenuSpotlight
+{
+	class JoinServer
+	{
+		text = """Lowtac Server""";
+		picture = "LT_Template_Base\logos\lowtac-server-banner.paa";
+		action = "connectToServer ['arma3.lowtac.nl', 2302, 'TacLow']";
+		actionText = "Join the Lowtac Server";
+		condition = "true";
+	};
+};
+
 #include "cfgFunctions.hpp"
 #include "cfg3DEN.hpp"
 #include "cfgVehicles.hpp"
