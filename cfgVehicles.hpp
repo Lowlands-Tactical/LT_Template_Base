@@ -29,4 +29,5 @@ class CfgVehicles
 	#include "\lt_template_base\Modules\Resupply.hpp"
 	#include "\lt_template_base\Modules\Defense.hpp"
 	#include "\lt_template_base\Modules\UnitSpawner.hpp"
+	#include "\lt_template_base\Modules\Convoy.hpp"
 };

@@ -37,6 +37,11 @@ class cfgFunctions
 		class Defense {};
 		class UnitSpawner {};
 	};
+	class Convoy
+	{
+		file="\lt_template_base\functions\Convoy";
+		class initConvoy {};
+	};
   };
   class FRED
   {
