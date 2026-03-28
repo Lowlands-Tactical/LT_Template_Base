@@ -41,14 +41,14 @@ _sideArr = ["WEST","EAST","GUER"];
 }forEach _sideArr;
 lbSetCurSel [620, 0];
 
-_loadArr = ["Empty","Custom","Crate Small","Crate Medium","Crate Large","Crate Explosives","Crate Mines","Crate Medical","Crate Weapons","Crate NVG","Crate Comms","Crate Air","Crate UAV"]; //every case in LT_fnc_vehicleLoadout
+_loadArr = ["Empty","Custom","Crate Squad","Crate Peleton","Crate Small","Crate Medium","Crate Large","Crate Explosives","Crate Mines","Crate Medical","Crate Weapons","Crate NVG","Crate Comms","Crate Air","Crate UAV"]; //every case in LT_fnc_vehicleLoadout
 {
 	lbAdd [621, _x];
 	lbSetData [621, _forEachIndex, _x];
 }forEach _loadArr;
 lbSetCurSel [621,0];
 
-_roleArr = ["com","sql","jtac","ftl","gren","comms","rifl","riflat","riflaa","dmr","ar","aar","medic","eng","hmg","hmga","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"];
+_roleArr = ["com","sql","jtac","ftl","gren","comms","rifl","riflat","riflaa","dmr","ar","aar","medic","eng","hmg","hat","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"];
 {
 	lbAdd [631, _x];
 	lbSetData [631, _forEachIndex, _x];

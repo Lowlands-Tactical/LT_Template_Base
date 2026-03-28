@@ -188,7 +188,7 @@ class Cfg3DEN
 						class LT_Role_MEDIC 	{data = "medic";	text = "Medic";};
 						class LT_Role_ENG 		{data = "eng";		text = "Engineer";};
 						class LT_Role_HMG		{data = "hmg";		text = "Heavy Machine Gunner";};
-						class LT_Role_HMGA		{data = "hmga";		text = "Assistant Heavy Machine Gunner";};
+						class LT_Role_HAT		{data = "hat";		text = "Heavy Anti Tank";};
 						class LT_Role_VHCO 		{data = "vhco";		text = "Vehicle commander (repair)";};
 						class LT_Role_VHGU 		{data = "vhgu";		text = "Vehicle gunner (repair)";};
 						class LT_Role_VHDR 		{data = "vhdr";		text = "Vehicle driver (medic)";};
@@ -265,6 +265,8 @@ class Cfg3DEN
 					{
 						class LT_Role_Custom 	{data = "Custom";			text = "Custom (via arsenal)"; default = 1;};
 						class LT_Role_Empty 	{data = "Empty";			text = "Empty";};
+						class LT_Role_Squad 	{data = "Crate Squad";		text = "Squad Ammocrate";};
+						class LT_Role_Peleton 	{data = "Crate Peleton";	text = "Peleton Ammocrate";};
 						class LT_Role_Cr_Small 	{data = "Crate Small";		text = "Small Ammocrate";};
 						class LT_Role_Cr_Medium	{data = "Crate Medium";		text = "Medium Ammocrate";};
 						class LT_Role_Cr_Large	{data = "Crate Large";		text = "Large Ammocrate";};
@@ -296,6 +298,8 @@ class Cfg3DEN
 					class Items
 					{
 						class LT_Load_Empty 	{data = "Empty";			text = "Empty"; default = 1;};
+						class LT_Load_CR_Squad 	{data = "Crate Squad";		text = "Squad Ammocrate";};
+						class LT_Load_CR_Peleton{data = "Crate Peleton";	text = "Peleton Ammocrate";};
 						class LT_Load_Cr_Small 	{data = "Crate Small";		text = "Small Ammocrate";};
 						class LT_Load_Cr_Medium	{data = "Crate Medium";		text = "Medium Ammocrate";};
 						class LT_Load_Cr_Large	{data = "Crate Large";		text = "Large Ammocrate";};

@@ -71,6 +71,8 @@ _loadArr = [
 // Nothing
 	"None",
 // Default crates
+	"Crate Squad",
+	"Crate Peleton",
 	"Crate Small",
 	"Crate Medium",
 	"Crate Large",
