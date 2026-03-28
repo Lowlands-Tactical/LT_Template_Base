@@ -41,16 +41,6 @@ class cfgAddons
     };
 };
 
-// Root folder for our own modules
-class cfgFactionClasses
-{
-	class NO_CATEGORY;
-	class LT_missionModules : NO_CATEGORY
-	{
-		displayName = "Lowlands Tactical Modules";
-	};
-};
-
 class CfgFunctions
 {
 	class LT
