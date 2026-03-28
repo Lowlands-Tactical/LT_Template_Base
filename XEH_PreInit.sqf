@@ -8,8 +8,6 @@ Defines global variables and hashmaps used in the template.
 
 */
 
-#include "script_component.hpp"
-
 //Missions global variables
 lt_group_teleport = 0;
 lt_resupply = 0;

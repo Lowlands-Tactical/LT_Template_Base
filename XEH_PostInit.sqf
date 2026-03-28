@@ -8,8 +8,6 @@ Defines more global variables and hashmaps used in the template.
 
 */
 
-#include "script_component.hpp"
-
 _ltMission = getMissionConfigValue "LT_Loadout_ID";
 if (isNil "_ltMission") exitWith
 {
