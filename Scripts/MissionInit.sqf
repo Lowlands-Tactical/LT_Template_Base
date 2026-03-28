@@ -22,13 +22,6 @@ if (!hasInterface && !isDedicated) exitWith {};
 enableSentences false;
 enableEnvironment [false, true];
 
-Diag_log "[LT] (Mission) loading Safety";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemChat "[LT] (Mission) loading Safety";
-};
-[] execVM "\lt_template_base\Scripts\safeStart.sqf";
-
 if (isServer) then 
 {
     Diag_log "[LT] (Mission) loading Server Debug";
@@ -36,7 +29,7 @@ if (isServer) then
     {
         systemChat "[LT] (Mission) loading Server Debug";
     };
-    [] execVM "\lt_template_base\Scripts\server_debug.sqf";
+    [] execVM "\lt_template_base\scripts\server_debug.sqf";
 
     Diag_log "[LT] (Mission) loading Zeus Modules";
     if ("lt_debug" call bis_fnc_getParamValue == 1) then 
@@ -44,15 +37,13 @@ if (isServer) then
         systemChat "[LT] (Mission) loading Zeus Modules";
     };
     [] remoteExec ["LT_fnc_adminZeusModule", 2];
-
-    Diag_log "[LT] (Mission) loading Gear/Weapons";
+    //[] execVM "\lt_template_base\scripts\setLowtacFaces.sqf";
+    Diag_log "[LT] (Mission) loading vehicle gear";
     if ("lt_debug" call bis_fnc_getParamValue == 1) then 
     {
-        systemChat "[LT] (Mission) loading server Gear/Weapons";
+        systemChat "[LT] (Mission) loading vehicle gear";
     };
-    [] execVM "\lt_template_base\Scripts\prepLoadout_Server.sqf";
-    //[] execVM "\lt_template_base\Scripts\setLowtacFaces.sqf";
-    [] remoteExec ["LT_fnc_prepVehicleLoadout", 2];
+    [] remoteExec ["LT_fnc_InitPostVeh", 2];
 };
 
 if (hasinterface) then 
@@ -62,18 +53,12 @@ if (hasinterface) then
     // Because we want to start with the weapon lowered
     if (vehicle player == player) then {player switchMove "AmovPercMstpSrasWrflDnon_AmovPercMstpSlowWrflDnon";};
 
-    Diag_log "[LT] (Mission) loading player Gear/Weapons";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Mission) loading Gear/Weapons";
-    };
-    [player] remoteExec ["LT_fnc_prepPlayerLoadout", player];
+    _uid = getPlayerUID player;
+    _admin = _uid in (AdminCrew get "Staff");
     
-    _staffArray = missionNameSpace getVariable ["lt_staff", []];
-    _staffCheck = getPlayerUID player;
     if (didJIP) then 
     {
-        if (_staffCheck IN _staffArray) then 
+        if (_admin) then 
         {
             [] remoteExec ["LT_fnc_adminZeusModule", 2];
         };
@@ -99,10 +84,9 @@ if (hasinterface) then
             systemChat "[LT] (Mission) Fatigue off";
         };
     };
-
     if ("lt_markers" call bis_fnc_getParamValue == 1) then 
     {
-        [[],"\lt_template_base\Scripts\QS_icons.sqf"] remoteExec ["BIS_fnc_execVM", player];
+        [[],"\lt_template_base\scripts\QS_icons.sqf"] remoteExec ["BIS_fnc_execVM", player];
         
         Diag_log "[LT] (Mission) QS markers are enabled";
         if ("lt_debug" call bis_fnc_getParamValue == 1) then 
@@ -110,13 +94,11 @@ if (hasinterface) then
             systemChat "[LT] (Mission) QS markers are enabled";
         };
     };
-
     Diag_log "[LT] (Mission) Loading EvenHandlers";
     if ("lt_debug" call bis_fnc_getParamValue == 1) then 
     {
         systemChat "[LT] (Mission) Loading EvenHandlers";
     };
-
     player addAction 
     [
         "<t color='#FF0000'>Parachute</t>", 
@@ -134,68 +116,68 @@ if (hasinterface) then
     };
 
     if (LT_PermaDeath == 1) then 
-    {
-        player addMPEventHandler 
-        [
-            "MPkilled",
-            {
-                params ["_unit", "_killer"];
-                diag_log format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
-                if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-                {
-                    systemChat format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
-                };
-                //Because MPEventHandler MPKilled is executed globaly AND on evey client this makes sure its only on the client that died
-                if (local _unit) then 
-                {
-                    hintSilent format ["%1 died and now is spectating", name _unit];
-                    ["west", "east", "resistance", "civ"] call acre_api_fnc_babelsetSpokenlanguages;
-                    [true] call acre_api_fnc_setSpectator;
-                    ["Initialize", [_unit, [], true]] call BIS_fnc_EGSpectator;
-                };
-            }
-        ];
-    } else 
-    {
-        if (_staffCheck IN _staffArray) then 
-        {
-            player addMPEventHandler 
-            [
-                "MPkilled",
-                {
-                    findDisplay 46 displayAddEventHandler 
-                    [
-                        "KeyDown",
-                        {
-                            if (inputAction "CuratorInterface" > 0) then 
-                            {
-                                closeDialog 0;
-                            };
-                        }
-                    ]
-                }
-            ];
-        };
-        player addMPEventHandler 
-        [
-            "MPRespawn",
-            {
-                params ["_unit","_corpse"];
-                [_unit, _corpse] execVM "lt_template_base\Scripts\Respawn.sqf";
-            }
-        ];
-    };
+	{
+		player addMPEventHandler 
+		[
+			"MPkilled",
+			{
+				params ["_unit", "_killer"];
+				diag_log format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
+				if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+				{
+					systemChat format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
+				};
+				//Because MPEventHandler MPKilled is executed globaly AND on evey client this makes sure its only on the client that died
+				if (local _unit) then 
+				{
+					hintSilent format ["%1 died and now is spectating", name _unit];
+					["west", "east", "resistance", "civ"] call acre_api_fnc_babelsetSpokenlanguages;
+					[true] call acre_api_fnc_setSpectator;
+					["Initialize", [_unit, [], true]] call BIS_fnc_EGSpectator;
+				};
+			}
+		];
+	} else 
+	{
+		if (_admin) then 
+		{
+			player addMPEventHandler 
+			[
+				"MPkilled",
+				{
+					findDisplay 46 displayAddEventHandler 
+					[
+						"KeyDown",
+						{
+							if (inputAction "CuratorInterface" > 0) then 
+							{
+								closeDialog 0;
+							};
+						}
+					]
+				}
+			];
+		};
+		player addMPEventHandler 
+		[
+			"MPRespawn",
+			{
+				params ["_unit","_corpse"];
+				[_unit, _corpse] execVM "lt_template_base\scripts\Respawn.sqf";
+			}
+		];
+	};
 
     player createDiarySubject ["H3 Menu","H3 Menu"];
     Diag_log "[LT] (Mission) Loading briefing";
-    _adBrief = [] execVM "\lt_template_base\Scripts\BriefingAdmin.sqf";
+    _adBrief = [] execVM "\lt_template_base\scripts\BriefingAdmin.sqf";
     waitUntil {uiSleep 0.5; scriptDone _adBrief};
-    _chBrief = [] execVM "\lt_template_base\Scripts\Briefingchecklist.sqf";
+    _chBrief = [] execVM "\lt_template_base\scripts\Briefingchecklist.sqf";
     waitUntil {uiSleep 0.5; scriptDone _chBrief};
     
     if ("lt_debug" call bis_fnc_getParamValue == 1) exitWith 
     {
-        _dbBrief = [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
+        _dbBrief = [] execVM "\lt_template_base\scripts\BriefingDebug.sqf";
         waitUntil {uiSleep 0.5; scriptDone _dbBrief};
     };
 };

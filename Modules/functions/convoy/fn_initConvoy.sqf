@@ -13,14 +13,14 @@ if (isServer) then
 	// reads -->  On Each Vehicle: 	{"terminate_driverTransitions"}
 	for [{ _i = 0 }, { _i < count _groupVehicles }, { _i = _i + 1 }] do
 	{
-		call{ null = [_groupVehicles select _i] execFSM "\lt_template_base\functions\Convoy\fn_driverTransitions.fsm" };
+		call{ null = [_groupVehicles select _i] execFSM "\lt_template_base\modules\functions\convoy\fn_driverTransitions.fsm" };
 	};
 
-	call { null = [_logic,_groupVehicles] execFSM "\lt_template_base\functions\Convoy\fn_dynamicConvoyElements.fsm" };
-	call { null = [_logic,_groupVehicles] execFSM "\lt_template_base\functions\Convoy\fn_behaviorManager.fsm" };
-	call { null = [_logic,_groupVehicles] execVM "\lt_template_base\functions\Convoy\fn_leadSpeedControl.sqf" };
-	call { null = [_logic,_groupVehicles] execVM "\lt_template_base\functions\Convoy\fn_linkSpeedControl.sqf" };
-	call { null = [_logic,_groupVehicles] execVM "\lt_template_base\functions\Convoy\fn_pathCreator.sqf" };
+	call { null = [_logic,_groupVehicles] execFSM "\lt_template_base\modules\functions\convoy\fn_dynamicConvoyElements.fsm" };
+	call { null = [_logic,_groupVehicles] execFSM "\lt_template_base\modules\functions\convoy\fn_behaviorManager.fsm" };
+	call { null = [_logic,_groupVehicles] execVM "\lt_template_base\modules\functions\convoy\fn_leadSpeedControl.sqf" };
+	call { null = [_logic,_groupVehicles] execVM "\lt_template_base\modules\functions\convoy\fn_linkSpeedControl.sqf" };
+	call { null = [_logic,_groupVehicles] execVM "\lt_template_base\modules\functions\convoy\fn_pathCreator.sqf" };
 };
 
 true

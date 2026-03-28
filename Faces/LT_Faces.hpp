@@ -1,21 +1,28 @@
+/*#include "\lt_template_base\script_mod.hpp"
+
 class cfgPatches
 {
-	class lt_template_base_heads
+	class lt_template_base_faces
 	{
-        addonRootClass="lt_template_base";
-		name="lt_template_base_heads";
-		author="Lowlands Tactical";
+		name="Lowtac - Faces";
+		author=LT_AUTHOR;
+		authors[]={LT_AUTHORS};
 		url="http://lowtac.nl/";
-		requiredVersion=2.14;
+		requiredVersion=LT_REQVR;
 		requiredAddons[]=
 		{
-            "lt_template_base",
-			"A3_Characters_F"
+            "A3_Characters_F",
+			"lt_template_base"
 		};
 		units[]={};
 		weapons[]={};
+
+		//CBA versioning
+		version = VERSION;
+		versionStr = STR(VERSION_STR);
+		versionAR[] = {VERSION_AR};
 	};
-};
+};*/
 
 class cfgFaces
 {
@@ -64,7 +71,7 @@ class cfgFaces
 		class Ben: Default
         {
             displayname="Brainless_Ben";
-			texture="\lt_template_base\LT_Faces\data\Face_Ben_co.paa";
+			texture="\lt_template_base\Faces\data\Face_Ben_co.paa";
         };
 		*/
     };
