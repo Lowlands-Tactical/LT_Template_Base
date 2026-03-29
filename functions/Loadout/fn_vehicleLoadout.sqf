@@ -444,22 +444,22 @@ if (_check) then
 			_vehicle addBackpackCargoGlobal [_itemsRole select 4, 4];
 		};
 	};
+	sleep 0.2;
+
+	_packsCrate = everyBackpack _vehicle;
+	{
+		if (typeOf _x == (_itemsRole select 5)) then
+		{
+			_medPack = _x;
+			{
+				_medPack addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
+				[_medPack, 450] remoteExec ["LT_fnc_resetMaxLoad"];
+			}forEach _itemsMedic;
+		};
+	}forEach _packsCrate;
 };
 
-_packsCrate = everyBackpack _vehicle;
-{
-	if (typeOf _x == (_itemsRole select 5)) then
-	{
-		_medPack = _x;
-		{
-			_medPack addItemCargoGlobal [_x, _itemsMedicAmt select _forEachIndex];
-			[_medPack, 450] remoteExec ["LT_fnc_resetMaxLoad"];
-		}forEach _itemsMedic;
-	};
-}forEach _packsCrate;
-
-sleep 0.2;
-
+_check = true;
 [_vehicle, ((ceil(loadabs _vehicle)) +1000)] remoteExec ["LT_fnc_resetMaxLoad"];
 
 sleep 0.2;
