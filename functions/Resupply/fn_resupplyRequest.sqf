@@ -31,7 +31,7 @@ if (!isServer) exitWith {Diag_log "[LT] (Resupply) You are not server";};
 
 params [
 	["_pos", [0,0,0], [[0,0,0]]],
-	["_side", west, [west]],
+	["_side", "WEST", ["WEST"]],
 	["_vehicle", "", [""]],
 	["_crate", "", [""]],
 	["_load1", "Empty", ["Empty"]],

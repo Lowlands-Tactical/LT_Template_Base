@@ -218,7 +218,7 @@ switch (_code) do
             <t size='1'>Shift + Alt = East To West</t><br/>
         ";
         onMapSingleClick '
-            [_pos, side player, veh, cra, lo1, lo2, lo3, _shift, _alt] remoteExec ["LT_fnc_ResupplyRequest", 2];
+            [_pos, str(side player), veh, cra, lo1, lo2, lo3, _shift, _alt] remoteExec ["LT_fnc_ResupplyRequest", 2];
             onMapSingleClick "";
             openMap [false, false];
             hintsilent "Resupply on the way";
