@@ -130,14 +130,14 @@ class Extended_PreInit_EventHandlers
 {
 	class LT_Template_Base_Pre
 	{
-		serverinit="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
 	};
 };
 class Extended_PostInit_EventHandlers
 {
 	class LT_Template_Base_Post
 	{
-		serverinit="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
 	};
 };
 
