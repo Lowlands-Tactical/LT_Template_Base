@@ -165,8 +165,8 @@ _spnVeh setVehicleAmmo 0;
 _spnVeh lock false;
 _spnVeh flyInHeight _wpHeight;
 _spnGrp setVariable ["LT_Resupply_Crate", _crate];
-_spnGrp setVariable ["LT_Resupply_Chute", "B_Parachute_02_F"];
-_spnGrp setVariable ["LT_veh_side", _side];
+_spnGrp setVariable ["LT_Resupply_Chute", _shute];
+_spnGrp setVariable ["LT_Resupply_Side", _side];
 
 // Add event handler to notifi if the respawn vehicle is destroyed
 _spnVeh addMPEventHandler 

@@ -26,8 +26,8 @@ if (_loadoutType == "None") exitWith {};
 // Import variable attached to the group in fnc_ResupplyRequest
 _crate = (group _pilot) getVariable "LT_Resupply_Crate";
 _chute = (group _pilot) getVariable "LT_Resupply_Chute";
-_side = (group _pilot) getVariable "LT_veh_side";
 _nvg = "lt_gear_nvg" call bis_fnc_getParamValue;
+_side = (group _pilot) getVariable "LT_Resupply_Side";
 
 // Extra crate check in case of special demand
 _crate = switch (_loadoutType) do 
