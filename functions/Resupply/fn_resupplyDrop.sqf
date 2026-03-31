@@ -114,26 +114,20 @@ if (sunOrMoon == 1) then
 	_dropObjAtt pushback _smoke;
 } else 
 {
-	if (_nvg == 0) then 
-	{
-		private _light = "#lightpoint" createVehicleLocal (position _dropObj);
+	private _light = "#lightpoint" createVehicleLocal (position _dropObj);
 		_light attachTo [_dropObj, [0,0,0]];
+	if (_nvg) then 
+	{
 		_light setLightColor [0.85,0.4,0.1];
 		_light setLightAmbient [0.85,0.4,0.1];
 		_light setLightUseFlare true;
 		_light setLightFlareSize 10;
 		_light setLightFlareMaxDistance 100000;
-		_light setLightIntensity 100000;
-		_dropObjAtt pushback _light;
 	} else 
 	{
-		private _light = "#lightpoint" createVehicleLocal (position _dropObj);
-		_light attachTo [_dropObj, [0,0,0]];
-		_light setLightColor [0.85,0.4,0.1];
 		_light setLightIR true;
-		_light setLightIntensity 10000;
-		_dropObjAtt pushback _light;
 	};
+	_light setLightIntensity 10000;
 };
 
 // Wait for the crate fo be on the ground
@@ -173,39 +167,27 @@ waitUntil
 		deleteVehicle _smoke;
 	} else 
 	{
-		if (_nvg == 0) then 
+		private _light = "#lightpoint" createVehicleLocal (position _dropObj);
+		_light attachTo [_dropObj, [0,0,0]];
+		_light setLightColor [0.85,0.4,0.1];
+		if (_nvg) then 
 		{
-			private _light = "#lightpoint" createVehicleLocal (position _dropObj);
-			_light attachTo [_dropObj, [0,0,0]];
-			_light setLightColor [0.85,0.4,0.1];
 			_light setLightAmbient [0.85,0.4,0.1];
 			_light setLightUseFlare true;
 			_light setLightFlareSize 10;
 			_light setLightFlareMaxDistance 10000;
-			_light setLightIntensity 10000;
-			for "_i" from 0 to 50 do 
-			{
-				_light setLightIntensity 10000;
-				uiSleep 2;
-				_light setLightIntensity 1000;
-				uiSleep 2;
-			};
-			deleteVehicle _light;
 		} else 
 		{
-			private _light = "#lightpoint" createVehicleLocal (position _dropObj);
-			_light attachTo [_dropObj, [0,0,0]];
-			_light setLightColor [0.85,0.4,0.1];
 			_light setLightIR true;
-			_light setLightIntensity 10000;
-			for "_i" from 0 to 50 do 
-			{
-				_light setLightIntensity 10000;
-				uiSleep 2;
-				_light setLightIntensity 1000;
-				uiSleep 2;
-			};
-			deleteVehicle _light;
 		};
+		_light setLightIntensity 10000;
+		for "_i" from 0 to 50 do 
+		{
+			_light setLightIntensity 10000;
+			uiSleep 2;
+			_light setLightIntensity 1000;
+			uiSleep 2;
+		};
+		deleteVehicle _light;
 	};
 };
