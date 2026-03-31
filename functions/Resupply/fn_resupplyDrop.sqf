@@ -60,26 +60,29 @@ _crate = switch (_loadoutType) do
 //Default
 	default {_crate};
 };
-_loadoutType = switch (_loadoutType) do 
+
+_loadName = TabletSettings get "LOAD";
+_loadoutType = switch (_loadoutType) do
 {
 //Base
-	case "King Quad": {"Crate Small"};
-	case "Amarok Green": {"Crate Medium"};
-	case "Amarok Tan": {"Crate Medium"};
-	case "Assault Boat": {"Crate Small"};
-	case "NLD RHIB": {"Crate Medium"};
-	case "FRISC Motorboat": {"Crate Medium"};
+	case "King Quad":{_loadName #3};		//Crate Small
+	case "Amarok Green":{_loadName #4};		//Crate Medium
+	case "Amarok Tan":{_loadName #4};		//Crate Medium
+	case "Assault Boat":{_loadName #3};		//Crate Small
+	case "NLD RHIB":{_loadName #4};			//Crate Medium
+	case "FRISC Motorboat":{_loadName #4};	//Crate Medium
 //GM
-	case "K125 Motor":{"Crate Small"};
-	case "Pkw 2 Beatle":{"Crate Small"};
-	case "Pkw 8 VW":{"Crate Small"};
-	case "Jeep Cargo":{"Crate Medium"};
-	case "Jeep MG3":{"Crate Medium"};
-	case "Jeep LATGM":{"Crate Medium"};
+	case "K125 Motor":{_loadName #3};		//Crate Small
+	case "Pkw 2 Beatle":{_loadName #3};		//Crate Small
+	case "Pkw 8 VW":{_loadName #3};		 	//Crate Small
+	case "Jeep Cargo":{_loadName #4};		//Crate Medium
+	case "Jeep MG3":{_loadName #4};			//Crate Medium
+	case "Jeep LATGM":{_loadName #4};		//Crate Medium
 //VN
-	case "Jeep":{"Crate Medium"};
-	case "Jeep MG":{"Crate Medium"};
-	case "Gun Boat":{"Crate Medium"};
+	case "Jeep":{_loadName #4};				//Crate Medium
+	case "Jeep MG":{_loadName #4};			//Crate Medium
+	case "Gun Boat":{_loadName #4};			//Crate Medium
+//Default
 	default {_loadoutType};
 };
 
