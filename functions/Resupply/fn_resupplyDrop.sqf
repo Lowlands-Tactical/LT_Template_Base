@@ -104,14 +104,12 @@ private _spnChut = createVehicle [_chute, position _dropObj, [], 0, "NONE"];
 _spnChut setVelocity (velocity _dropObj);
 _spnChut setDir (direction _dropObj);
 _dropObj attachTo [_spnChut, [0,0,-1]];
-_dropObjAtt = [];
 
 // Checks if mission is in day or night and attaches the right smoke/light
 if (sunOrMoon == 1) then 
 {
 	_smoke = createVehicle ["SmokeShellOrange", [0,0,0], [], 0, "NONE"];
 	_smoke attachTo [_dropObj, [0,0,0]];
-	_dropObjAtt pushback _smoke;
 } else 
 {
 	private _light = "#lightpoint" createVehicleLocal (position _dropObj);
@@ -137,14 +135,13 @@ waitUntil
 	(((position _dropObj select 2) < 1));
 };
 
-[_dropObj, _dropObjAtt, _crate, _spnChut, _loadoutType, _nvg, _side] spawn 
+[_dropObj, _crate, _spnChut, _loadoutType, _nvg, _side] spawn 
 {
-	params ["_dropObj","_dropObjAtt","_crate","_spnChut","_loadoutType","_nvg","_side"];
+	params ["_dropObj","_crate","_spnChut","_loadoutType","_nvg","_side"];
 	
 	private _dropPos = position _dropObj;
 	private _dropDir = direction _dropObj;
 	deleteVehicle _dropObj;
-	deleteVehicle (_dropObjAtt select 0);
 
 	_spnObj = createVehicle [_crate, [(_dropPos select 0), (_dropPos select 1), 0.1], [], 0, "CAN_COLLIDE"];
 	_spnObj setDir _dropDir;
