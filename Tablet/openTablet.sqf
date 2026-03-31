@@ -31,7 +31,7 @@ _missionPeriod = MissionSettings get "Period";
 _vehArr = TabletSettings get "VEH";
 _crateArr = TabletSettings get "CRATE";
 _loadArr = TabletSettings get "LOAD";
-_extraArr = (TabletSettings get "EXTRA") get _missionPeriod;
+_extraArr = ((TabletSettings get "EXTRA") get _missionPeriod);
 
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
@@ -51,29 +51,18 @@ playerArr = [];
 lbSetCurSel [550,0];
 
 // Add period appropriate vehicles/crates/loadouts
+_vehExtrArr = _extraArr get "VEH";
 {
-	if (_x == "VEH") then
-	{
-		_arr = _extraArr get _x;
-		{
-			_vehArr pushback _x;
-		}forEach _arr;
-	};
-	if (_x == "CRATE") then
-	{
-		_arr = _extraArr get _x;
-		{
-			_crateArr pushback _x;
-		}forEach _arr;
-	};
-	if (_x == "LOAD") then
-	{
-		_arr = _extraArr get _x;
-		{
-			_loadArr pushback _x;
-		}forEach _arr;
-	};
-}forEach _extraArr;
+	_vehArr pushback _x;
+}forEach _vehExtrArr;
+_crateExtrArr = _extraArr get "CRATE";
+{
+	_crateArr pushback _x;
+}forEach _crateExtrArr;
+_loadExtrArr = _extraArr get "LOAD";
+{
+	_loadArr pushback _x;
+}forEach _loadExtrArr;
 
 {
 	_vehName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
