@@ -26,11 +26,11 @@ if (_loadoutType == "None") exitWith {};
 // Import variable attached to the group in fnc_ResupplyRequest
 _crate = (group _pilot) getVariable "LT_Resupply_Crate";
 _chute = (group _pilot) getVariable "LT_Resupply_Chute";
-_nvg = "lt_gear_nvg" call bis_fnc_getParamValue;
 _side = (group _pilot) getVariable "LT_Resupply_Side";
+_nvg = (MissionSettings get "NVG");
 
 // Extra crate check in case of special demand
-_crate = switch (_loadoutType) do 
+_crate = switch (_loadoutType) do
 {
 //Base
 	case "M2 HMG": {"B_G_HMG_02_high_F"};
@@ -57,6 +57,7 @@ _crate = switch (_loadoutType) do
 	case "Jeep":{"vn_b_wheeled_m151_01"};
 	case "Jeep MG":{"vn_b_wheeled_m151_mg_02"};
 	case "Gun Boat":{"vn_b_boat_09_01"};
+//Default
 	default {_crate};
 };
 _loadoutType = switch (_loadoutType) do 
