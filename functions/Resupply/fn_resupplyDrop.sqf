@@ -152,7 +152,7 @@ waitUntil
 	[_spnObj, _side, _loadoutType] remoteExec ["LT_fnc_VehicleLoadout", 2];
 
 	// if createdvehicle is a remote designator add ai
-	if (_crate == "B_W_Static_Designator_01_F") then 
+	if (_crate == "B_W_Static_Designator_01_F") exitWith 
 	{
 		createVehicleCrew _spnObj;
 		[_spnObj] joinSilent (createGroup _side);
