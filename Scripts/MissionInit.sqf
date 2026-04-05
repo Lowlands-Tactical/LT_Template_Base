@@ -166,6 +166,47 @@ if (hasinterface) then
 				[_unit, _corpse] execVM "lt_template_base\scripts\Respawn.sqf";
 			}
 		];
+        player addMPEventHandler 
+		[
+			"GetOutMan",
+			{
+				params ["_unit", "_role", "_vehicle", "_turret", "_isEject"];
+                if (_vehicle isKindOf "ParachuteBase") then
+                {
+                    _unitRole = _unit getVariable "LT_unit_role";
+                    _unitSide = str(side _unit);
+                    _airRoles = RoleSettings get "wpnAir";
+                    if (_unitRole IN _airRoles) then
+                    {
+                        _missionPeriod = MissionSettings get "Period";
+                        _gear = switch (_unitSide) do {
+                            case "WEST":{westGear};
+                            case "EAST":{eastGear};
+                            case "GUER":{guerGear};
+                        };
+                        _weapon = switch (_unitSide) do {
+                            case "WEST":{westWeapons};
+                            case "EAST":{eastWeapons};
+                            case "GUER":{guerWeapons};
+                        };
+                        
+                        _backpack = (_gear get "Backpack")#0;
+                        _items = (ItemsGear get "pilot") get _missionPeriod;
+                        _itemsAmt = (ItemsGear get "pilot") get "Amount";
+                        _ammo = [((_weapon get "AIR") get "Ammo")#0,((_weapon get "HG") get "Ammo")#0];
+                        _ammoAmt = [10,5];
+
+                        _pack = _backpack createVehicle (position _unit);
+                        {
+                            _pack addItemCargoGlobal [_x, _itemsAmt select _forEachIndex];
+                        }forEach _items;
+                        {
+                            _pack addItemCargoGlobal [_x, _ammoAmt select _forEachIndex];
+                        }forEach _ammo;
+                    };
+                };
+			}
+		];
 	};
 
     player createDiarySubject ["H3 Menu","H3 Menu"];
