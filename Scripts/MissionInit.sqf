@@ -166,7 +166,7 @@ if (hasinterface) then
 				[_unit, _corpse] execVM "lt_template_base\scripts\Respawn.sqf";
 			}
 		];
-        player addMPEventHandler 
+        player addEventHandler 
 		[
 			"GetOutMan",
 			{
@@ -203,6 +203,19 @@ if (hasinterface) then
                         {
                             _pack addItemCargoGlobal [_x, _ammoAmt select _forEachIndex];
                         }forEach _ammo;
+                        
+                        diag_log format ["[LT] (Parachute) %1 landed backpack:%2 has been spawned", name _unit,_pack];
+                        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+                        {
+                            systemChat format ["[LT] (Parachute) %1 landed backpack:%2 has been spawned", name _unit,_pack];
+                        };
+                    }else
+                    {
+                        diag_log format ["[LT] (Parachute) %1 landed but gets no backpack", name _unit];
+                        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+                        {
+                            systemChat format ["[LT] (Parachute) %1 landed but gets no backpack", name _unit];
+                        };
                     };
                 };
 			}
