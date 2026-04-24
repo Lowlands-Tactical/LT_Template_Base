@@ -7,7 +7,7 @@ Description:
 If conditions are met players wil be airdropped.
 
 Example:
-[] execVM "\lt_template_base\Scripts\paradrop.sqf";
+[] execVM "\lt_template_base\scripts\paradrop.sqf";
 
 */
 

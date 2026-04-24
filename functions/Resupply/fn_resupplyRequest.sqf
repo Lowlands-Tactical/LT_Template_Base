@@ -29,9 +29,21 @@ Returns:
 
 if (!isServer) exitWith {Diag_log "[LT] (Resupply) You are not server";};
 
-params [
+_pos = param [0,[0,0,0],[[0,0,0]]];
+_side = param [1,"WEST",["WEST"]];
+_vehicle = param [2,"",[""]];
+_crate = param [3,"",[""]];
+_load1 = param [4,"Empty",["Empty"]];
+_load2 = param [5,"Empty",["Empty"]];
+_load3 = param [6,"Empty",["Empty"]];
+_shift = param [7,false,[false]];
+_alt = param [8,false,[false]];
+
+_shute = "B_Parachute_02_F";
+
+/*params [
 	["_pos", [0,0,0], [[0,0,0]]],
-	["_side", west, [west]],
+	["_side", "WEST", ["WEST"]],
 	["_vehicle", "", [""]],
 	["_crate", "", [""]],
 	["_load1", "Empty", ["Empty"]],
@@ -39,7 +51,7 @@ params [
 	["_load3", "Empty", ["Empty"]],
 	["_shift", false, [false]],
 	["_alt", false, [false]]
-];
+];*/
 
 // Check if vehicle and crate are defined
 if (_vehicle == "" OR _crate == "") exitWith 
@@ -165,8 +177,8 @@ _spnVeh setVehicleAmmo 0;
 _spnVeh lock false;
 _spnVeh flyInHeight _wpHeight;
 _spnGrp setVariable ["LT_Resupply_Crate", _crate];
-_spnGrp setVariable ["LT_Resupply_Chute", "B_Parachute_02_F"];
-_spnGrp setVariable ["LT_veh_side", _side];
+_spnGrp setVariable ["LT_Resupply_Chute", _shute];
+_spnGrp setVariable ["LT_Resupply_Side", _side];
 
 // Add event handler to notifi if the respawn vehicle is destroyed
 _spnVeh addMPEventHandler 

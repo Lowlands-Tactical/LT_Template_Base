@@ -25,29 +25,45 @@ class Cfg3DEN
 						condition = "objectBrain + objectControllable"; 
 						typeName = "STRING"; 
 					};
-					class LT_unit_gear
+					class LT_unit_link
 					{
-						displayName = "Has weapon/consumables";
-						tooltip = "Select if unit get weapon/consumables (grenade/smoke/medic)";
-						property = "LT_unit_gear_ID";
-						control = "CheckboxNumber";
-						expression = "_this setVariable ['LT_unit_gear',_value,true];";
-						validate = "number";
-						defaultValue = 1;
+						displayName = "Has Navigation";
+						tooltip = "Gets navigation items map/gps/bino";
+						property = "LT_unit_link_ID";
+						control = "Checkbox";
+						expression = "_this setVariable ['LT_unit_link',_value,true];";
 						condition = "objectBrain + objectControllable"; 
-						typeName = "NUMBER";
+						typeName = "BOOL";
 					};
-					class LT_unit_item
+					class LT_unit_items
+					{
+						displayName = "Has consumables";
+						tooltip = "Gets consumables (grenade/smoke/medic)";
+						property = "LT_unit_item_ID";
+						control = "Checkbox";
+						expression = "_this setVariable ['LT_unit_item',_value,true];";
+						condition = "objectBrain + objectControllable"; 
+						typeName = "BOOL";
+					};
+					class LT_unit_weapon
 					{
 						displayName = "Has role items";
-						tooltip = "Select if unit has role specific items (medic/supply engineer/toolkit)";
-						property = "LT_unit_item_ID";
-						control = "CheckboxNumber";
-						expression = "_this setVariable ['LT_unit_item',_value,true];";
-						validate = "number";
-						defaultValue = 1;
+						tooltip = "Gets default weapon/ammo";
+						property = "LT_unit_weapon_ID";
+						control = "Checkbox";
+						expression = "_this setVariable ['LT_unit_weapon',_value,true];";
 						condition = "objectBrain + objectControllable"; 
-						typeName = "NUMBER";
+						typeName = "BOOL";
+					};
+					class LT_unit_gear
+					{
+						displayName = "Has consumables";
+						tooltip = "Gets role specific gear (medic/eod/at/mmg)";
+						property = "LT_unit_gear_ID";
+						control = "Checkbox";
+						expression = "_this setVariable ['LT_unit_gear',_value,true];";
+						condition = "objectBrain + objectControllable"; 
+						typeName = "BOOL";
 					};
 				};
 			};
@@ -187,8 +203,8 @@ class Cfg3DEN
 						class LT_Role_AAR 		{data = "aar";		text = "Assistant automatic rifleman";};
 						class LT_Role_MEDIC 	{data = "medic";	text = "Medic";};
 						class LT_Role_ENG 		{data = "eng";		text = "Engineer";};
-						class LT_Role_HMG		{data = "hmg";		text = "Heavy Machine Gunner";};
-						class LT_Role_HAT		{data = "hat";		text = "Heavy Anti Tank";};
+						class LT_Role_HMG		{data = "mmg";		text = "Medium Machine Gunner";};
+						class LT_Role_HAT		{data = "mat";		text = "Medium Anti Tank";};
 						class LT_Role_VHCO 		{data = "vhco";		text = "Vehicle commander (repair)";};
 						class LT_Role_VHGU 		{data = "vhgu";		text = "Vehicle gunner (repair)";};
 						class LT_Role_VHDR 		{data = "vhdr";		text = "Vehicle driver (medic)";};

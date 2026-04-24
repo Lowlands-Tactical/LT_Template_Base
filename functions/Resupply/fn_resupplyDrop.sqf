@@ -26,11 +26,11 @@ if (_loadoutType == "None") exitWith {};
 // Import variable attached to the group in fnc_ResupplyRequest
 _crate = (group _pilot) getVariable "LT_Resupply_Crate";
 _chute = (group _pilot) getVariable "LT_Resupply_Chute";
-_side = (group _pilot) getVariable "LT_veh_side";
-_nvg = "lt_gear_nvg" call bis_fnc_getParamValue;
+_side = (group _pilot) getVariable "LT_Resupply_Side";
+_nvg = (MissionSettings get "NVG");
 
 // Extra crate check in case of special demand
-_crate = switch (_loadoutType) do 
+_crate = switch (_loadoutType) do
 {
 //Base
 	case "M2 HMG": {"B_G_HMG_02_high_F"};
@@ -57,28 +57,32 @@ _crate = switch (_loadoutType) do
 	case "Jeep":{"vn_b_wheeled_m151_01"};
 	case "Jeep MG":{"vn_b_wheeled_m151_mg_02"};
 	case "Gun Boat":{"vn_b_boat_09_01"};
+//Default
 	default {_crate};
 };
-_loadoutType = switch (_loadoutType) do 
+
+_loadName = TabletSettings get "LOAD";
+_loadoutType = switch (_loadoutType) do
 {
 //Base
-	case "King Quad": {"Crate Small"};
-	case "Amarok Green": {"Crate Medium"};
-	case "Amarok Tan": {"Crate Medium"};
-	case "Assault Boat": {"Crate Small"};
-	case "NLD RHIB": {"Crate Medium"};
-	case "FRISC Motorboat": {"Crate Medium"};
+	case "King Quad":{_loadName #3};		//Crate Small
+	case "Amarok Green":{_loadName #4};		//Crate Medium
+	case "Amarok Tan":{_loadName #4};		//Crate Medium
+	case "Assault Boat":{_loadName #3};		//Crate Small
+	case "NLD RHIB":{_loadName #4};			//Crate Medium
+	case "FRISC Motorboat":{_loadName #4};	//Crate Medium
 //GM
-	case "K125 Motor":{"Crate Small"};
-	case "Pkw 2 Beatle":{"Crate Small"};
-	case "Pkw 8 VW":{"Crate Small"};
-	case "Jeep Cargo":{"Crate Medium"};
-	case "Jeep MG3":{"Crate Medium"};
-	case "Jeep LATGM":{"Crate Medium"};
+	case "K125 Motor":{_loadName #3};		//Crate Small
+	case "Pkw 2 Beatle":{_loadName #3};		//Crate Small
+	case "Pkw 8 VW":{_loadName #3};		 	//Crate Small
+	case "Jeep Cargo":{_loadName #4};		//Crate Medium
+	case "Jeep MG3":{_loadName #4};			//Crate Medium
+	case "Jeep LATGM":{_loadName #4};		//Crate Medium
 //VN
-	case "Jeep":{"Crate Medium"};
-	case "Jeep MG":{"Crate Medium"};
-	case "Gun Boat":{"Crate Medium"};
+	case "Jeep":{_loadName #4};				//Crate Medium
+	case "Jeep MG":{_loadName #4};			//Crate Medium
+	case "Gun Boat":{_loadName #4};			//Crate Medium
+//Default
 	default {_loadoutType};
 };
 
@@ -104,36 +108,28 @@ private _spnChut = createVehicle [_chute, position _dropObj, [], 0, "NONE"];
 _spnChut setVelocity (velocity _dropObj);
 _spnChut setDir (direction _dropObj);
 _dropObj attachTo [_spnChut, [0,0,-1]];
-_dropObjAtt = [];
 
 // Checks if mission is in day or night and attaches the right smoke/light
 if (sunOrMoon == 1) then 
 {
 	_smoke = createVehicle ["SmokeShellOrange", [0,0,0], [], 0, "NONE"];
 	_smoke attachTo [_dropObj, [0,0,0]];
-	_dropObjAtt pushback _smoke;
 } else 
 {
-	if (_nvg == 0) then 
-	{
-		private _light = "#lightpoint" createVehicleLocal (position _dropObj);
+	private _light = "#lightpoint" createVehicleLocal (position _dropObj);
 		_light attachTo [_dropObj, [0,0,0]];
+	if (_nvg) then 
+	{
 		_light setLightColor [0.85,0.4,0.1];
 		_light setLightAmbient [0.85,0.4,0.1];
 		_light setLightUseFlare true;
 		_light setLightFlareSize 10;
 		_light setLightFlareMaxDistance 100000;
-		_light setLightIntensity 100000;
-		_dropObjAtt pushback _light;
 	} else 
 	{
-		private _light = "#lightpoint" createVehicleLocal (position _dropObj);
-		_light attachTo [_dropObj, [0,0,0]];
-		_light setLightColor [0.85,0.4,0.1];
 		_light setLightIR true;
-		_light setLightIntensity 10000;
-		_dropObjAtt pushback _light;
 	};
+	_light setLightIntensity 10000;
 };
 
 // Wait for the crate fo be on the ground
@@ -143,14 +139,13 @@ waitUntil
 	(((position _dropObj select 2) < 1));
 };
 
-[_dropObj, _dropObjAtt, _crate, _spnChut, _loadoutType, _nvg, _side] spawn 
+[_dropObj, _crate, _spnChut, _loadoutType, _nvg, _side] spawn 
 {
-	params ["_dropObj","_dropObjAtt","_crate","_spnChut","_loadoutType","_nvg","_side"];
+	params ["_dropObj","_crate","_spnChut","_loadoutType","_nvg","_side"];
 	
 	private _dropPos = position _dropObj;
 	private _dropDir = direction _dropObj;
 	deleteVehicle _dropObj;
-	deleteVehicle (_dropObjAtt select 0);
 
 	_spnObj = createVehicle [_crate, [(_dropPos select 0), (_dropPos select 1), 0.1], [], 0, "CAN_COLLIDE"];
 	_spnObj setDir _dropDir;
@@ -158,7 +153,7 @@ waitUntil
 	[_spnObj, _side, _loadoutType] remoteExec ["LT_fnc_VehicleLoadout", 2];
 
 	// if createdvehicle is a remote designator add ai
-	if (_crate == "B_W_Static_Designator_01_F") then 
+	if (_crate == "B_W_Static_Designator_01_F") exitWith 
 	{
 		createVehicleCrew _spnObj;
 		[_spnObj] joinSilent (createGroup _side);
@@ -173,39 +168,27 @@ waitUntil
 		deleteVehicle _smoke;
 	} else 
 	{
-		if (_nvg == 0) then 
+		private _light = "#lightpoint" createVehicleLocal (position _dropObj);
+		_light attachTo [_dropObj, [0,0,0]];
+		_light setLightColor [0.85,0.4,0.1];
+		if (_nvg) then 
 		{
-			private _light = "#lightpoint" createVehicleLocal (position _dropObj);
-			_light attachTo [_dropObj, [0,0,0]];
-			_light setLightColor [0.85,0.4,0.1];
 			_light setLightAmbient [0.85,0.4,0.1];
 			_light setLightUseFlare true;
 			_light setLightFlareSize 10;
 			_light setLightFlareMaxDistance 10000;
-			_light setLightIntensity 10000;
-			for "_i" from 0 to 50 do 
-			{
-				_light setLightIntensity 10000;
-				uiSleep 2;
-				_light setLightIntensity 1000;
-				uiSleep 2;
-			};
-			deleteVehicle _light;
 		} else 
 		{
-			private _light = "#lightpoint" createVehicleLocal (position _dropObj);
-			_light attachTo [_dropObj, [0,0,0]];
-			_light setLightColor [0.85,0.4,0.1];
 			_light setLightIR true;
-			_light setLightIntensity 10000;
-			for "_i" from 0 to 50 do 
-			{
-				_light setLightIntensity 10000;
-				uiSleep 2;
-				_light setLightIntensity 1000;
-				uiSleep 2;
-			};
-			deleteVehicle _light;
 		};
+		_light setLightIntensity 10000;
+		for "_i" from 0 to 50 do 
+		{
+			_light setLightIntensity 10000;
+			uiSleep 2;
+			_light setLightIntensity 1000;
+			uiSleep 2;
+		};
+		deleteVehicle _light;
 	};
 };

@@ -1,3 +1,13 @@
+/*
+
+File: descriptionMission.hpp
+Author: Brainless_Ben
+
+Description:
+used in description.ext for the missions template where it is imported as mission parameters.
+
+*/
+
 #ifndef MISSION_FATIGUE
     #define MISSION_FATIGUE 0
 #endif

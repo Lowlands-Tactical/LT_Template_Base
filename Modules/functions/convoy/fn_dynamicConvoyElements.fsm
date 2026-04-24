@@ -434,7 +434,7 @@ class FSM
                 {
                         name = "create_new_convo";
                         itemno = 26;
-                        init = /*%FSM<STATEINIT""">*/"call{ 0 = [_logic,_newConvoy] execVM ""\lt_template_base\functions\Convoy\fn_initConvoy.sqf"" };"/*%FSM</STATEINIT""">*/;
+                        init = /*%FSM<STATEINIT""">*/"call{ 0 = [_logic,_newConvoy] execVM ""\lt_template_base\modules\functions\convoy\fn_initConvoy.sqf"" };"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {

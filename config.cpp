@@ -1,24 +1,24 @@
-#include "script_version.hpp"
+#include "script_mod.hpp"
 
 class cfgPatches
 {
 	class lt_template_base
 	{
-		name="lt_template_base";
-		author="Lowlands Tactical";
+		name="Lowtac - Template";
+		author=LT_AUTHOR;
+		authors[]={LT_AUTHORS};
 		url="http://lowtac.nl/";
-		requiredVersion=2.14;
+		requiredVersion=LT_REQVR;
 		requiredAddons[]=
 		{
 			"A3_Characters_F_BLUFOR",
-			"A3_Modules_F",
 			"cba_main",
 			"ace_main",
 			"acre_main"
 		};
 		units[]={};
 		weapons[]={};
-		
+
 		//CBA versioning
 		version = VERSION;
 		versionStr = STR(VERSION_STR);
@@ -26,29 +26,11 @@ class cfgPatches
 	};
 };
 
-class CfgSettings 
-{
-	class CBA 
-	{
-		class Versioning 
-		{
-			class LT_Base
-			{
-				main_addon = "LT_Template_Base";
-				class Dependancies 
-				{
-					LT_Base[] = {"LT_Template_Base", {VERSION_AR}, "true"};
-				};
-			};
-		};
-	};
-};
-
 class cfgAddons
 {
     class PreloadAddons
     {
-        class LT
+        class NAF
         {
             list[]=
             {
@@ -59,6 +41,111 @@ class cfgAddons
     };
 };
 
+class CfgFunctions
+{
+	class LT
+	{
+		class template_base
+		{
+			file="\lt_template_base\functions";
+			class adminZeusModule {};
+			class deleteUnits {};
+			class safeStartLoop {};
+			class safety {};
+			class setFog {};
+			class setTime {};
+			class setWeather {};
+			class teleportGroup {};
+		};
+		class Resupply
+		{
+			file="\lt_template_base\functions\Resupply";
+			class resupplyRequest {};
+			class resupplyDrop {};
+		};
+		class Modules
+        {
+            file="\lt_template_base\Modules\functions";
+            class CustomCompSpawner {};
+            class Intel {};
+            class Resupply {};
+            class Defense {};
+            class UnitSpawner {};
+        };
+		class Convoy
+		{
+			file="\lt_template_base\Modules\functions\Convoy";
+			class initConvoy {};
+		};
+	};
+	class FRED
+	{
+		class VehicleRespawn 
+		{
+			file="\lt_template_base\functions\VehicleRespawn";
+			class vehicleLoadout {};
+			class vehicleMonitor {};
+			class vehicleRespawn {};
+		};
+	};
+};
+// Defines the functions that can we remote executed and for whom.
+class cfgRemoteExec
+{
+    class Functions
+    {
+        // 0= all machines 1= only clients 2= only server
+        mode=2;
+        jip=1;
+		class LT_fnc_safety				{allowedTargets=0;};
+		class LT_fnc_safeStartLoop		{allowedTargets=0;};
+		class LT_fnc_adminZeusModule	{allowedTargets=2;};
+		class LT_fnv_initConvoy			{allowedTargets=2;};
+		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
+		class LT_fnc_deleteUnits		{allowedTargets=2;};
+    };
+};
+
+#include "cfg3DEN.hpp"
+
+// Extended Eventhandlers
+/*Game start
+│
+├─ PreStart
+│
+Mission loading
+│
+├─ PreInit
+│
+├─ Object Init
+│   (Extended_Init_EventHandlers)
+│
+├─ init.sqf
+│
+├─ PostInit
+│
+└─ InitPost	*/
+
+class Extended_PreInit_EventHandlers
+{
+	class LT_Template_Base_Pre
+	{
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
+	};
+};
+class Extended_PostInit_EventHandlers
+{
+	class LT_Template_Base_Post
+	{
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
+	};
+};
+
+#include "Tablet\LT_Tablet_Base.hpp"
+#include "Modules\LT_modules.hpp"
+#include "Faces\LT_Faces.hpp"
+
+// Main menu 'join server' option
 class cfgMainMenuSpotlight
 {
 	class JoinServer
@@ -70,10 +157,6 @@ class cfgMainMenuSpotlight
 		condition = "true";
 	};
 };
-
-#include "cfgFunctions.hpp"
-#include "cfg3DEN.hpp"
-#include "cfgVehicles.hpp"
 
 // Our added notifications for the safestart function
 class cfgNotifications
@@ -103,34 +186,6 @@ class cfgNotifications
 		priority = 1;
 	};
 };
-
-// Root folder for our own modules
-class cfgFactionClasses
-{
-	class NO_CATEGORY;
-	class LT_missionModules : NO_CATEGORY
-	{
-		displayName = "Lowlands Tactical Modules";
-	};
-};
-
-// Pre/PostInit is loaded before the mission is loaded.
-class Extended_PreInit_Eventhandlers
-{
-	class LT_menuPreInit
-	{
-		init = "call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
-	};
-};
-class Extended_PostInit_Eventhandlers
-{
-	class LT_menuPostInit
-	{
-		init = "call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
-	};
-};
-
-#include "LT_Tablet\LT_Tablet.hpp"
 
 // Default mission debriefings
 class cfgDebriefing
