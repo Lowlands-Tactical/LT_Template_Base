@@ -36,6 +36,7 @@ _extraArr = ((TabletSettings get "EXTRA") get _missionPeriod);
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
 playerArr = [];
+_pIndex = 0;
 {
 	_name = name _x;
 	if (_name == "HC") exitWith {};
@@ -47,8 +48,9 @@ playerArr = [];
 		case east: {lbSetColor [550, _forEachIndex, [0.5,0,0,1]];};
 		case resistance: {lbSetColor [550, _forEachIndex, [0,0.5,0,1]];};
 	};
+	if (_name == name player) then {_pIndex = _forEachindex};
 }forEach _allPlayers;
-lbSetCurSel [550,0];
+lbSetCurSel [550,_pIndex];
 
 // Add period appropriate vehicles/crates/loadouts
 _vehExtrArr = _extraArr get "VEH";

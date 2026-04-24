@@ -34,6 +34,7 @@ _gearArr = TabletSettings get "GEAR";
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
 playerArr = [];
+_pIndex = 0;
 {
 	_name = name _x;
 	if (_name == "HC") exitWith {};
@@ -45,8 +46,9 @@ playerArr = [];
 		case east: {lbSetColor [750, _forEachIndex, [0.5,0,0,1]];};
 		case resistance: {lbSetColor [750, _forEachIndex, [0,0.5,0,1]];};
 	};
+	if (_name == name player) then {_pIndex = _forEachindex};
 } forEach _allPlayers;
-lbSetCurSel [750, 0];
+lbSetCurSel [750, _pIndex];
 
 // Array with crate loadout is selected for the supply drop
 {
