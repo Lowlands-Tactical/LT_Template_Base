@@ -31,7 +31,7 @@ _pIndex = 0;
 {
 	_name = name _x;
 	if (_name == "HC") exitWith {};
-	playerArr pushBack _x;
+	playerAdvArr pushBack _x;
 	lbAdd [650, _name];
 	switch (side _x) do 
 	{
