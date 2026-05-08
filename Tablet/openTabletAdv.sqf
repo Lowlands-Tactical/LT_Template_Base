@@ -26,7 +26,7 @@ _gearArr = TabletSettings get "GEAR";
 
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
-playerArr = [];
+playerAdvArr = [];
 _pIndex = 0;
 {
 	_name = name _x;
@@ -105,7 +105,7 @@ while {!isNull findDisplay 600} do
 	};
 
 	_index = lbCurSel 650;
-	_player = playerArr select _index;
+	_player = playerAdvArr select _index;
 	_playerRole = _player getVariable ["LT_unit_role", "custom"];
 	_playerLink = _player getVariable ["LT_unit_link", true];
 	_playerItem = _player getVariable ["LT_unit_item", true];

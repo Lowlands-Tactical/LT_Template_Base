@@ -359,7 +359,7 @@ switch (_code) do
     case "SetValues": 
     {
         _index = lbCurSel 650;
-        _unit = playerArr select _index; //playerArr is de array defined in openTablet.sqf
+        _unit = playerAdvArr select _index; //playerAdvArr is de array defined in openTablet.sqf
         _role = _unit getVariable ["LT_unit_role", "lvdw"];
         _link = _unit getVariable ["LT_unit_link", true];
         _item = _unit getVariable ["LT_unit_item", true];
@@ -392,7 +392,7 @@ switch (_code) do
     case "PrepPlayer": 
     {
         _index = lbCurSel 650;
-        _unit = playerArr select _index; //playerArr is de array defined in openTablet.sqf
+        _unit = playerAdvArr select _index; //playerAdvArr is de array defined in openTablet.sqf
         [_unit] remoteExec ["LT_fnc_initPostUnit", _unit];
         
         Diag_log format["[LT] (Tablet) Reload initPostUnit for Player:%1", name _unit];
@@ -514,7 +514,7 @@ switch (_code) do
     case "HealCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTabletCrew.sqf
         [_unit] call ace_medical_treatment_fnc_fullHealLocal;
         [_unit, false] call ace_medical_status_fnc_setUnconsciousState;
         Diag_log format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
@@ -526,7 +526,7 @@ switch (_code) do
     case "TPtoMeCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTabletCrew.sqf
         _vehUnit = vehicle _unit;
         if (_vehUnit != _unit) then 
         {
@@ -553,7 +553,7 @@ switch (_code) do
     case "TPtoTargetCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerArr select _index; //playerArr is de array defined in openTabletCrew.sqf
+        _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTabletCrew.sqf
         _vehUnit = vehicle _unit;
         if (_vehUnit != _unit) then 
         {
@@ -605,7 +605,7 @@ switch (_code) do
     case "SetValuesCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerArr select _index; //playerArr is de array defined in openTablet.sqf
+        _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTablet.sqf
         _role = _unit getVariable ["LT_unit_role", "lvdw"];
         _link = _unit getVariable ["LT_unit_link", true];
         _item = _unit getVariable ["LT_unit_item", true];
@@ -638,7 +638,7 @@ switch (_code) do
     case "PrepPlayerCrew": 
     {
         _index = lbCurSel 750;
-        _unit = playerArr select _index; //playerArr is de array defined in openTablet.sqf
+        _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTablet.sqf
         [_unit] remoteExec ["LT_fnc_initPostUnit", _unit];
         
         Diag_log format["[LT] (Tablet) Reload initPostUnit for Player:%1", name _unit];
