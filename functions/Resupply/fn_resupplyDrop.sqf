@@ -109,6 +109,12 @@ _spnChut setVelocity (velocity _dropObj);
 _spnChut setDir (direction _dropObj);
 _dropObj attachTo [_spnChut, [0,0,-1]];
 
+// Clear Inventory of dropped opbject
+clearWeaponCargoGlobal _dropObj;
+clearMagazineCargoGlobal _dropObj;
+clearItemCargoGlobal _dropObj;
+clearBackpackCargoGlobal _dropObj;
+
 // Checks if mission is in day or night and attaches the right smoke/light
 if (sunOrMoon == 1) then 
 {
