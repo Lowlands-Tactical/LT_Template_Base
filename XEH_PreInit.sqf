@@ -20,8 +20,7 @@ _lt_staff=[
 ];
 _lt_crew=[
 	"76561198010219180",	// PingWing
-	"76561198047657052",	// DM3002X
-	"76561198047491445" 	// Pekeru
+	"76561198047657052" 	// DM3002X
 ];
 AdminCrew = createHashMapFromArray [
 	["Staff", _lt_staff],
@@ -181,7 +180,7 @@ TabletSettings = createHashMapFromArray [
 	["WEAPON",	["No Weapon","Yes Weapon"]],
 	["GEAR",	["No Role","Yes Role"]],
 	["ROLES",	["com","sql","jtac","ftl","gren","comms","rifl","riflat","riflaa","dmr","ar","aar","medic","eng","mmg","mat","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"]]
-//		 		[ 00  , 01  ,  02  , 03  ,  04  ,  05   ,  06  ,   07   ,   08   , 09  , 10 , 11  ,  12   , 13  , 14  ,  15 ,  16  ,  17  ,  18  ,  19   ,  20  ,  21 ,  22  ];
+//		 		[ 00  , 01  , 02   , 03  , 04   , 05    , 06   , 07     , 08     , 09  , 10 , 11  , 12    , 13  , 14  , 15  , 16   , 17   , 18   , 19    , 20   , 21  , 22   ];
 ];
 publicVariable "TabletSettings";
 
