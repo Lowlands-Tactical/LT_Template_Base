@@ -152,31 +152,25 @@ _extra40K=[
 ];
 
 TabletSettings = createHashMapFromArray [
-    ["VEH",		_tabletList #0],
-	["CRATE",	_tabletList #1],
-	["LOAD",	_tabletList #2],
-	["EXTRA", createHashMapFromArray[
-		["BASE", createHashMapFromArray[
-			["VEH", _extraBASE #0],
-			["CRATE", _extraBASE #1],
-			["LOAD", _extraBASE #2]
-		]],
-		["GM", createHashMapFromArray[
-			["VEH", _extraGM #0],
-			["CRATE", _extraGM #1],
-			["LOAD", _extraGM #2]
-		]],
-		["VN", createHashMapFromArray[
-			["VEH", _extraVN #0],
-			["CRATE", _extraVN #1],
-			["LOAD", _extraVN #2]
-		]],
-		["40K", createHashMapFromArray[
-			["VEH", _extra40K #0],
-			["CRATE", _extra40K #1],
-			["LOAD", _extra40K #2]
-		]]
+	["VEH", createHashMapFromArray[
+		["BASE", (_tabletList #0) + (_extraBASE #0)],
+		["GM", (_tabletList #0) + (_extraGM #0)],
+		["VN", (_tabletList #0) + (_extraVN #0)],
+		["40K", (_tabletList #0) + (_extra40K #0)]
 	]],
+	["CRATE", createHashMapFromArray[
+		["BASE", (_tabletList #1) + (_extraBASE #1)],
+		["GM", (_tabletList #1) + (_extraGM #1)],
+		["VN", (_tabletList #1) + (_extraVN #1)],
+		["40K", (_tabletList #1) + (_extra40K #1)]
+	]],
+	["LOADT", createHashMapFromArray[
+		["BASE", (_tabletList #2) + (_extraBASE #2)],
+		["GM", (_tabletList #2) + (_extraGM #2)],
+		["VN", (_tabletList #2) + (_extraVN #2)],
+		["40K", (_tabletList #2) + (_extra40K #2)]
+	]],
+	["LOAD", _tabletList #2],
 	["SIDES",	["WEST","EAST","GUER"]],
 	["LINK",	["No Nav","Yes Nav"]],
 	["ITEM",	["No Items","Yes Items"]],

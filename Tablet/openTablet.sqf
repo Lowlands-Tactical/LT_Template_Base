@@ -28,10 +28,10 @@ if (lt_group_teleport == 1) then {ctrlShow [516,false]} else {ctrlShow [517,fals
 if (lt_resupply == 1) then {ctrlShow [538,false]} else {ctrlShow [539,false]};
 
 _missionPeriod = MissionSettings get "Period";
-_vehArr = TabletSettings get "VEH";
-_crateArr = TabletSettings get "CRATE";
-_loadArr = TabletSettings get "LOAD";
-_extraArr = ((TabletSettings get "EXTRA") get _missionPeriod);
+_vehArr = ((TabletSettings get "VEH") get _missionPeriod);
+_crateArr = ((TabletSettings get "CRATE") get _missionPeriod);
+_loadArr = ((TabletSettings get "LOADT") get _missionPeriod);
+//_extraArr = ((TabletSettings get "EXTRA") get _missionPeriod);
 
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
@@ -51,20 +51,6 @@ _pIndex = 0;
 	if (_name == name player) then {_pIndex = _forEachindex};
 }forEach _allPlayers;
 lbSetCurSel [550,_pIndex];
-
-// Add period appropriate vehicles/crates/loadouts
-_vehExtrArr = _extraArr get "VEH";
-{
-	_vehArr pushback _x;
-}forEach _vehExtrArr;
-_crateExtrArr = _extraArr get "CRATE";
-{
-	_crateArr pushback _x;
-}forEach _crateExtrArr;
-_loadExtrArr = _extraArr get "LOAD";
-{
-	_loadArr pushback _x;
-}forEach _loadExtrArr;
 
 {
 	_vehName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
