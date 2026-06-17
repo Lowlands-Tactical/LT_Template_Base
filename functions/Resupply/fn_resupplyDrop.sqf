@@ -39,8 +39,11 @@ _crate = switch (_loadoutType) do
 	case "Anti Tank": {"B_A_Static_AT_wdl_F"};
 	case "Artillery": {"RHS_M119_D"};
 	case "King Quad": {"B_Quadbike_01_F"};
-	case "Amarok Green": {"NAF_Amarok_comms_nfpg"};
-	case "Amarok Tan": {"NAF_Amarok_comms_nfpt"};
+	case "Amarok": {"NAF_Amarok_covered_blk"};
+	case "Amarok Comms": {"NAF_Amarok_comms_blk"};
+	case "Vector": {"NAF_Vector_blk"};
+	case "Vector XM312": {"NAF_Vector_HMG_blk"};
+	case "Vector Spike": {"NAF_Vector_AT_blk"};
 	case "Assault Boat": {"B_Boat_Transport_01_F"};
 	case "FRISC Motorboat": {"B_Boat_Armed_01_minigun_F"};
 //GM
@@ -66,8 +69,11 @@ _loadoutType = switch (_loadoutType) do
 {
 //Base
 	case "King Quad":{_loadName #3};		//Crate Small
-	case "Amarok Green":{_loadName #4};		//Crate Medium
-	case "Amarok Tan":{_loadName #4};		//Crate Medium
+	case "Amarok":{_loadName #4};			//Crate Medium
+	case "Amarok Comms":{_loadName #4};		//Crate Medium
+	case "Vector":{_loadName #4};			//Crate Medium
+	case "Vector XM312":{_loadName #4};		//Crate Medium
+	case "Vector Spike":{_loadName #4};		//Crate Medium
 	case "Assault Boat":{_loadName #3};		//Crate Small
 	case "NLD RHIB":{_loadName #4};			//Crate Medium
 	case "FRISC Motorboat":{_loadName #4};	//Crate Medium

@@ -85,8 +85,11 @@ _extraBASE=[
 		"Anti Tank",
 		"Artillery",
 		"King Quad",
-		"Amarok Green",
-		"Amarok Tan",
+		"Amarok",
+		"Amarok Comms",
+		"Vector",
+		"Vector XM312",
+		"Vector Spike",
 		"Assault Boat",
 		"FRISC Motorboat"
 	]
