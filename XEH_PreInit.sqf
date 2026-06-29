@@ -20,7 +20,9 @@ _lt_staff=[
 ];
 _lt_crew=[
 	"76561198010219180",	// PingWing
-	"76561198047657052" 	// DM3002X
+	"76561198047657052",	// DM3002X
+	"76561198103175891",	// RaiderNL
+	"76561198192823433"		// Bearfingers
 ];
 AdminCrew = createHashMapFromArray [
 	["Staff", _lt_staff],
