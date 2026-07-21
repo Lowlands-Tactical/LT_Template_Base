@@ -132,8 +132,8 @@ class BB_LT_Tablet_Crew
 		{
 			idc = 717;
 			y = 0.62;
-			text = "Empty";
-			onButtonClick = "";
+			text = "Add Longrange";
+			onButtonClick = "'addLong' execVM '\lt_template_base\Tablet\Buttons.sqf'";
 		};
 		class BB_ButtonEmpty06 : BB_ButtonEmpty05
 		{

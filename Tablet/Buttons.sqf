@@ -678,6 +678,12 @@ switch (_code) do
         _uavBackpack = (_gearUnits get "UAV")#1;
         _uavBackpack createVehicle (position player);
     };
+    case "addLong":
+    {
+        _period = MissionSettings get "Period";
+        _itemsRadios = (ItemsGear get "Radio") get _period;
+        (backpackContainer player) addItemCargoGlobal [_itemsRadios #1,1];
+    };
     case "lvdwFlag":
     {
         {
