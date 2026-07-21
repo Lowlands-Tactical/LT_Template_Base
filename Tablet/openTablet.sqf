@@ -31,7 +31,6 @@ _missionPeriod = MissionSettings get "Period";
 _vehArr = ((TabletSettings get "VEH") get _missionPeriod);
 _crateArr = ((TabletSettings get "CRATE") get _missionPeriod);
 _loadArr = ((TabletSettings get "LOADT") get _missionPeriod);
-//_extraArr = ((TabletSettings get "EXTRA") get _missionPeriod);
 
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
