@@ -21,6 +21,7 @@ if (!hasInterface && !isDedicated) exitWith {};
 
 enableSentences false;
 enableEnvironment [false, true];
+ace_dragging_canMoveDead = false;
 
 if (isServer) then 
 {
