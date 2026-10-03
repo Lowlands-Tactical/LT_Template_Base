@@ -77,10 +77,11 @@ if (isNil "_showTriggers") then
         };
 
         //ADD TRIGGER INFO TO BRIEFING SECTION
-        _briefing = _briefing + format
-        ["
+        
+// add klik markers <marker name='MarkerName'>Click Here</marker>
+        _briefing = _briefing + format ["
             <br/><font color='#FFBA26' size='14'>Trigger: %1</font>
-            <br/>Trigger Name: %2
+            <br/>Trigger Name:<marker name=%5> %2</marker>
             <br/>Trigger Type: %3
             <br/>Trigger Activation: %4
             <br/>Trigger Statements:
@@ -90,7 +91,7 @@ if (isNil "_showTriggers") then
             <br/>%6
             <br/><br/>OnDeactivation:
             <br/>%7
-            <br/><br/><br/>
+            <br/><br/>
         ",
             _mkrName,
             _trigName,
@@ -98,7 +99,8 @@ if (isNil "_showTriggers") then
             _trigAct,
             _trigState select 0,
             _trigState select 1,
-            _trigState select 2
+            _trigState select 2,
+            _mkr
         ];
     }forEach _allTriggers;
 
