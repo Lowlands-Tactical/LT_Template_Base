@@ -9,6 +9,8 @@ See Admin.sqf for the list.
 
 */
 
+if !(hasInterface) exitWith {};
+
 _uid = getPlayerUID player;
 _admin = _uid in (AdminCrew get "Staff");
 if !(_admin OR serverCommandAvailable "kick") exitWith {};
@@ -25,12 +27,12 @@ _camo = "lt_gear_camo_"+_side;
 _weap = "lt_gear_weapon_"+_side;
 
 _briefing = "
-    <br/><br/><font color='#FFBA26' size='18'>ADMIN SECTION</font>
+    <br/><font color='#FFBA26' size='18'>ADMIN SECTION</font>
     <br/>This briefing section can only be seen by the current admin.
-    <br/><br/>";
+";
 
 _briefing = _briefing + format['
-    <br/><font color="#FFBA26" size="16">MISSIE PARAMETERS:</font>
+    <br/><br/><font color="#FFBA26" size="16">MISSIE PARAMETERS:</font>
     <br/><font color="#D7DBD5">• Periode:</font> %1
     <br/><font color="#D7DBD5">• Fatige:</font> %2
     <br/><font color="#D7DBD5">• Markers:</font> %3
@@ -80,7 +82,7 @@ LT_fnc_setTaskState = {
 };
 
 // forEach through _tasks and add description of task and the expressions for succeeded and failed in _briefing
-_briefing = _briefing + "<font color='#FFBA26' size='18'>TASKS</font><br/>";
+_briefing = _briefing + "<br/><br/><font color='#FFBA26' size='18'>TASKS</font>";
 if (count _tasks > 0) then 
 {
     {
@@ -90,10 +92,9 @@ if (count _tasks > 0) then
         _taskDescription = _taskDescriptionArray select 1;
         _briefing = _briefing + format 
         ["
-            <font color='#FFBA26' size='14'>Task: %2</font>
+            <br/><font color='#FFBA26' size='14'>Task: %2</font>
             <br/>Set state to: <executeClose expression=""[%1, 'Succeeded', %3] call LT_fnc_setTaskState;"">'Succeeded'</executeClose> 
             or <executeClose expression=""[%1, 'Failed', %3] call LT_fnc_setTaskState;"">'Failed'</executeClose>
-            <br/>
         ",
             _taskindex,
             _taskDescription,
@@ -107,7 +108,7 @@ if (count _tasks > 0) then
 
 // SAFE START SECTION
 _briefing = _briefing + "
-    <font color='#FFBA26' size='18'>SAFE START CONTROL</font>
+    <br/><font color='#FFBA26' size='18'>SAFE START CONTROL</font>
     <br/>|- <execute expression=""lt_param_timer = lt_param_timer + 1; publicVariable 'lt_param_timer'; hintSilent format ['Mission timer: %1', lt_param_timer];"">Increase Safe Start timer by 1 minute</execute>
     <br/>|- <execute expression=""lt_param_timer = lt_param_timer - 1; publicVariable 'lt_param_timer'; hintSilent format ['Mission timer: %1', lt_param_timer];"">Decrease Safe Start timer by 1 minute</execute>
     <br/>|- <execute expression=""lt_param_timer = 10; publicVariable 'lt_param_timer';['SafeStartmissionStarting',['Mission safety is on!']] call BIS_fnc_showNotification;[true] remoteExec ['LT_fnc_safety',allPlayers];[] remoteExec ['LT_fnc_safeStartLoop'];hintSilent 'Safe Start started!';"">Enable Safe Start timer</execute>
@@ -116,7 +117,7 @@ _briefing = _briefing + "
 ";
 
 // CREATE DIARY Entry
-player createDiaryRecord ["LT Briefing", ["(ZEUS) Admin Menu", _briefing]];
+player createDiaryRecord ["LT Briefing", ["(Admin) Menu", _briefing]];
 
 Diag_log "[LT] (BriefingAdmin) briefing finished";
 if ("lt_debug" call bis_fnc_getParamValue == 1) then 
