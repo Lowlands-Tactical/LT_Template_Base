@@ -97,13 +97,12 @@ class BB_LT_Tablet_Advanced
 			text = "Spawn JTAC pack";
 			onButtonClick = "'JTACPack' execVM '\lt_template_base\Tablet\Buttons.sqf'";
 		};
-		class BB_ButtonReturn : BB_ButtonSpwnJTAC
+		class BB_ButtonRadio : BB_ButtonSpwnJTAC
 		{
 			idc = 616;
 			y = 0.69;
-			text = "Return";
-			tooltip = "";
-			onButtonClick = "'Switch' execVM '\lt_template_base\Tablet\Buttons.sqf'";
+			text = "Add Longrange";
+			onButtonClick = "'addLong' execVM '\lt_template_base\Tablet\Buttons.sqf'";
 		};
 		class BB_TextCrate : BB_TextBase 
 		{
