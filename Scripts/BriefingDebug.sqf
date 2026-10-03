@@ -78,24 +78,32 @@ if (isNil "_showTriggers") then
 
         //ADD TRIGGER INFO TO BRIEFING SECTION
         _briefing = _briefing + format
-        [
-            "<br/><font color='#FFBA26' size='14'>Trigger: %1</font><br/>
-            Trigger Name: %2<br/>
-            Trigger Type: %3<br/>
-            Trigger Activation: %4<br/>
-            Trigger Statements:<br/>
-            Condition:<br/>
-            %5<br/><br/>
-            OnActivation:<br/>
-            %6<br/><br/>
-            OnDeactivation:<br/>
-            %7<br/><br/><br/>",
-            _mkrName,_trigName,_trigType,_trigAct,_trigState select 0,_trigState select 1,_trigState select 2
+        ["
+            <br/><font color='#FFBA26' size='14'>Trigger: %1</font>
+            <br/>Trigger Name: %2
+            <br/>Trigger Type: %3
+            <br/>Trigger Activation: %4
+            <br/>Trigger Statements:
+            <br/>Condition:
+            <br/>%5
+            <br/><br/>OnActivation:
+            <br/>%6
+            <br/><br/>OnDeactivation:
+            <br/>%7
+            <br/><br/><br/>
+        ",
+            _mkrName,
+            _trigName,
+            _trigType,
+            _trigAct,
+            _trigState select 0,
+            _trigState select 1,
+            _trigState select 2
         ];
     }forEach _allTriggers;
 
     // CREATE DIARY Entry
-    _debugBriefing = player createDiaryRecord ["H3 Menu", ["H3 Debug Menu", _briefing]];
+    _debugBriefing = player createDiaryRecord ["LT Briefing", ["(Debug) Menu", _briefing]];
 
     // CREATE MissionnameSpace Variable
     missionNamespace setVariable ["LT_Debug_Triggers", _triggerArray, true];
@@ -107,7 +115,7 @@ if (isNil "_showTriggers") then
     }forEach _showTriggers;
 
     _debugBrief = missionNamespace getVariable "LT_Debug_Briefing";
-    player removeDiaryRecord ["H3 Menu", _debugBrief];
+    player removeDiaryRecord ["LT Briefing", _debugBrief];
 
     missionNamespace setVariable ["LT_Debug_Triggers", nil, true];
     missionNamespace setVariable ["LT_Debug_Briefing", nil, true];

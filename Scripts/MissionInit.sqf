@@ -223,7 +223,6 @@ if (hasinterface) then
 		];
 	};
 
-    player createDiarySubject ["H3 Menu","H3 Menu"];
     Diag_log "[LT] (Mission) Loading briefing";
     _adBrief = [] execVM "\lt_template_base\scripts\BriefingAdmin.sqf";
     waitUntil {uiSleep 0.5; scriptDone _adBrief};
