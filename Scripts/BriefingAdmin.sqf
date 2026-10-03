@@ -47,10 +47,11 @@ if (count _tasks > 0) then
         _taskDescription = _taskDescriptionArray select 1;
         _briefing = _briefing + format 
         ["
-            <br/><font color='#FFBA26' size='14'>Task: %2</font>
+            <font color='#FFBA26' size='14'>Task: %2</font>
             <br/>Set state to: <executeClose expression=""[%1, 'Succeeded', %3] call LT_fnc_setTaskState;"">'Succeeded'</executeClose> 
             or <executeClose expression=""[%1, 'Failed', %3] call LT_fnc_setTaskState;"">'Failed'</executeClose>
-            <br/><br/>",
+            <br/>
+        ",
             _taskindex,
             _taskDescription,
             _side
@@ -68,7 +69,7 @@ _briefing = _briefing + "
     <br/>|- <execute expression=""lt_param_timer = lt_param_timer - 1; publicVariable 'lt_param_timer'; hintSilent format ['Mission timer: %1', lt_param_timer];"">Decrease Safe Start timer by 1 minute</execute>
     <br/>|- <execute expression=""lt_param_timer = 10; publicVariable 'lt_param_timer';['SafeStartmissionStarting',['Mission safety is on!']] call BIS_fnc_showNotification;[true] remoteExec ['LT_fnc_safety',allPlayers];[] remoteExec ['LT_fnc_safeStartLoop'];hintSilent 'Safe Start started!';"">Enable Safe Start timer</execute>
     <br/>|- <execute expression=""lt_param_timer = -1; publicVariable 'lt_param_timer';['SafeStartmissionStarting',['Mission starting now!']] call BIS_fnc_showNotification;[false] remoteExec ['LT_fnc_safety',allPlayers];hintSilent 'Safe Start ended!';"">Disable Safe Start timer</execute>
-    <br/><br/>
+    <br/>
 ";
 
 // CREATE DIARY Entry
