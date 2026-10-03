@@ -224,10 +224,12 @@ if (hasinterface) then
 	};
 
     Diag_log "[LT] (Mission) Loading briefing";
-    _adBrief = [] execVM "\lt_template_base\scripts\BriefingAdmin.sqf";
-    waitUntil {uiSleep 0.5; scriptDone _adBrief};
+    _meBrief = [] execVM "\lt_template_base\scripts\BriefingMeteo.sqf";
+    waitUntil {uiSleep 0.5; scriptDone _meBrief};
     _chBrief = [] execVM "\lt_template_base\scripts\Briefingchecklist.sqf";
     waitUntil {uiSleep 0.5; scriptDone _chBrief};
+    _adBrief = [] execVM "\lt_template_base\scripts\BriefingAdmin.sqf";
+    waitUntil {uiSleep 0.5; scriptDone _adBrief};
     
     if ("lt_debug" call bis_fnc_getParamValue == 1) exitWith 
     {
