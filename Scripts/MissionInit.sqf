@@ -224,6 +224,10 @@ if (hasinterface) then
 	};
 
     Diag_log "[LT] (Mission) Loading briefing";
+    if !(player diarySubjectExists "LT_Briefing") then
+    {
+        player createDiarySubject ["LT Briefing", "LT Briefing"];
+    };
     _meBrief = [] execVM "\lt_template_base\scripts\BriefingMeteo.sqf";
     waitUntil {uiSleep 0.5; scriptDone _meBrief};
     _chBrief = [] execVM "\lt_template_base\scripts\Briefingchecklist.sqf";
