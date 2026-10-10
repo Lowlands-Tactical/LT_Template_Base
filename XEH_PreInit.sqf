@@ -19,9 +19,10 @@ _lt_staff=[
 	"76561197992586763"		// Brainless_Ben
 ];
 _lt_crew=[
-	"76561198010219180",	// PingWing
+	//"76561198010219180",	// PingWing
 	"76561198047657052",	// DM3002X
-	"76561198047491445" 	// Pekeru
+	"76561198103175891",	// RaiderNL
+	"76561198192823433"		// Bearfingers
 ];
 AdminCrew = createHashMapFromArray [
 	["Staff", _lt_staff],
@@ -86,8 +87,11 @@ _extraBASE=[
 		"Anti Tank",
 		"Artillery",
 		"King Quad",
-		"Amarok Green",
-		"Amarok Tan",
+		"Amarok",
+		"Amarok Comms",
+		"Vector",
+		"Vector XM312",
+		"Vector Spike",
 		"Assault Boat",
 		"FRISC Motorboat"
 	]
@@ -150,38 +154,32 @@ _extra40K=[
 ];
 
 TabletSettings = createHashMapFromArray [
-    ["VEH",		_tabletList #0],
-	["CRATE",	_tabletList #1],
-	["LOAD",	_tabletList #2],
-	["EXTRA", createHashMapFromArray[
-		["BASE", createHashMapFromArray[
-			["VEH", _extraBASE #0],
-			["CRATE", _extraBASE #1],
-			["LOAD", _extraBASE #2]
-		]],
-		["GM", createHashMapFromArray[
-			["VEH", _extraGM #0],
-			["CRATE", _extraGM #1],
-			["LOAD", _extraGM #2]
-		]],
-		["VN", createHashMapFromArray[
-			["VEH", _extraVN #0],
-			["CRATE", _extraVN #1],
-			["LOAD", _extraVN #2]
-		]],
-		["40K", createHashMapFromArray[
-			["VEH", _extra40K #0],
-			["CRATE", _extra40K #1],
-			["LOAD", _extra40K #2]
-		]]
+	["VEH", createHashMapFromArray[
+		["BASE", (_tabletList #0) + (_extraBASE #0)],
+		["GM", (_tabletList #0) + (_extraGM #0)],
+		["VN", (_tabletList #0) + (_extraVN #0)],
+		["40K", (_tabletList #0) + (_extra40K #0)]
 	]],
+	["CRATE", createHashMapFromArray[
+		["BASE", (_tabletList #1) + (_extraBASE #1)],
+		["GM", (_tabletList #1) + (_extraGM #1)],
+		["VN", (_tabletList #1) + (_extraVN #1)],
+		["40K", (_tabletList #1) + (_extra40K #1)]
+	]],
+	["LOADT", createHashMapFromArray[
+		["BASE", (_tabletList #2) + (_extraBASE #2)],
+		["GM", (_tabletList #2) + (_extraGM #2)],
+		["VN", (_tabletList #2) + (_extraVN #2)],
+		["40K", (_tabletList #2) + (_extra40K #2)]
+	]],
+	["LOAD", _tabletList #2],
 	["SIDES",	["WEST","EAST","GUER"]],
 	["LINK",	["No Nav","Yes Nav"]],
 	["ITEM",	["No Items","Yes Items"]],
 	["WEAPON",	["No Weapon","Yes Weapon"]],
 	["GEAR",	["No Role","Yes Role"]],
 	["ROLES",	["com","sql","jtac","ftl","gren","comms","rifl","riflat","riflaa","dmr","ar","aar","medic","eng","mmg","mat","vhco","vhgu","vhdr","pilot","crew","jet","lvdw"]]
-//		 		[ 00  , 01  ,  02  , 03  ,  04  ,  05   ,  06  ,   07   ,   08   , 09  , 10 , 11  ,  12   , 13  , 14  ,  15 ,  16  ,  17  ,  18  ,  19   ,  20  ,  21 ,  22  ];
+//		 		[ 00  , 01  , 02   , 03  , 04   , 05    , 06   , 07     , 08     , 09  , 10 , 11  , 12    , 13  , 14  , 15  , 16   , 17   , 18   , 19    , 20   , 21  , 22   ];
 ];
 publicVariable "TabletSettings";
 

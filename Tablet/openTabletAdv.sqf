@@ -26,12 +26,12 @@ _gearArr = TabletSettings get "GEAR";
 
 // Array with players for the list inside the tablet
 _allPlayers = call BIS_fnc_listPlayers;
-playerArr = [];
+playerAdvArr = [];
 _pIndex = 0;
 {
 	_name = name _x;
 	if (_name == "HC") exitWith {};
-	playerArr pushBack _x;
+	playerAdvArr pushBack _x;
 	lbAdd [650, _name];
 	switch (side _x) do 
 	{
@@ -105,13 +105,13 @@ while {!isNull findDisplay 600} do
 	};
 
 	_index = lbCurSel 650;
-	_player = playerArr select _index;
+	_player = playerAdvArr select _index;
 	_playerRole = _player getVariable ["LT_unit_role", "custom"];
 	_playerLink = _player getVariable ["LT_unit_link", true];
 	_playerItem = _player getVariable ["LT_unit_item", true];
 	_playerWeap = _player getVariable ["LT_unit_weapon", true];
 	_playerGear = _player getVariable ["LT_unit_gear", true];
-	_text = format["Link:%1 Item:%2 Wpn:%3 Gear:%4", _playerLink, _playerItem, _playerWeap, _playerGear];
+	_text = format["R:%1 L:%2 I:%3 W:%4 G:%5",_playerRole, _playerLink, _playerItem, _playerWeap, _playerGear];
 	_textCheck = ctrlText 630;
 
 	if (_textCheck != _text) then 

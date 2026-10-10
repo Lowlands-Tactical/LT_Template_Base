@@ -69,9 +69,10 @@ if (missionNamespace getVariable ["ace_common", false]) then
 _radioShort = if (("lt_gear_SR" call bis_fnc_getParamValue) == 0) then {false} else {true};
 _radioLong = switch ("lt_gear_radiopack" call bis_fnc_getParamValue) do
 {
-    case 0: {false}; //Nobody get LongRange
+    case 0: {false}; // Nobody get LongRange
 	case 1: {"comms"};
 	case 2: {true};
+	default {true}; // Default if none selected
 };
 _gearNVG = if (("lt_gear_nvg" call bis_fnc_getParamValue) == 0) then {false} else {true};
 _wpnScope = if (("lt_gear_weapon_scope" call bis_fnc_getParamValue) == 0) then {false} else {true};
