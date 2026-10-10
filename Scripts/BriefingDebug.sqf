@@ -105,24 +105,32 @@ if (isNil "_showTriggers") then
     // CREATE DIARY Entry
     _debugBriefing = player createDiaryRecord ["LT Briefing", ["(Debug) Menu", _briefing]];
 
-    // CREATE MissionnameSpace Variable
-    missionNamespace setVariable ["LT_Debug_Triggers", _triggerArray, true];
-    missionNamespace setVariable ["LT_Debug_Briefing", _debugBriefing, true];
+    Diag_log "[LT] (BriefingDebug) Briefing Triggers Reveal Finish";
+    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+    {
+        systemChat "[LT] (BriefingDebug) Briefing Triggers Reveal Finish";
+    };
 }else 
 {
+    _records = (player allDiaryRecords "LT Briefing");
     {
-        deleteMarkerLocal _x;
-    }forEach _showTriggers;
+        if ("Debug" in (_x select 1)) then
+        {
+            player removeDiaryRecord ["LT Briefing",(_x select 8)];
+        };
+    }forEach _records;
 
-    _debugBrief = missionNamespace getVariable "LT_Debug_Briefing";
-    player removeDiaryRecord ["LT Briefing", _debugBrief];
+    _allMarkers = allMapMarkers;
+    {
+        if ("TrigMarker_" in _x) then
+        {
+            deleteMarkerLocal _x;
+        };
+    }forEach _allMarkers;
 
-    missionNamespace setVariable ["LT_Debug_Triggers", nil, true];
-    missionNamespace setVariable ["LT_Debug_Briefing", nil, true];
-};
-
-Diag_log "[LT] (BriefingDebug) Briefing TriggerReveal Finish";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemChat "[LT] (BriefingDebug) Briefing TriggerReveal Finish";
+    Diag_log "[LT] (BriefingDebug) Briefing Triggers Delete Finish";
+    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+    {
+        systemChat "[LT] (BriefingDebug) Briefing Triggers Delete Finish";
+    };
 };
