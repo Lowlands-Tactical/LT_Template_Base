@@ -41,7 +41,8 @@ _vehicles = [];
         if (_texture isEqualTo "") then {_texture = [_x] call ace_common_fnc_getVehicleIcon;};
 
         _name = [_x] call ace_common_fnc_getName;
-        if ((_x getVariable ["LT_unit_role",""]) == "ftl") then {_name = _name + " VTL"};
+        if (_x == leader group _x) then {_name = _name + " [GC]"};
+        if ((_x getVariable ["LT_unit_role",""]) == "ftl") then {_name = _name + " [VTL]"};
         _color = switch (assignedTeam _x) do {
             case "MAIN": {'#FFFFFF'};
             case "RED": {'#FFABAB'};
