@@ -16,12 +16,7 @@ if (!visibleMap || {!LT_mapIntel_visible}) exitWith {
 
 _groups = [];
 {
-    if (isPlayer _x && {!(_x isKindOf "HeadlessClient_F")}) then {
-        _group = group _x;
-        if (!isNull _group && {side _group isEqualTo side group player}) then {
-            _groups pushBackUnique _group;
-        };
-    };
+    _groups pushBackUnique group _x;
 } forEach allPlayers;
 // allPlayers can be empty during single-player initialization.
 if (isPlayer player) then {_groups pushBackUnique group player;};
@@ -49,7 +44,7 @@ _records = [];
             _members select {vehicle _x == _x}
         };
         _icon = [_group, _iconMembers] call LT_fnc_mapIntelIcon;
-        
+
         _color = [side _group, false] call BIS_fnc_sideColor;
         // [group, leader, FTL, main texture, FTL texture, side color]
         _ftlIcon = if (isNull _ftl) then {""} else {[_group, [_ftl]] call LT_fnc_mapIntelIcon};
