@@ -3,25 +3,27 @@
     Preserve its precedence: support, naval and air override ground symbols.
     Return the texture required by drawIcon, rather than a native group icon.
 */
+private ["_prefix","_type","_vehicles","_types","_supportTypes","_vehicle","_config","_texture"];
 params ["_group", "_members"];
-private _prefix = switch (side _group) do {
+
+_prefix = switch (side _group) do {
     case west: {"b_"};
     case east: {"o_"};
     case independent: {"n_"};
     default {""};
 };
-private _type = "unknown";
-private _vehicles = [];
-private _types = [];
-private _supportTypes = [];
+_type = "unknown";
+_vehicles = [];
+_types = [];
+_supportTypes = [];
 {
-    private _vehicle = vehicle _x;
+    _vehicle = vehicle _x;
     if (_vehicle isEqualTo _x) then {
         _types pushBackUnique "inf";
     } else {
         if (!(_vehicle in _vehicles) && {alive _vehicle}) then {
             _vehicles pushBack _vehicle;
-            private _config = configFile >> "CfgVehicles" >> typeOf _vehicle;
+            _config = configFile >> "CfgVehicles" >> typeOf _vehicle;
             switch true do {
                 case (_vehicle isKindOf "Car"): {_types pushBackUnique "motor_inf"};
                 case (_vehicle isKindOf "Tank"): {_types pushBackUnique "armor"};
@@ -43,19 +45,21 @@ private _supportTypes = [];
                 case (getNumber (_config >> "attendant") > 0): {_supportTypes pushBackUnique "med"};
                 //controleer naam markerName
                 default {
-                    Diag_log "[LT] (MapIconVehicles) Default marker applied";
+                    Diag_log "[LT] (MapIntelIcon) Default marker applied";
                     _types pushBackUnique "unkown";
                 };
             };
         };
     };
 } forEach _members;
+
 if (count _supportTypes > 1) then {_supportTypes = ["support"];};
 _types append _supportTypes;
 {
     if (_x in _types) then {_type = _x;};
 } forEach ["inf", "motor_inf", "armor", "mech_inf", "antiair", "art", "mortar", "support", "maint", "med", "naval", "air", "plane", "uav"];
-private _texture = getText (configFile >> "CfgMarkers" >> (_prefix + _type) >> "icon");
+
+_texture = getText (configFile >> "CfgMarkers" >> (_prefix + _type) >> "icon");
 if (_texture isEqualTo "") then {
     _texture = getText (configFile >> "CfgMarkers" >> "mil_unknown" >> "icon");
 };
