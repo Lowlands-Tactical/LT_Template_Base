@@ -87,7 +87,7 @@ if (hasinterface) then
     };
     if (["lt_markers", 1] call BIS_fnc_getParamValue == 1) then
     {
-        [] call LT_fnc_initMapIntel;
+        [] remoteExec ["LT_fnc_initMapIntel", 0];
         
         Diag_log "[LT] (Mission) Player group markers are enabled";
         if ("lt_debug" call bis_fnc_getParamValue == 1) then 

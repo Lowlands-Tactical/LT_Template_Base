@@ -113,6 +113,7 @@ class cfgRemoteExec
 		class LT_fnv_initConvoy			{allowedTargets=2;};
 		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
 		class LT_fnc_deleteUnits		{allowedTargets=2;};
+		class LT_fnc_initMapIntel		{allowedTargets=0;};
     };
 };
 
