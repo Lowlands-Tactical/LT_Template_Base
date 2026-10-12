@@ -39,9 +39,19 @@ _vehicles = [];
         // texture resolver. getName returns text safe for structured text.
         _texture = _x getVariable ["ace_nametags_rankIcon", ""];
         if (_texture isEqualTo "") then {_texture = [_x] call ace_common_fnc_getVehicleIcon;};
-        private _name = [_x] call ace_common_fnc_getName;
-        _footText = _footText + format ["<img image='%1' shadow='0' size='1.2' valign='middle'/> %2<br/>", _texture, _name];
-        private _vehicle = vehicle _x;
+
+        _name = [_x] call ace_common_fnc_getName;
+        if ((_x getVariable ["LT_unit_role",""]) == "ftl") then {_name = _name + " VTL"};
+        _color = switch (assignedTeam _x) do {
+            case "MAIN": {'#FFFFFF'};
+            case "RED": {'#FFABAB'};
+            case "GREEN": {'#ABFFAB'};
+            case "YELLOW": {'#FFFFAB'};
+            case "BLUE": {'#ABABFF'};
+        };
+        _footText = _footText + format ["<img image='%1' shadow='0' size='1.2' color='%2' valign='middle'/> %3<br/>", _texture, _color, _name];
+        
+        _vehicle = vehicle _x;
         if (!(_vehicle isEqualTo _x)) then {
             if (!(_vehicle in _vehicles)) then {
                 _vehicles pushBack _vehicle;
