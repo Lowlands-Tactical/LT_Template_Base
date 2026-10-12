@@ -22,19 +22,31 @@ private _supportTypes = [];
         if (!(_vehicle in _vehicles) && {alive _vehicle}) then {
             _vehicles pushBack _vehicle;
             private _config = configFile >> "CfgVehicles" >> typeOf _vehicle;
-            if (_vehicle isKindOf "Car") then {_types pushBackUnique "motor_inf";};
-            if (_vehicle isKindOf "Tank") then {_types pushBackUnique "armor";};
-            if (_vehicle isKindOf "Wheeled_APC_F" || {_vehicle isKindOf "APC_Tracked_01_base_F"} || {_vehicle isKindOf "APC_Tracked_02_base_F"} || {_vehicle isKindOf "APC_Tracked_03_base_F"}) then {_types pushBackUnique "mech_inf";};
-            if (getNumber (_config >> "radarType") > 0) then {_types pushBackUnique "antiair";};
-            if (getNumber (_config >> "artilleryScanner") > 0 || {_vehicle isKindOf "StaticCannon"}) then {_types pushBackUnique "art";};
-            if (_vehicle isKindOf "StaticMortar") then {_types pushBackUnique "mortar";};
-            if (getNumber (_config >> "transportAmmo") > 0 || {getNumber (_config >> "transportFuel") > 0}) then {_supportTypes pushBackUnique "support";};
-            if (getNumber (_config >> "transportRepair") > 0) then {_supportTypes pushBackUnique "maint";};
-            if (getNumber (_config >> "attendant") > 0) then {_supportTypes pushBackUnique "med";};
-            if (_vehicle isKindOf "Ship") then {_types pushBackUnique "naval";};
-            if (_vehicle isKindOf "Helicopter") then {_types pushBackUnique "air";};
-            if (_vehicle isKindOf "Plane") then {_types pushBackUnique "plane";};
-            if (_vehicle in allUnitsUAV) then {_types pushBackUnique "uav";};
+            switch true do {
+                case (_vehicle isKindOf "Car"): {_types pushBackUnique "motor_inf"};
+                case (_vehicle isKindOf "Tank"): {_types pushBackUnique "armor"};
+                case (_vehicle isKindOf "Wheeled_APC_F");
+                case (_vehicle isKindOf "APC_Tracked_01_base_F");
+                case (_vehicle isKindOf "APC_Tracked_02_base_F");
+                case (_vehicle isKindOf "APC_Tracked_03_base_F"): {_types pushBackUnique "mech_inf"};
+                case (_vehicle isKindOf "StaticMortar"): {_types pushBackUnique "mortar"};
+                case (_vehicle isKindOf "Ship"): {_types pushBackUnique "naval"};
+                case (_vehicle isKindOf "Helicopter"): {_types pushBackUnique "air"};
+                case (_vehicle isKindOf "Plane"): {_types pushBackUnique "plane"};
+                case (_vehicle in allUnitsUAV): {_types pushBackUnique "uav"};
+                case (getNumber (_config >> "radarType") > 0): {_types pushBackUnique "antiair"};
+                case (_vehicle isKindOf "StaticCannon");
+                case (getNumber (_config >> "artilleryScanner") > 0): {_types pushBackUnique "art"};
+                case (getNumber (_config >> "transportAmmo") > 0);
+                case (getNumber (_config >> "transportFuel") > 0): {_supportTypes pushBackUnique "support"};
+                case (getNumber (_config >> "transportRepair") > 0): {_supportTypes pushBackUnique "maint"};
+                case (getNumber (_config >> "attendant") > 0): {_supportTypes pushBackUnique "med"};
+                //controleer naam markerName
+                default {
+                    Diag_log "[LT] (MapIconVehicles) Default marker applied";
+                    _types pushBackUnique "unkown";
+                };
+            };
         };
     };
 } forEach _members;
