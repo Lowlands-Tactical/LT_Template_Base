@@ -45,6 +45,16 @@ class CfgFunctions
 {
 	class LT
 	{
+		class MapIntel
+		{
+			file="\lt_template_base\functions\MapIntel";
+			class initMapIntel {postInit=1;};
+			class mapIntelUpdate {};
+			class mapIntelIcon {};
+			class mapIntelDraw {};
+			class mapIntelUI {};
+			class mapIntelTooltip {};
+		};
 		class template_base
 		{
 			file="\lt_template_base\functions";

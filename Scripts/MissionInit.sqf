@@ -85,14 +85,14 @@ if (hasinterface) then
             systemChat "[LT] (Mission) Fatigue off";
         };
     };
-    if ("lt_markers" call bis_fnc_getParamValue == 1) then 
+    if (["lt_markers", 1] call BIS_fnc_getParamValue == 1) then
     {
-        [[],"\lt_template_base\scripts\QS_icons.sqf"] remoteExec ["BIS_fnc_execVM", player];
+        [] call LT_fnc_initMapIntel;
         
-        Diag_log "[LT] (Mission) QS markers are enabled";
+        Diag_log "[LT] (Mission) Player group markers are enabled";
         if ("lt_debug" call bis_fnc_getParamValue == 1) then 
         {
-            systemChat "[LT] (Mission) QS markers are enabled";
+            systemChat "[LT] (Mission) Player group markers are enabled";
         };
     };
     Diag_log "[LT] (Mission) Loading EvenHandlers";
