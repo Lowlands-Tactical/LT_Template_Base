@@ -41,6 +41,16 @@ _records = [];
         _index = _previous findIf {(_x select 0) isEqualTo _group};
         if (_index >= 0) then {_ftl = (_previous select _index) select 2;};
         if (!(_ftl in _candidates)) then {_ftl = _candidates param [0, objNull];};
+
+        _mounted = _members select {vehicle _x != _x};
+        _iconMembers = if (count _mounted > count _members / 2) then {
+            _mounted
+        } else {
+            _members select {vehicle _x == _x}
+        };
+        _icon = [_group, _iconMembers] call LT_fnc_mapIntelIcon;
+        
+        _color = [side _group, false] call BIS_fnc_sideColor;
         // [group, leader, FTL, main texture, FTL texture, side color]
         _ftlIcon = if (isNull _ftl) then {""} else {[_group, [_ftl]] call LT_fnc_mapIntelIcon};
         _records pushBack [_group, _leader, _ftl, _icon, _ftlIcon, _color];
