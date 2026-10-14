@@ -103,7 +103,7 @@ if (count _tasks > 0) then
     } forEach _tasks;
 } else 
 {
-    _briefing = _briefing + "   No tasks specified at beginning<br/><br/>";
+    _briefing = _briefing + "<br/>   No tasks specified at beginning<br/><br/>";
 };
 
 // SAFE START SECTION
