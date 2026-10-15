@@ -181,6 +181,8 @@ if (hasinterface) then
 	};
 
     ["Mission","Loading briefing"] call LT_fnc_log;
+    
+    player removeDiarySubject "Diary";
     _meBrief = [] execVM "\lt_template_base\Scripts\BriefingMeteo.sqf";
     waitUntil {uiSleep 0.5; scriptDone _meBrief};
     _chBrief = [] execVM "\lt_template_base\Scripts\Briefingchecklist.sqf";
