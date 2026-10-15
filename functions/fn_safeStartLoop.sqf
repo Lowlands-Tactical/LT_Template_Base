@@ -16,11 +16,7 @@ if (isServer) then
 	while {lt_param_timer > 0} do
 	{
 		["SafeStart",[format["Time Remaining: %1 min",lt_param_timer]]] remoteExecCall ["BIS_fnc_showNotification"];
-		Diag_log "[LT] (Safety) SafetyLoop";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) SafetyLoop";
-		};
+		["Safety","SafetyLoop cycle"] call LT_fnc_log;
 		uisleep 60;
 
 		if (lt_param_timer < 0) exitWith {};
@@ -34,10 +30,6 @@ if (isServer) then
 	{
 		["SafeStartMissionStarting",["Mission starting now!"]] remoteExecCall ["BIS_fnc_showNotification"];
 		[false] remoteExec ["LT_fnc_safety",allPlayers];
-		Diag_log "[LT] (Safety) SafetyLoop ended";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) SafetyLoop ended";
-		};
+		["Safety","SafetyLoop ended"] call LT_fnc_log;
 	};
 };

@@ -15,11 +15,7 @@ if (local player) then
 {
     if !(((vehicle player) isKindOf "Air") && (((position player) select 2) > 100) && (player != driver (vehicle player))) exitWith 
     {
-        Diag_log format["[LT] (Paradrop) %1 is not ready to paradrop", name player];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Paradrop) %1 is not ready to paradrop", name player];
-        };
+        ["Paradrop",format ["%1 is not ready to paradrop", name player],1] call LT_fnc_log;
     };
 
     player allowdamage false;
@@ -35,9 +31,5 @@ if (local player) then
     waituntil {sleep 0.5; isTouchingGround player};
     player allowDamage true;
 
-    Diag_log format["[LT] (Paradrop) %1 has landed", name player];
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat format["[LT] (Paradrop) %1 has landed", name player];
-    };
+    ["Paradrop",format ["%1 has landed", name player],2] call LT_fnc_log;
 };

@@ -27,7 +27,7 @@ Returns:
 
 */
 
-if (!isServer) exitWith {Diag_log "[LT] (Resupply) You are not server";};
+if (!isServer) exitWith {};
 
 _pos = param [0,[0,0,0],[[0,0,0]]];
 _side = param [1,"WEST",["WEST"]];
@@ -56,24 +56,13 @@ _shute = "B_Parachute_02_F";
 // Check if vehicle and crate are defined
 if (_vehicle == "" OR _crate == "") exitWith 
 {
-	Diag_log "[LT] (Resupply) Vehicle or Crate is Nil";
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemChat "[LT] (Resupply) Vehicle or Crate is Nil";
-	};
+	["ResupplyRequest","Vehicle or Crate is Nil",3] call LT_fnc_log;
 };
 
-// Debug messages
-Diag_log format["[LT] (Resupply) Loadoutside= %1", _side];
-Diag_log format["[LT] (Resupply) Vehicle= %1 Crate= %2", _vehicle, _crate];
-Diag_log format["[LT] (Resupply) Lo_1= %1 Lo_2= %2 Lo_3= %3", _load1, _load2, _load3];
-Diag_log format["[LT] (Resupply) ShiftPress= %1 AltPress= %2", _shift, _alt];
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-	systemChat format["[LT] (Resupply) Vehicle= %1 Crate= %2", _vehicle, _crate];
-	systemChat format["[LT] (Resupply) Lo1= %1 Lo2= %2 Lo3= %3", _load1, _load2, _load3];
-	systemChat format["[LT] (Resupply) ShiftPress= %1 AltPress= %2", _shift, _alt];
-};
+["ResupplyRequest",format ["Loadoutside= %1", _side],2] call LT_fnc_log;
+["ResupplyRequest",format ["Vehicle= %1 Crate= %2", _vehicle, _crate],2] call LT_fnc_log;
+["ResupplyRequest",format ["Lo_1= %1 Lo_2= %2 Lo_3= %3", _load1, _load2, _load3],2] call LT_fnc_log;
+["ResupplyRequest",format ["ShiftPress= %1 AltPress= %2", _shift, _alt],2] call LT_fnc_log;
 
 // Define waypoints
 _wpHeight = 350;
@@ -87,16 +76,13 @@ _wpAfter = [_pos select 0, _pos select 1, _wpHeight];
 _wpReturn = [_pos select 0, _pos select 1, _wpHeight];
 _wpEnd = [_pos select 0, _pos select 1, _wpHeight];
 
+_diagDir = "South > North";
 if (_shift) then 
 {
 	if (_alt) then 
 	{
 		// true-true
-		Diag_log "[LT] (Resupply) East > West";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Resupply) East > West";
-		};
+		_diagDir = "East > West";
 		_wpStart = [(_pos select 0) + 4000, (_pos select 1), _wpHeightVeh];
 		_wpNear = [(_pos select 0) + 100, (_pos select 1), _wpHeight];
 		_wpDrop1 = [(_pos select 0) - 5, (_pos select 1), _wpHeight];
@@ -108,11 +94,7 @@ if (_shift) then
 	} else 
 	{
 		// true-false
-		Diag_log "[LT] (Resupply) West > East";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Resupply) West > East";
-		};
+		_diagDir = "West > East";
 		_wpStart = [(_pos select 0) - 4000, (_pos select 1), _wpHeightVeh];
 		_wpNear = [(_pos select 0) - 100, (_pos select 1), _wpHeight];
 		_wpDrop1 = [(_pos select 0) + 5, (_pos select 1), _wpHeight];
@@ -127,11 +109,7 @@ if (_shift) then
 	if (_alt) then 
 	{
 		// false-true
-		Diag_log "[LT] (Resupply) North > South";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Resupply) North > South";
-		};
+		_diagDir = "North > South";
 		_wpStart = [(_pos select 0), (_pos select 1) + 4000, _wpHeightVeh];
 		_wpNear = [(_pos select 0), (_pos select 1) + 100, _wpHeight];
 		_wpDrop1 = [(_pos select 0), (_pos select 1) - 5, _wpHeight];
@@ -143,11 +121,7 @@ if (_shift) then
 	} else 
 	{
 		// false-false
-		Diag_log "[LT] (Resupply) South > North";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Resupply) South > North";
-		};
+		_diagDir = _diagDir;
 		_wpStart = [(_pos select 0), (_pos select 1) - 4000, _wpHeightVeh];
 		_wpNear = [(_pos select 0), (_pos select 1) - 100, _wpHeight];
 		_wpDrop1 = [(_pos select 0), (_pos select 1) + 5, _wpHeight];
@@ -158,6 +132,7 @@ if (_shift) then
 		_wpEnd = [(_pos select 0), (_pos select 1) - 4000, _wpHeight];
 	};
 };
+["ResupplyRequest",_diagDir,2] call LT_fnc_log;
 _waypoints = [_wpNear, _wpDrop1, _wpDrop2, _wpDrop3, _wpAfter, _wpReturn, _wpEnd];
 
 // Spawn Vehicle and set direction and AI settings
@@ -187,11 +162,7 @@ _spnVeh addMPEventHandler
 	{
 		lt_resupply = 0;
 		publicVariable "lt_resupply";
-		Diag_log "[LT] (Resupply) Resupply vehicle has crashed";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Resupply) Resupply vehicle has crashed";
-		};
+		["ResupplyRequest","Resupply vehicle has crashed",3] call LT_fnc_log;
 		hint "Resupply vehicle has crashed";
 	}
 ];

@@ -45,7 +45,7 @@ _supportTypes = [];
                 case (getNumber (_config >> "attendant") > 0): {_supportTypes pushBackUnique "med"};
                 //controleer naam markerName
                 default {
-                    Diag_log "[LT] (MapIntelIcon) Default marker applied";
+                    ["MapIntelIcon","Default marker applied",2] call LT_fnc_log;
                     _types pushBackUnique "unkown";
                 };
             };

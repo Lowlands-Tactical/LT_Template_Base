@@ -183,8 +183,4 @@ TabletSettings = createHashMapFromArray [
 ];
 publicVariable "TabletSettings";
 
-Diag_log "[LT] (XEH) Template Base PreInit finished";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-	systemChat "[LT] (XEH) Template Base PreInit finished";
-};
+["XEH_Base","Template Base PreInit finished",2] call LT_fnc_log;

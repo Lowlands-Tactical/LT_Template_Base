@@ -62,12 +62,8 @@ _briefing = _briefing + format['
 
 
 // Create array of tasks
-_tasks = player call BIS_fnc_tasksUnit;
-diag_log format["[LT] (BriefingAdmin) Taskarray: %1", _tasks];
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemchat format["[LT] (BriefingAdmin) Taskarray: %1", _tasks];
-};
+_tasks = player call bis_fnc_tasksUnit;
+["BriefingAdmin",format ["Taskarray: %1", _tasks],2] call LT_fnc_log;
 
 // Get side of player so taskState will be remoteExec only to that side.
 _side = side player;
@@ -119,8 +115,6 @@ _briefing = _briefing + "
 // CREATE DIARY Entry
 player createDiaryRecord ["LT Briefing", ["(Admin) Menu", _briefing]];
 
-Diag_log "[LT] (BriefingAdmin) briefing finished";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemchat "[LT] (BriefingAdmin) briefing finished";
-};
+["BriefingAdmin","Briefing finished",2] call LT_fnc_log;
+
+_briefing

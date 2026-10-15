@@ -90,11 +90,7 @@ switch (_code) do
     {
         closeDialog 0;
         openCuratorInterface;
-        Diag_log format ["[LT] (Tablet) %1 Opened Zeus", name player];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format ["[LT] (Tablet) %1 Opened Zeus", name player];
-        };
+        ["Tablet",format ["%1 Opened Zeus", name player],2] call LT_fnc_log;
     };
     case "MarkUnits": 
     {
@@ -105,11 +101,7 @@ switch (_code) do
     {
         [player, player, true] call ace_arsenal_fnc_openBox;
         closedialog 0;
-        Diag_log format["[LT] (Tablet) %1 Opened ACE Arsenal", name player];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format["[LT] (Tablet) %1 Opened ACE Arsenal", name player];
-        };
+        ["Tablet",format ["%1 Opened ACE Arsenal", name player],2] call LT_fnc_log;
     };
     case "Debug": 
     {
@@ -122,11 +114,7 @@ switch (_code) do
         _unit = playerArr select _index; //playerArr is de array defined in openTablet.sqf
         [_unit] call ace_medical_treatment_fnc_fullHealLocal;
         [_unit, false] call ace_medical_status_fnc_setUnconsciousState;
-        Diag_log format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
-        };
+        ["Tablet",format ["%1 Healed %2", name player, name _unit],2] call LT_fnc_log;
     };
     case "TPtoMe": 
     {
@@ -148,11 +136,7 @@ switch (_code) do
             _pos = getPosATL player;
             _unit setPosATL _pos;
         };
-        Diag_log format ["[LT] (Tablet) %1 Teleported to %2", name _unit, name player];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format ["[LT] (Tablet) %1 Teleported to %2", name _unit, name player];
-        };
+        ["Tablet",format ["%1 Teleported to %2", name _unit],2] call LT_fnc_log;
         closeDialog 0;
     };
     case "TPtoTarget": 
@@ -173,22 +157,14 @@ switch (_code) do
             _pos = getPosATL _unit;
             player setPosATL _pos;
         };
-        Diag_log format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
-        };
+        ["Tablet",format ["%1 Teleported to %2", name player, name _unit],2] call LT_fnc_log;
         closeDialog 0;
     };
     case "Drop": 
     {
         if (lt_resupply == 1) exitWith 
         {
-            Diag_log "[LT] (Tablet) Supplydrop already in progress";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (Tablet) Supplydrop already in progress";
-            };
+            ["Tablet","Supplydrop already in progress",1] call LT_fnc_log;
             hintsilent "Supplydrop already in progress";
         };
         
@@ -199,11 +175,7 @@ switch (_code) do
         lo3 = (lbData [537, lbCurSel 537]);
         if (lo1 == "None" && lo2 == "None" && lo3 == "None") exitWith 
         {
-            Diag_log "[LT] (Tablet) All crate types are None";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (Tablet) All crate types are None";
-            };
+            ["Tablet","All crate types are None",1] call LT_fnc_log;
             hintsilent "All crate types are None";
         };
 
@@ -230,11 +202,7 @@ switch (_code) do
     };
     case "Droping": 
     {
-        Diag_log "[LT] (Tablet) Supplydrop already in progress";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Tablet) Supplydrop already in progress";
-        };
+        ["Tablet","Supplydrop already in progress",1] call LT_fnc_log;
         hintsilent "Supplydrop already in progress";
         closeDialog 0;
     };
@@ -244,19 +212,11 @@ switch (_code) do
         {
             lt_resupply = 0;
             publicVariable "lt_resupply";
-            Diag_log "[LT] (Tablet) Supplydrop value has been reset";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (Tablet) Supplydrop value has been reset";
-            };
+            ["Tablet","Supplydrop value has been reset",2] call LT_fnc_log;
             hintsilent "Supplydrop value has been reset";
         }else 
         {
-            Diag_log "[LT] (Tablet) Supplydrop doesn't need a reset";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (Tablet) Supplydrop doesn't need a reset";
-            };
+            ["Tablet","Supplydrop doesn't need a reset",1] call LT_fnc_log;
             hintsilent "Supplydrop doesn't need a reset";
         };
     };
@@ -278,11 +238,7 @@ switch (_code) do
         _object = ctrlText 619;
         if (_object == "No object detected") then 
         {
-            Diag_log "[LT] (Tablet) nothing is found and could not be filled";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (Tablet) nothing is found and could not be filled";
-            };
+            ["Tablet","Nothing is found and could not be filled",1] call LT_fnc_log;
         }else 
         {
             _vehicle = cursorObject;
@@ -292,41 +248,25 @@ switch (_code) do
             _vehicle setVariable ["LT_veh_role", _load, true];
             [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout"];
 
-            Diag_log format["[LT] (Tablet) %1 is being filled with %2", _vehicle, _load];
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat format["[LT] (Tablet) %1 is being filled with %2", _vehicle, _load];
-            };
+            ["Tablet",format ["%1 is being filled with %2", _vehicle, _load],2] call LT_fnc_log;
         };
         closeDialog 0;
     };
     case "DebugBriefing":
     {
-        Diag_log "[LT] (Tablet) Add/Remove Debug";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Tablet) Add/Remove Debug";
-        };
+        ["Tablet","Add/Remove Debug",2] call LT_fnc_log;
         ["\lt_template_base\Scripts\BriefingDebug.sqf"] remoteExec ["execVM",0];
         closeDialog 0;
     };
     case "Briefing": 
     {
-        Diag_log "[LT] (Tablet) Reload admin briefing";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Tablet) Reload admin briefing";
-        };
+        ["Tablet","Reload admin briefing",2] call LT_fnc_log;
         [] execVM "\lt_template_base\Scripts\BriefingAdmin.sqf";
         closeDialog 0;
     };
     case "ZeusModule": 
     {
-        Diag_log "[LT] (Tablet) Reload zeus modules";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Tablet) Reload zeus modules";
-        };
+        ["Tablet","Reload zeus modules",2] call LT_fnc_log;
         [] remoteExec ["LT_fnc_AdminZeusModule", 2];
         closeDialog 0;
     };
@@ -336,11 +276,7 @@ switch (_code) do
             [_x] remoteExec ["LT_fnc_initPostUnit", _x];
         }forEach allPlayers;
 
-        Diag_log "[LT] (Tablet) Reload initPostUnit for every player";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Tablet) Reload initPostUnit for every player";
-        };
+        ["Tablet","Reload initPostUnit for every player",2] call LT_fnc_log;
         closeDialog 0;
     };
     case "PrepVehicle":
@@ -349,11 +285,7 @@ switch (_code) do
         publicVariable "LT_vehicleGearIsSet";
         [] remoteExec ["LT_fnc_prepVehicleLoadout", 2];
         
-        Diag_log "[LT] (Tablet) Reload prepVehicleloadout";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Tablet) Reload prepVehicleloadout";
-        };
+        ["Tablet","Reload prepVehicleloadout",2] call LT_fnc_log;
         closeDialog 0;
     };
     case "SetValues": 
@@ -366,11 +298,7 @@ switch (_code) do
         _wpn = _unit getVariable ["LT_unit_weapon", true];
         _gear = _unit getVariable ["LT_unit_gear", true];
 
-        Diag_log format["[LT] (Tablet) %1 was role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _role, _link, _item, _wpn, _gear];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) %1 was role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _role, _link, _item, _wpn, _gear];
-        };
+        ["Tablet",format ["%1 was role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _role, _link, _item, _wpn, _gear],2] call LT_fnc_log;
 
         _newRole = lbData [631, lbCurSel 631];
         _newLink = if (lbCurSel 632 == 0) then {false} else {true};
@@ -383,11 +311,7 @@ switch (_code) do
         if (_wpn != _newWpn) then {_unit setVariable ["LT_unit_weapon", _newWpn, true]};
         if (_gear != _newGear) then {_unit setVariable ["LT_unit_gear", _newGear, true]};
 
-        Diag_log format["[LT] (Tablet) %1 is role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _newRole, _newLink, _newItem, _newWpn, _newGear];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) %1 is role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _newRole, _newLink, _newItem, _newWpn, _newGear];
-        };
+        ["Tablet",format ["%1 is role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _newRole, _newLink, _newItem, _newWpn, _newGear],2] call LT_fnc_log;
     };
     case "PrepPlayer": 
     {
@@ -395,16 +319,12 @@ switch (_code) do
         _unit = playerAdvArr select _index; //playerAdvArr is de array defined in openTablet.sqf
         [_unit] remoteExec ["LT_fnc_initPostUnit", _unit];
         
-        Diag_log format["[LT] (Tablet) Reload initPostUnit for Player:%1", name _unit];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) Reload initPostUnit for Player:%1", name _unit];
-        };
+        ["Tablet",["Reload initPostUnit for Player:%1", name _unit],2] call LT_fnc_log;
         closeDialog 0;
     };
     case "End1": // Missie geslaagd!
     {
-        Diag_log "[LT] (Tablet) Mission ended (1)";
+        ["Tablet","Mission ended (1)",2] call LT_fnc_log;
         lt_param_timer = 10;
         publicVariable "lt_param_timer";
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
@@ -416,7 +336,7 @@ switch (_code) do
     };
     case "End2": // Missie partial win
     {
-        Diag_log "[LT] (Tablet) Mission ended (2)";
+        ["Tablet","Mission ended (2)",2] call LT_fnc_log;
         lt_param_timer = 10;
         publicVariable "lt_param_timer";
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
@@ -428,7 +348,7 @@ switch (_code) do
     };
     case "End3": // Missie gefaald
     {
-        Diag_log "[LT] (Tablet) Mission ended (3)";
+        ["Tablet","Mission ended (3)",2] call LT_fnc_log;
         lt_param_timer = 10;
         publicVariable "lt_param_timer";
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
@@ -440,7 +360,7 @@ switch (_code) do
     };
     case "End4": // BLUEFOR Wins
     {
-        Diag_log "[LT] (Tablet) Mission ended (4)";
+        ["Tablet","Mission ended (4)",2] call LT_fnc_log;
         lt_param_timer = 10;
         publicVariable "lt_param_timer";
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
@@ -452,7 +372,7 @@ switch (_code) do
     };
     case "End5": // REDFOR Wins
     {
-        Diag_log "[LT] (Tablet) Mission ended (5)";
+        ["Tablet","Mission ended (5)",2] call LT_fnc_log;
         lt_param_timer = 10;
         publicVariable "lt_param_timer";
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
@@ -464,7 +384,7 @@ switch (_code) do
     };
     case "End6": // GREENFOR Wins
     {
-        Diag_log "[LT] (Tablet) Mission ended (6)";
+        ["Tablet","Mission ended (6)",2] call LT_fnc_log;
         lt_param_timer = 10;
         publicVariable "lt_param_timer";
         ["SafeStartmissionStarting",["Mission safety is on!"]] remoteExecCall ["BIS_fnc_showNotification"];
@@ -517,11 +437,8 @@ switch (_code) do
         _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTabletCrew.sqf
         [_unit] call ace_medical_treatment_fnc_fullHealLocal;
         [_unit, false] call ace_medical_status_fnc_setUnconsciousState;
-        Diag_log format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) %1 Healed %2", name player, name _unit];
-        };
+
+        ["Tablet Crew",format ["%1 Healed %2", name player, name _unit],2] call LT_fnc_log;
     };
     case "TPtoMeCrew": 
     {
@@ -543,11 +460,7 @@ switch (_code) do
             _pos = getPosATL player;
             _unit setPosATL _pos;
         };
-        Diag_log format ["[LT] (Tablet) %1 Teleported to %2", name _unit, name player];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format ["[LT] (Tablet) %1 Teleported to %2", name _unit, name player];
-        };
+        ["Tablet Crew",format ["%1 Teleported to %2", name _unit, name player],2] call LT_fnc_log;
         closeDialog 0;
     };
     case "TPtoTargetCrew": 
@@ -568,11 +481,7 @@ switch (_code) do
             _pos = getPosATL _unit;
             player setPosATL _pos;
         };
-        Diag_log format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then
-        {
-            systemChat format ["[LT] (Tablet) %1 Teleported to %2", name player, name _unit];
-        };
+        ["Tablet Crew",format ["%1 Teleported to %2", name player, name _unit],2] call LT_fnc_log;
         closeDialog 0;
     };
     case "LoadoutCrew": 
@@ -580,11 +489,7 @@ switch (_code) do
         _object = ctrlText 721;
         if (_object == "No object detected") then 
         {
-            Diag_log "[LT] (Tablet) nothing is found and could not be filled";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (Tablet) nothing is found and could not be filled";
-            };
+            ["Tablet Crew","Nothing is found and could not be filled",1] call LT_fnc_log;
         }else 
         {
             _vehicle = cursorObject;
@@ -594,11 +499,7 @@ switch (_code) do
             _vehicle setVariable ["LT_veh_role", _load, true];
             [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout"];
 
-            Diag_log format["[LT] (Tablet) %1 is being filled with %2", _vehicle, _load];
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat format["[LT] (Tablet) %1 is being filled with %2", _vehicle, _load];
-            };
+            ["Tablet Crew",format ["%1 is being filled with %2", _vehicle, _load],2] call LT_fnc_log;
         };
         closeDialog 0;
     };
@@ -612,11 +513,7 @@ switch (_code) do
         _wpn = _unit getVariable ["LT_unit_weapon", true];
         _gear = _unit getVariable ["LT_unit_gear", true];
 
-        Diag_log format["[LT] (Tablet) %1 was role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _role, _link, _item, _wpn, _gear];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) %1 was role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _role, _link, _item, _wpn, _gear];
-        };
+        ["Tablet Crew",format ["%1 was role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _role, _link, _item, _wpn, _gear],2] call LT_fnc_log;
 
         _newRole = lbData [752, lbCurSel 752];
         _newLink = if (lbCurSel 753 == 0) then {false} else {true};
@@ -629,11 +526,7 @@ switch (_code) do
         if (_wpn != _newWpn) then {_unit setVariable ["LT_unit_weapon", _newWpn, true]};
         if (_gear != _newGear) then {_unit setVariable ["LT_unit_gear", _newGear, true]};
 
-        Diag_log format["[LT] (Tablet) %1 is role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _newRole, _newLink, _newItem, _newWpn, _newGear];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) %1 is role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _newRole, _newLink, _newItem, _newWpn, _newGear];
-        };
+        ["Tablet Crew",format ["%1 is role:%2 link:%3 items:%4 weapons:%5 gear:%6", name _unit, _newRole, _newLink, _newItem, _newWpn, _newGear],2] call LT_fnc_log;
     };
     case "PrepPlayerCrew": 
     {
@@ -641,11 +534,7 @@ switch (_code) do
         _unit = playerCrewArr select _index; //playerCrewArr is de array defined in openTablet.sqf
         [_unit] remoteExec ["LT_fnc_initPostUnit", _unit];
         
-        Diag_log format["[LT] (Tablet) Reload initPostUnit for Player:%1", name _unit];
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat format["[LT] (Tablet) Reload initPostUnit for Player:%1", name _unit];
-        };
+        ["Tablet Crew",["Reload initPostUnit for Player:%1", name _unit],2] call LT_fnc_log;
         closeDialog 0;
     };
     case "CreateCrate": 

@@ -47,10 +47,8 @@ player addAction [
 ];
 
 // Readd zeus module
-Diag_log "[LT] (Respawn) Reload zeus modules";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
 {
-	systemChat "[LT] (Respawn) Reload zeus modules";
+	["Respawn","Reload zeus modules",2] call LT_fnc_log;
 };
 [] remoteExec ["LT_fnc_AdminZeusModule", 2];
 
@@ -81,18 +79,10 @@ if (_hasRadio) then
 		} forEach _oldRadios;
 	}forEach _allRadios;
 
-	diag_log "[LT] (Respawn) player radio('s) have been reset";
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemChat "[LT] (Respawn) player radio('s) have been reset";
-	};
+	["Respawn","Player radio('s) have been reset",2] call LT_fnc_log;
 }else
 {
-	diag_log "[LT] (Respawn) player has no radio";
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemChat "[LT] (Respawn) player has no radio";
-	};
+	["Respawn","Player has no radio",2] call LT_fnc_log;
 };
 
 // Reset unit gear load with extra space

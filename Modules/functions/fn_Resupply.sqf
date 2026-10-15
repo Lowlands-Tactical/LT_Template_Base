@@ -33,16 +33,10 @@ if (_activated) then
 	_shift = _logic getVariable ["Resupply_Shift", false];
 	_alt = _logic getVariable ["Resupply_Alt", false];
 	
-	Diag_Log format["[LT] (ResupplyModule) Loadoutside= %1", _side];
-	Diag_Log format["[LT] (ResupplyModule) Vehicle= %1 Crate= %2", _vehicle, _crate];
-	Diag_Log format["[LT] (ResupplyModule) Lo1= %1 Lo2= %2 Lo3= %3", _load1, _load2, _load3];
-	Diag_Log format["[LT] (ResupplyModule) ShiftPress= %1 AltPress= %2", _shift, _alt];
-	
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then {};
-		systemChat format["[LT] (ResupplyModule) Loadoutside= %1", _side];
-		systemChat format["[LT] (ResupplyModule) Vehicle= %1 Crate= %2", _vehicle, _crate];
-		systemChat format["[LT] (ResupplyModule) Lo1= %1 Lo2= %2 Lo3= %3", _load1, _load2, _load3];
-		systemChat format["[LT] (ResupplyModule) ShiftPress= %1 AltPress= %2", _shift, _alt];
+	["ResupplyModule",format ["Loadoutside= %1", _side],2] call LT_fnc_log;
+	["ResupplyModule",format ["Vehicle= %1 Crate= %2", _vehicle, _crate],2] call LT_fnc_log;
+	["ResupplyModule",format ["Lo1= %1 Lo2= %2 Lo3= %3", _load1, _load2, _load3],2] call LT_fnc_log;
+	["ResupplyModule",format ["ShiftPress= %1 AltPress= %2", _shift, _alt],2] call LT_fnc_log;
 
 	[_position, _side, _vehicle, _crate, _load1, _load2, _load3, _shift, _alt] remoteExec ["LT_fnc_ResupplyRequest", 2];
 };

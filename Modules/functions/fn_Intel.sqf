@@ -19,11 +19,7 @@ _intel = _objects select 0;
 
 if (isNil "_intel") exitWith
 {
-    Diag_log "[LT] (Intel) _intel == nil (JIP ErrorCatcher)";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Intel) _intel == nil (JIP ErrorCatcher)";
-    };
+    ["Intel","_intel == nil (JIP ErrorCatcher)",3] call LT_fnc_log;
 };
 
 removeAllActions _intel;

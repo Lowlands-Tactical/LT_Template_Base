@@ -24,10 +24,6 @@ if !(local (leader _grpId)) exitWith {};
   deleteVehicle _x;
 } forEach units _grpId;
 
-Diag_log "[LT] (deleteUnits) group/unit deleted";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-  systemChat "[LT] (deleteUnits) group/unit deleted";
-};
+["deleteUnits","group/unit deleted"] call LT_fnc_log;
 
 true;

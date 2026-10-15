@@ -19,9 +19,18 @@ params [
 ];
 
 // Make sure only the pilot spawns the loadout
-if !(local _pilot) exitWith {};
-if (isNull _pilot) exitWith {};
-if (_loadoutType == "None") exitWith {};
+if !(local _pilot) exitWith
+{
+	["ReupplyDrop","Pilot is not local",3] call LT_fnc_log;
+};
+if (isNull _pilot) exitWith
+{
+	["ReupplyDrop","Pilot does not exist",3] call LT_fnc_log;
+};
+if (_loadoutType == "None") exitWith
+{
+	["ReupplyDrop","Loadout type is NONE",3] call LT_fnc_log;
+};
 
 // Import variable attached to the group in fnc_ResupplyRequest
 _crate = (group _pilot) getVariable "LT_Resupply_Crate";
@@ -92,12 +101,7 @@ _loadoutType = switch (_loadoutType) do
 	default {_loadoutType};
 };
 
-// Debug messages
-Diag_log format["[LT] (Resupply) Crate=%1 Chute=%2 LoadoutTypes=%3", _crate, _chute, _loadoutType];
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-	systemChat format["[LT] (Resupply) Crate=%1 Chute=%2 LoadoutTypes=%3", _crate, _chute, _loadoutType];
-};
+["ResupplyDrop",format ["Crate=%1 Chute=%2 LoadoutTypes=%3", _crate, _chute, _loadoutType],2] call LT_fnc_log;
 
 _veh = vehicle _pilot;
 _locVeh = [(position _veh) select 0, (position _veh) select 1, ((position _veh) select 2) -25];

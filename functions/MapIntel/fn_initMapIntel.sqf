@@ -30,5 +30,6 @@ LT_mapIntel_respawnEH = addMissionEventHandler ["EntityRespawned", {
 LT_mapIntel_mapEH = addMissionEventHandler ["Map", {
     [] call LT_fnc_mapIntelUpdate;
 }];
-LT_mapIntel_updatePFH = [{[] call LT_fnc_mapIntelUpdate;}, 1] call CBA_fnc_addPerFrameHandler;
-diag_log "[LT] (MapIntel) Player group marker system initialized";
+LT_mapIntel_updatePFH = [{[] call LT_fnc_mapIntelUpdate;}, 1] call cba_fnc_addPerFrameHandler;
+
+["initMapIntel","Player group marker system initialized",2] call LT_fnc_log;

@@ -20,20 +20,12 @@ if (lt_param_timer > 0) then
 	if (isServer) then 
 	{
 		[] remoteExec ["LT_fnc_safeStartLoop"];
-		Diag_log "[LT] (Safety) SafeStartLoop started";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) SafeStartLoop started";
-		};
+		["Safety","SafeStartLoop started",2] call LT_fnc_log;
 	};
 	
 	if (!isDedicated) then 
 	{
 		[true] remoteExec ["LT_fnc_safety", allPlayers];
-		Diag_log "[LT] (Safety) SafeStart started";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) SafeStart started";
-		};
+		["Safety","SafeStart started",2] call LT_fnc_log;
 	};
 };

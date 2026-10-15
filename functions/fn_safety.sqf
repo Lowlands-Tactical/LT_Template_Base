@@ -33,11 +33,7 @@ switch (_this select 0) do
 		};
 		player allowDamage false;
 
-		Diag_log "[LT] (Safety) Safety True";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) Safety True";
-		};
+		["Safety","Safety True"] call LT_fnc_log;
 	};
 
 	//Turn safety off
@@ -62,10 +58,6 @@ switch (_this select 0) do
 		};
 		player allowDamage true;
 
-		Diag_log "[LT] (Safety) Safety False";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) Safety False";
-		};
+		["Safety","Safety False"] call LT_fnc_log;
 	};
 };
