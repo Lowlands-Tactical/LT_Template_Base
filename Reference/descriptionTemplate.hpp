@@ -38,7 +38,7 @@ showUAVFeed=1;
 
 //Corpse and Wrack Management
 corpseManagerMode=3;
-coprseLimit=20;
+corpseLimit=20;
 corpseRemovalMinTime=30;
 coprseRemovalMaxTime=300;
 disposalCheckPeriod=20;
@@ -54,7 +54,7 @@ minPlayerDistance[]=
 weaponholderLimit=50;
 weaponholderRemovalMinTime=60;
 weaponholderRemovalMaxTime=600;
-wrackManagerMode=0;
+wreckManagerMode=0;
 
 //Mission Settings
 aiKills=0;

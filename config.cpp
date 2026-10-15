@@ -105,12 +105,13 @@ class cfgRemoteExec
     class Functions
     {
         // 0= all machines 1= only clients 2= only server
-        mode=2;
+        mode=1;
         jip=1;
+		class LT_fnc_log 				{allowedTargets=0;};
 		class LT_fnc_safety				{allowedTargets=0;};
 		class LT_fnc_safeStartLoop		{allowedTargets=0;};
 		class LT_fnc_adminZeusModule	{allowedTargets=2;};
-		class LT_fnv_initConvoy			{allowedTargets=2;};
+		class LT_fnc_initConvoy			{allowedTargets=2;};
 		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
 		class LT_fnc_deleteUnits		{allowedTargets=2;};
 		class LT_fnc_initMapIntel		{allowedTargets=0;};
@@ -141,19 +142,19 @@ class Extended_PreInit_EventHandlers
 {
 	class LT_Template_Base_Pre
 	{
-		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_preInit.sqf'";
 	};
 };
 class Extended_PostInit_EventHandlers
 {
 	class LT_Template_Base_Post
 	{
-		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_postInit.sqf'";
 	};
 };
 
 #include "Tablet\LT_Tablet_Base.hpp"
-#include "Modules\LT_modules.hpp"
+#include "Modules\LT_Modules.hpp"
 #include "Faces\LT_Faces.hpp"
 
 // Main menu 'join server' option

@@ -11,8 +11,7 @@ See Admin.sqf for the list.
 
 if !(hasInterface) exitWith {};
 
-_uid = getPlayerUID player;
-_admin = _uid in (AdminCrew get "Staff");
+_admin = (getPlayerUID player) in (AdminCrew get "Staff");
 if !(_admin OR serverCommandAvailable "kick") exitWith {};
 
 // ADMIN BRIEFING
@@ -72,7 +71,7 @@ LT_fnc_setTaskState = {
     _taskindex = _this select 0;
     _state = _this select 1;
     _side = _this select 2;
-    _taskArray = player call BIS_fnc_tasksUnit;
+    _taskArray = player call bis_fnc_tasksUnit;
     _task = _taskArray select _taskindex;
     [_task, _state, true] remoteExec ['BIS_fnc_tasksetState', _side, true];
 };
@@ -83,8 +82,8 @@ if (count _tasks > 0) then
 {
     {
         _taskID = _x;
-        _taskindex = (player call BIS_fnc_tasksUnit) find _x;
-        _taskDescriptionArray = _taskID call BIS_fnc_taskDescription;
+        _taskindex = (player call bis_fnc_tasksUnit) find _x;
+        _taskDescriptionArray = _taskID call bis_fnc_taskDescription;
         _taskDescription = _taskDescriptionArray select 1;
         _briefing = _briefing + format 
         ["

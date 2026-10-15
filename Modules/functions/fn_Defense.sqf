@@ -51,7 +51,7 @@ if (_activated) then
 	_formation = _logic getVariable ["Defense_Formation", "WEDGE"];
 	_speedMode = _logic getVariable ["Defense_SpeedMode", "NORMAL"];
 
-	_allFactions = [] call BIS_fnc_getFactions;
+	_allFactions = [] call bis_fnc_getFactions;
 
 	Diag_Log format["[LT] (Defense) Defense Module:%1  Defense Marker:%2  Faction:%3  BlackList:%4", _logic, _mrkDefPos, _faction, _blackList];
 	Diag_Log format["[LT] (Defense) AllFactions: %1", _allFactions];
@@ -121,7 +121,7 @@ if (_activated) then
 	};
 
 	// Define Faction arrays
-	_factionSide = [[_faction]] call BIS_fnc_getFactions;
+	_factionSide = [[_faction]] call bis_fnc_getFactions;
 	_factionInfArr = [];
 	_factionVehArr = [];
 	_factionMechArr = [];
@@ -133,7 +133,7 @@ if (_activated) then
 			_displayName = getText (configFile >> "CfgVehicles" >> _className >> "displayName");
 			_vehicleClass = getText (configFile >> "CfgVehicles" >> _className >> "vehicleClass");
 			_textSingular = getText (configFile >> "CfgVehicles" >> _className >> "textSingular");
-			if (_textSingular == "Infantry" AND !(["Uniform", _displayName] call BIS_fnc_inString)) then 
+			if (_textSingular == "Infantry" AND !(["Uniform", _displayName] call bis_fnc_inString)) then 
 			{
 				_factionInfArr pushback _className;
 			};

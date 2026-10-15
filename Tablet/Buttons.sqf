@@ -283,7 +283,7 @@ switch (_code) do
     {
         LT_vehicleGearIsSet = 0;
         publicVariable "LT_vehicleGearIsSet";
-        [] remoteExec ["LT_fnc_prepVehicleLoadout", 2];
+        [] remoteExec ["LT_fnc_vehicleLoadout", 2];
         
         ["Tablet","Reload prepVehicleloadout",2] call LT_fnc_log;
         closeDialog 0;

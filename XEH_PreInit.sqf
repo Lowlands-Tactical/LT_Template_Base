@@ -13,20 +13,18 @@ lt_group_teleport = 0;
 lt_resupply = 0;
 
 //Staff array used for table ace action and admin briefing
-_lt_staff=[
-	"76561198042684200",	// Tybalty
-	"76561198014060493",	// R.Hoods
-	"76561197992586763"		// Brainless_Ben
-];
-_lt_crew=[
-	//"76561198010219180",	// PingWing
-	"76561198047657052",	// DM3002X
-	"76561198103175891",	// RaiderNL
-	"76561198192823433"		// Bearfingers
-];
 AdminCrew = createHashMapFromArray [
-	["Staff", _lt_staff],
-	["Crew", _lt_crew]
+	["Staff", [
+		"76561198042684200",	// Tybalty
+		"76561198014060493",	// R.Hoods
+		"76561197992586763"		// Brainless_Ben
+	]],
+	["Crew", [
+		//"76561198010219180",	// PingWing
+		"76561198047657052",	// DM3002X
+		"76561198103175891",	// RaiderNL
+		"76561198192823433"		// Bearfingers
+	]]
 ];
 publicVariable "AdminCrew";
 

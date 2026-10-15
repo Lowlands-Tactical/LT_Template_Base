@@ -19,7 +19,7 @@ if (!isServer) exitWith {};
 
 _staffArray = AdminCrew get "Staff";
 {
-    _staffObject = _x call BIS_fnc_getUnitByUID;
+    _staffObject = _x call bis_fnc_getUnitByUID;
     _staffName = name _staffObject;
     
     if (isNull (getAssignedCuratorLogic _staffObject)) then 

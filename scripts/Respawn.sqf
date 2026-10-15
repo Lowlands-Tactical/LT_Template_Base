@@ -28,7 +28,7 @@ private _insignia = [_corpse] call BIS_fnc_getUnitInsignia;
 	params ["_unit", "_insignia"];
 	sleep 1;
 	_unit setVariable ["BIS_fnc_setUnitInsignia_class", nil];
-	[_unit, _insignia] call BIS_fnc_setUnitInsignia;
+	[_unit, _insignia] call bis_fnc_setUnitInsignia;
 };
 
 _team = assignedTeam _corpse;
@@ -41,16 +41,17 @@ if ("lt_fatigue_onoff" call bis_fnc_getParamValue == 0) then
 };
 player addAction [
 	"<t color='#FF0000'>Parachute</t>", 
-	"\lt_template_base\scripts\paradrop.sqf", 
+	"\lt_template_base\Scripts\paradrop.sqf", 
 	"", 1, false, true, "", 
 	"((vehicle player) isKindOf ""Air"") && (((position player) select 2) > 100) && (player != driver (vehicle player))"
 ];
 
 // Readd zeus module
+if ((getPlayerUID player) in (AdminCrew get "Staff")) then
 {
 	["Respawn","Reload zeus modules",2] call LT_fnc_log;
+	[] call LT_fnc_AdminZeusModule;
 };
-[] remoteExec ["LT_fnc_AdminZeusModule", 2];
 
 // After respawn reassign all radios and channels
 waitUntil {([] call acre_api_fnc_isInitialized)};

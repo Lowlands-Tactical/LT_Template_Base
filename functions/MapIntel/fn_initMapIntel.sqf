@@ -5,7 +5,7 @@
 */
 if (!hasInterface) exitWith {};
 if (missionNamespace getVariable ["LT_mapIntel_started", false]) exitWith {};
-if (["lt_markers", 1] call BIS_fnc_getParamValue != 1) exitWith {};
+if (["lt_markers", 1] call bis_fnc_getParamValue != 1) exitWith {};
 disableSerialization;
 
 LT_mapIntel_started = true;

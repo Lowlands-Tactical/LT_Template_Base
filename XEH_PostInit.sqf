@@ -49,13 +49,13 @@ if (missionNamespace getVariable ["ace_common", false]) then
 	_lt_main = ["lt_main", "Lowlands Tactical", "\lt_template_base\logos\lowtac.paa", {}, {true}] call ace_interact_menu_fnc_createAction;
 	[player, 1, ["ACE_SelfActions"], _lt_main] call ace_interact_menu_fnc_addActionToObject;
 
-	_action = ["lt_main_tablet", "Show Tablet", "\lt_template_base\logos\lowtac.paa", {execVM "\lt_template_base\Tablet\openTablet.sqf"}, {lt_admin OR lt_logged}] call ace_interact_menu_fnc_createAction;
+	_action = ["lt_staff_tablet", "Show Tablet", "\lt_template_base\logos\lowtac.paa", {execVM "\lt_template_base\Tablet\openTablet.sqf"}, {lt_admin OR lt_logged}] call ace_interact_menu_fnc_createAction;
 	[player, 1, ["ACE_SelfActions","lt_main"], _action] call ace_interact_menu_fnc_addActionToObject;
 
-	_action = ["lt_main_tablet", "Show Crew Tablet", "\lt_template_base\logos\lowtac.paa", {execVM "\lt_template_base\Tablet\openTabletCrew.sqf"}, {lt_crewmin OR lt_logged}] call ace_interact_menu_fnc_createAction;
+	_action = ["lt_crew_tablet", "Show Crew Tablet", "\lt_template_base\logos\lowtac.paa", {execVM "\lt_template_base\Tablet\openTabletCrew.sqf"}, {lt_crewmin OR lt_logged}] call ace_interact_menu_fnc_createAction;
 	[player, 1, ["ACE_SelfActions","lt_main"], _action] call ace_interact_menu_fnc_addActionToObject;
 	
-	_action = ["lt_main_doGroupTP", "Teleport Group", "\lt_template_base\logos\lowtac.paa", {openMap[true,true]; onMapSingleClick "[_pos] call LT_fnc_teleportGroup; openMap[false,false]; onMapSingleClick '';"; lt_group_teleport = 0; }, {(lt_group_teleport == 1) AND (player == leader player)}] call ace_interact_menu_fnc_createAction;
+	_action = ["lt_groupTP", "Teleport Group", "\lt_template_base\logos\lowtac.paa", {openMap[true,true]; onMapSingleClick "[_pos] call LT_fnc_teleportGroup; openMap[false,false]; onMapSingleClick '';"; lt_group_teleport = 0; }, {(lt_group_teleport == 1) AND (player == leader player)}] call ace_interact_menu_fnc_createAction;
 	[player, 1, ["ACE_SelfActions", "lt_main"], _action] call ace_interact_menu_fnc_addActionToObject;
 
 	["XEH","Ace SelfAction finished"] call LT_fnc_log;

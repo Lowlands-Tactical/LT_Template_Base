@@ -53,7 +53,7 @@ if (_activated) then
 	_formation = _logic getVariable ["CustomCompSpawner_Formation", "WEDGE"];
 	_speedMode = _logic getVariable ["CustomCompSpawner_SpeedMode", "NORMAL"];
 
-	_allFactions = [] call BIS_fnc_getFactions;
+	_allFactions = [] call bis_fnc_getFactions;
 
 	Diag_Log format["[LT] (CustomCompSpawner) CustomCompSpawner Module:%1 Waypoints:%2  Lastwaypoint task:%3", _logic, _waypoints, _lastWaypoint];
 	Diag_Log format["[LT] (CustomCompSpawner) Inf Amount:%1  Veh Amount:%2  Mech Amount:%3  Armor Amount:%4", _infAmt, _vehAmt, _mechAmt, _armorAmt];
@@ -177,7 +177,7 @@ if (_activated) then
 					{
 						for "_u" from 0 to _infSize do 
 						{
-							_unitClass = _InfArr call BIS_fnc_selectRandom;
+							_unitClass = _InfArr call bis_fnc_selectRandom;
 							_unit = _grp createUnit [_unitClass, _spawnPos,[],3,"NONE"];
 							[_unit] joinSilent _grp;
 							sleep 0.3;
@@ -185,13 +185,13 @@ if (_activated) then
 					};
 					case "Vehicles": 
 					{
-						_vehCar = _VehArr call BIS_fnc_selectRandom;
-						private _vehicleCar = [_spawnPos, _spawnDir, _vehCar, _grp] call BIS_fnc_spawnVehicle;
+						_vehCar = _VehArr call bis_fnc_selectRandom;
+						private _vehicleCar = [_spawnPos, _spawnDir, _vehCar, _grp] call bis_fnc_spawnVehicle;
 						private _hasCargo = fullCrew[(_vehicleCar select 0),"cargo",true];
 						{
 							if (isNull (_x select 0)) then 
 							{
-								_unitClass = _InfArr call BIS_fnc_selectRandom;
+								_unitClass = _InfArr call bis_fnc_selectRandom;
 								_unit = _grp createUnit [_unitClass,_spawnPos,[],3,"CARGO"];
 								[_unit] joinSilent _grp;
 							};
@@ -199,13 +199,13 @@ if (_activated) then
 					};
 					case "Mechanized": 
 					{
-						_vehMech = _MechArr call BIS_fnc_selectRandom;
-						private _vehicleMech = [_spawnPos, _spawnDir, _vehMech, _grp] call BIS_fnc_spawnVehicle;
+						_vehMech = _MechArr call bis_fnc_selectRandom;
+						private _vehicleMech = [_spawnPos, _spawnDir, _vehMech, _grp] call bis_fnc_spawnVehicle;
 						private _hasCargo = fullCrew[(_vehicleMech select 0),"cargo",true];
 						{
 							if (isNull (_x select 0)) then 
 							{
-								_unitClass = _InfArr call BIS_fnc_selectRandom;
+								_unitClass = _InfArr call bis_fnc_selectRandom;
 								_unit = _grp createUnit [_unitClass,_spawnPos,[],3,"CARGO"];
 								[_unit] joinSilent _grp;
 							};
@@ -213,8 +213,8 @@ if (_activated) then
 					};
 					case "Armored": 
 					{
-						_vehArmor = _ArmorArr call BIS_fnc_selectRandom;
-						[_spawnPos, _spawnDir, _vehArmor, _grp] call BIS_fnc_spawnVehicle;
+						_vehArmor = _ArmorArr call bis_fnc_selectRandom;
+						[_spawnPos, _spawnDir, _vehArmor, _grp] call bis_fnc_spawnVehicle;
 					};
 				};
 
@@ -224,22 +224,22 @@ if (_activated) then
 				{
 					if (_idx != (_waypointCnt - 1)) then 
 					{
-						[_grp, (_waypoints select _idx), 5, "MOVE", _behaviour, _combatMode, _speedMode, _formation, "", [0.3, 0.6, 0.9]] call CBA_fnc_addWaypoint;
+						[_grp, (_waypoints select _idx), 5, "MOVE", _behaviour, _combatMode, _speedMode, _formation, "", [0.3, 0.6, 0.9]] call cba_fnc_addWaypoint;
 					} else
 					{
 						switch (_lastWaypoint) do 
 						{
 							case "": 
 							{
-								[_grp, (_waypoints select _idx), 5, "MOVE", _behaviour, _combatMode, _speedMode, _formation, "", [0.3, 0.6, 0.9]] call CBA_fnc_addWaypoint;
+								[_grp, (_waypoints select _idx), 5, "MOVE", _behaviour, _combatMode, _speedMode, _formation, "", [0.3, 0.6, 0.9]] call cba_fnc_addWaypoint;
 							};
 							case "Attack": 
 							{
-								[_grp, (_waypoints select _idx), _searchArea] call CBA_fnc_taskAttack;
+								[_grp, (_waypoints select _idx), _searchArea] call cba_fnc_taskAttack;
 							};
 							case "Defend": 
 							{
-								[_grp, (_waypoints select _idx), _searchArea] call CBA_fnc_taskDefend;
+								[_grp, (_waypoints select _idx), _searchArea] call cba_fnc_taskDefend;
 							};
 							case "Garrison": 
 							{
@@ -247,11 +247,11 @@ if (_activated) then
 							};
 							case "Patrol": 
 							{
-								[_grp, (_waypoints select _idx), _searchArea, 10, "MOVE", _behaviour, _combatMode, _speedMode, _formation, "", [0.3, 0.6, 0.9]] call CBA_fnc_taskPatrol;
+								[_grp, (_waypoints select _idx), _searchArea, 10, "MOVE", _behaviour, _combatMode, _speedMode, _formation, "", [0.3, 0.6, 0.9]] call cba_fnc_taskPatrol;
 							};
 							case "Search": 
 							{
-								[_grp, _searchArea] call CBA_fnc_taskSearchArea;
+								[_grp, _searchArea] call cba_fnc_taskSearchArea;
 							};
 							case "Delete": 
 							{

@@ -38,14 +38,12 @@ if (hasinterface) then
     // Because we want to start with the weapon lowered
     if (vehicle player == player) then {player switchMove "AmovPercMstpSrasWrflDnon_AmovPercMstpSlowWrflDnon";};
 
-    _uid = getPlayerUID player;
-    _admin = _uid in (AdminCrew get "Staff");
-    
     if (didJIP) then 
     {
+        _admin = (getPlayerUID player) in (AdminCrew get "Staff");
         if (_admin) then 
         {
-            [] remoteExec ["LT_fnc_adminZeusModule", 2];
+            [] call LT_fnc_adminZeusModule;
         };
     };
 
@@ -65,9 +63,9 @@ if (hasinterface) then
 
         ["Mission","Fatigue off",2] call LT_fnc_log;
     };
-    if (["lt_markers", 1] call BIS_fnc_getParamValue == 1) then
+    if (["lt_markers", 1] call bis_fnc_getParamValue == 1) then
     {
-        [] remoteExec ["LT_fnc_initMapIntel", 0];
+        [] call LT_fnc_initMapIntel;
         
         ["Mission","Player group markers are enabled",2] call LT_fnc_log;
     };
@@ -75,7 +73,7 @@ if (hasinterface) then
     player addAction 
     [
         "<t color='#FF0000'>Parachute</t>", 
-        "\lt_template_base\scripts\paradrop.sqf", 
+        "\lt_template_base\Scripts\paradrop.sqf", 
         "", 1, false, true, "", 
         "((vehicle player) isKindOf 'Air') && (((position player) select 2) > 100) && (player != driver (vehicle player))"
     ];
@@ -128,7 +126,10 @@ if (hasinterface) then
 			"MPRespawn",
 			{
 				params ["_unit","_corpse"];
-				[_unit, _corpse] execVM "lt_template_base\scripts\Respawn.sqf";
+                if (local _unit) then
+                {
+				    [_unit, _corpse] execVM "lt_template_base\Scripts\Respawn.sqf";
+                };
 			}
 		];
         player addEventHandler 
@@ -180,15 +181,16 @@ if (hasinterface) then
 	};
 
     ["Mission","Loading briefing"] call LT_fnc_log;
+    _meBrief = [] execVM "\lt_template_base\Scripts\BriefingMeteo.sqf";
     waitUntil {uiSleep 0.5; scriptDone _meBrief};
-    _chBrief = [] execVM "\lt_template_base\scripts\Briefingchecklist.sqf";
+    _chBrief = [] execVM "\lt_template_base\Scripts\Briefingchecklist.sqf";
     waitUntil {uiSleep 0.5; scriptDone _chBrief};
-    _adBrief = [] execVM "\lt_template_base\scripts\BriefingAdmin.sqf";
+    _adBrief = [] execVM "\lt_template_base\Scripts\BriefingAdmin.sqf";
     waitUntil {uiSleep 0.5; scriptDone _adBrief};
     
     if ("lt_debug" call bis_fnc_getParamValue == 1) exitWith 
     {
-        _dbBrief = [] execVM "\lt_template_base\scripts\BriefingDebug.sqf";
+        _dbBrief = [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
         waitUntil {uiSleep 0.5; scriptDone _dbBrief};
     };
 };
