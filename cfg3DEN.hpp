@@ -119,26 +119,27 @@ class Cfg3DEN
 						condition = "objectVehicle";
 						typeName = "NUMBER";
 					};
-					class LT_veh_playerRespawn
+					
+					class LT_veh_respawnPoint
 					{
-						displayName = "Player respawn point";
-						tooltip = "Allow players of the selected vehicle side to respawn here. Vehicle replacement is configured separately.";
-						property = "LT_veh_playerRespawn_ID";
+						displayName = "Respawn point for players";
+						tooltip = "Players can deploy to this vehicle with 'Deploy to group' (needs a free seat)";
+						property = "LT_veh_respawnPoint_ID";
 						control = "Checkbox";
-						expression = "_this setVariable ['LTR_respawnVehicle',_value,true];";
+						expression = "_this setVariable ['LT_veh_respawnPoint',_value,true];";
 						defaultValue = "false";
-						condition = "objectVehicle";
+						condition = "objectVehicle + objectHasInventoryCargo";
 						typeName = "BOOL";
 					};
-					class LT_veh_playerRespawnName
+					class LT_veh_respawnName
 					{
-						displayName = "Player respawn point name";
-						tooltip = "Optional name in the respawn menu. Empty uses the vehicle display name.";
-						property = "LT_veh_playerRespawnName_ID";
+						displayName = "Respawn point name";
+						tooltip = "Name in the deploy list (empty = name of the vehicle)";
+						property = "LT_veh_respawnName_ID";
 						control = "Edit";
-						expression = "_this setVariable ['LTR_respawnName',_value,true];";
+						expression = "_this setVariable ['LT_veh_respawnName',_value,true];";
 						defaultValue = "''";
-						condition = "objectVehicle";
+						condition = "objectVehicle + objectHasInventoryCargo";
 						typeName = "STRING";
 					};
 					class LT_drone_side
@@ -169,37 +170,6 @@ class Cfg3DEN
 					class Attributes
 					{
 						class LT_Loadout;
-						class LT_RespawnArrival
-						{
-							displayName = "LT leader respawn arrival";
-							tooltip = "Select LT command respawn under Multiplayer > Respawn templates. Lobby arrival can override this setting. Native fallback locations keep normal Arma placement.";
-							property = "LT_RespawnArrival_ID";
-							control = "Combo";
-							defaultValue = "0";
-							typeName = "NUMBER";
-							class Values
-							{
-								class Ground {name="On foot nearby"; value=0; default=1;};
-								class Parachute {name="Open parachute at 100 m"; value=1;};
-							};
-						};
-						class LT_RespawnEnemyRadius
-						{
-							displayName = "LT leader respawn block radius (m)";
-							tooltip = "Living enemies within this distance block leader respawn. Native fallback points are unaffected.";
-							property = "LT_RespawnEnemyRadius_ID";
-							control = "Edit";
-							validate = "number";
-							defaultValue = "50";
-							typeName = "NUMBER";
-						};
-						class LT_RespawnWarningRadius: LT_RespawnEnemyRadius
-						{
-							displayName = "LT leader respawn warning radius (m)";
-							tooltip = "Warn about enemies within this distance. Values below the block radius use at least the block radius.";
-							property = "LT_RespawnWarningRadius_ID";
-							defaultValue = "100";
-						};
 						class LT_PermaDeath
 						{
 							displayName = "PermaDeath Scenario";

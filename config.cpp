@@ -44,7 +44,6 @@ class cfgAddons
 
 class CfgFunctions
 {
-	#include "functions\Respawn\cfgFunctions.hpp"
 	class LT
 	{
 		class MapIntel
@@ -62,6 +61,7 @@ class CfgFunctions
 			file="\lt_template_base\functions";
 			class adminZeusModule {};
 			class deleteUnits {};
+			class initPostVeh {};
 			class log {};
 			class safeStartLoop {};
 			class safety {};
@@ -75,6 +75,16 @@ class CfgFunctions
 			file="\lt_template_base\functions\Resupply";
 			class resupplyRequest {};
 			class resupplyDrop {};
+		};
+		class RespawnGroup
+		{
+			file="\lt_template_base\functions\RespawnGroup";
+			class respawnGroupInit {};
+			class respawnGroupTargets {};
+			class respawnGroupMenu {};
+			class respawnGroupRequest {};
+			class respawnGroupMove {};
+			class respawnVehicle {};
 		};
 		class Modules
         {
@@ -118,26 +128,15 @@ class cfgRemoteExec
 		class LT_fnc_initConvoy			{allowedTargets=2;};
 		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
 		class LT_fnc_deleteUnits		{allowedTargets=2;};
+        class LT_fnc_InitPostVeh		{allowedTargets=2;};
 		class LT_fnc_initMapIntel		{allowedTargets=0;};
-		class LTRespawn_fnc_request {allowedTargets=2; jip=0;};
-		class LTRespawn_fnc_reply {allowedTargets=0; jip=0;};
+		class LT_fnc_respawnGroupRequest{allowedTargets=2;};
+		class LT_fnc_respawnGroupMove   {allowedTargets=1;};
+		class FRED_fnc_vehicleRespawn	{allowedTargets=2;};
     };
 };
 
 #include "cfg3DEN.hpp"
-#include "functions\Respawn\ui.hpp"
-class CfgRespawnTemplates
-{
-	class LTR_Teammate
-	{
-		displayName="LT command respawn";
-		show=1;
-		isCall=0;
-		onPlayerKilled="LTRespawn_fnc_killed";
-		onPlayerRespawn="LTRespawn_fnc_begin";
-		respawnTypes[]={3};
-	};
-};
 
 // Extended Eventhandlers
 /*Game start
@@ -173,6 +172,7 @@ class Extended_PostInit_EventHandlers
 };
 
 #include "Tablet\LT_Tablet_Base.hpp"
+#include "RespawnGroup\LT_RespawnGroup.hpp"
 #include "Modules\LT_Modules.hpp"
 #include "Faces\LT_Faces.hpp"
 

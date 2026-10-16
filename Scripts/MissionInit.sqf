@@ -46,6 +46,8 @@ if (hasinterface) then
         };
     };
 
+    ["register"] call LT_fnc_respawnGroupInit;
+
     _rankPlayer = rank player;
     switch (_rankPlayer) do 
     {
@@ -136,7 +138,7 @@ if (hasinterface) then
 			"GetOutMan",
 			{
 				params ["_unit", "_role", "_vehicle", "_turret", "_isEject"];
-                if (_vehicle isKindOf "ParachuteBase" && {!(_vehicle getVariable ["LTR_drop", false])}) then
+                if (_vehicle isKindOf "ParachuteBase") then
                 {
                     _unitRole = _unit getVariable "LT_unit_role";
                     _unitSide = str(side _unit);

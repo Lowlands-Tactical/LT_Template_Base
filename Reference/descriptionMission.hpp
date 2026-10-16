@@ -29,8 +29,15 @@ used in description.ext for the missions template where it is imported as missio
 #ifndef MISSION_TIMER
     #define MISSION_TIMER 10
 #endif
-
-#include "respawnParams.hpp"
+#ifndef MISSION_RESPAWNGROUP
+    #define MISSION_RESPAWNGROUP 1
+#endif
+#ifndef MISSION_RESPAWNMODE
+    #define MISSION_RESPAWNMODE 0
+#endif
+#ifndef MISSION_RESPAWNTIME
+    #define MISSION_RESPAWNTIME 120
+#endif
 
 class lt_Empty_01
 {
@@ -90,4 +97,32 @@ class lt_param_timer
     values[] = {0,1,2,3,4,5,6,7,8,9,10,15,20};
     texts[] = {"No timer","1","2","3","4","5","6","7","8","9","10","15","20"};
     default = MISSION_TIMER;
+};
+class lt_Empty_10
+{
+    title = "========== Respawn setting ==========";
+    values[] = {0};
+    texts[] = {"========== Respawn setting =========="};
+    default = 0;
+};
+class lt_respawngroup
+{
+    title = "Deploy to group after respawn";
+    values[] = {0,1};
+    texts[] = {"Off","On"};
+    default = MISSION_RESPAWNGROUP;
+};
+class lt_respawngroup_mode
+{
+    title = "Deploy type";
+    values[] = {0,1};
+    texts[] = {"Next to the team","Parachute (100 m)"};
+    default = MISSION_RESPAWNMODE;
+};
+class lt_respawngroup_time
+{
+    title = "Time to deploy after respawn";
+    values[] = {30,60,120,300};
+    texts[] = {"30 seconds","1 minute","2 minutes","5 minutes"};
+    default = MISSION_RESPAWNTIME;
 };

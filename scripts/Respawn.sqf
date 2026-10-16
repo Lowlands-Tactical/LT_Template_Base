@@ -99,3 +99,5 @@ _unit setUnitTrait ["loadCoef", 0.5];
 (removeAllWeapons _corpse);
 //(removeAllAssignedItems _corpse);
 (deleteVehicle (nearestObject [_corpse, "WeaponHolderSimulated"]));
+
+["unit", _unit] call LT_fnc_respawnGroupInit;
