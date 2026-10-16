@@ -60,6 +60,7 @@ class CfgFunctions
 			file="\lt_template_base\functions";
 			class adminZeusModule {};
 			class deleteUnits {};
+			class log {};
 			class safeStartLoop {};
 			class safety {};
 			class setFog {};

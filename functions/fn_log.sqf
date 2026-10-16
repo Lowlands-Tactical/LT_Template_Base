@@ -33,8 +33,6 @@ params [
 	["_level", 0, [0]]
 ];
 
-private ["_tag","_message","_level","_prefix","private"];
-
 // Build the message when a format array is given
 if (_message isEqualType []) then {_message = format _message;};
 
