@@ -88,7 +88,7 @@ _map = createHashMap;
 _headless = entities "HeadlessClient_F";
 {
 	_man = _x;
-	if (_man != _unit && {alive _man} && {!(_man in _headless)} && {side group _man == _side} && {lifeState _man != "INCAPACITATED"} && {!(_man getVariable ["ACE_isUnconscious", false])}) then
+	if (_man != _unit && (alive _man) && {!(_man in _headless)} && {side group _man == _side} && {lifeState _man != "INCAPACITATED"} && {!(_man getVariable ["ACE_isUnconscious", false])}) then
 	{
 		_vehicle = vehicle _man;
 		if (_vehicle != vehicle _unit) then
@@ -119,7 +119,10 @@ _headless = entities "HeadlessClient_F";
 			{
 				_key = netId _vehicle;
 				_previous = _map getOrDefault [_key, [9, objNull]];
-				if (_cat < (_previous select 0)) then {_map set [_key, [_cat, _vehicle]];};
+				if (_cat < (_previous select 0)) then
+				{
+					_map set [_key, [_cat, _vehicle]];
+				};
 			};
 		};
 	};
@@ -128,14 +131,17 @@ _headless = entities "HeadlessClient_F";
 // Add the vehicles that are a respawn point
 {
 	_veh = _x;
-	if ({alive _veh} && {(_veh getVariable ["LT_veh_respawnPoint", false]) isEqualTo true}) then
+	if ((alive _veh) && (_veh getVariable ["LT_veh_respawnPoint", false])) then
 	{
 		_vehSide = _veh getVariable ["LT_veh_side", "Custom"];
-		if (!(_vehSide in ["WEST", "EAST", "GUER"]) || {_vehSide == _sideStr}) then
+		if (!(_vehSide in ["WEST", "EAST", "GUER"]) || (_vehSide == _sideStr)) then
 		{
 			_key = netId _veh;
 			_previous = _map getOrDefault [_key, [9, objNull]];
-			if (2 < (_previous select 0)) then {_map set [_key, [2, _veh]];};
+			if (2 < (_previous select 0)) then
+			{
+				_map set [_key, [2, _veh]];
+			};
 		};
 	};
 } forEach vehicles;
@@ -153,14 +159,23 @@ _result = [];
 	{
 		_label = name _obj;
 		_role = toUpper (_obj getVariable ["LT_unit_role", ""]);
-		if (_role != "" && {_role != "CUSTOM"}) then {_label = format ["%1 [%2]", _label, _role];};
+		if (_role != "" && {_role != "CUSTOM"}) then
+		{
+			_label = format ["%1 [%2]", _label, _role];
+		};
 	} else
 	{
 		_customName = _obj getVariable ["LT_veh_respawnName", ""];
-		if (_customName == "") then {_customName = getText (configOf _obj >> "displayName");};
+		if (_customName == "") then
+		{
+			_customName = getText (configOf _obj >> "displayName");
+		};
 		_label = _customName;
 		_players = (crew _obj) select {isPlayer _x};
-		if (!_flagged && {_players isNotEqualTo []}) then {_label = format ["%1 (%2)", name (_players select 0), _customName];};
+		if (!_flagged && {_players isNotEqualTo []}) then
+		{
+			_label = format ["%1 (%2)", name (_players select 0), _customName];
+		};
 	};
 
 	_status = 0;
@@ -170,7 +185,10 @@ _result = [];
 	// Closest enemy
 	_enemyDist = 1e6;
 	{
-		if ([_x, _side] call _isHostile) then {_enemyDist = _enemyDist min (_obj distance _x);};
+		if ([_x, _side] call _isHostile) then
+		{
+			_enemyDist = _enemyDist min (_obj distance _x);
+		};
 	} forEach (_obj nearEntities [["CAManBase", "LandVehicle", "Air", "Ship"], _warnDist]);
 
 	if (_enemyDist <= _blockDist) then
