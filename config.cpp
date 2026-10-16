@@ -81,6 +81,7 @@ class CfgFunctions
             class Intel {};
             class Resupply {};
             class Defense {};
+			class SpawnWaves {};
             class UnitSpawner {};
         };
 		class Convoy
