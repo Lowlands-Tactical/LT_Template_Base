@@ -22,9 +22,9 @@ class LT_RespawnGroup
 	{
 		class LT_RG_Background : BB_TextBase
 		{
-			x = 0.25;
+			x = 0.10;
 			y = 0.12;
-			w = 0.50;
+			w = 0.80;
 			h = 0.76;
 			colorBackground[] = {0.12,0.12,0.12,0.95};
 		};
@@ -35,7 +35,7 @@ class LT_RespawnGroup
 		{
 			x = 0.11;
 			y = 0.13;
-			w = 0.78;
+			w = 0.38;
 			h = 0.05;
 			text = "Deploy to group";
 			SizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.3);
@@ -45,10 +45,22 @@ class LT_RespawnGroup
 			idc = 804;
 			x = 0.11;
 			y = 0.18;
-			w = 0.78;
+			w = 0.38;
 			h = 0.08;
 			style = 16;
 			text = "";
+		};
+		class LT_RG_Notice : BB_TextBase
+		{
+			idc = 805;
+			x = 0.50;
+			y = 0.14;
+			w = 0.39;
+			h = 0.11;
+			style = 16;
+			text = "";
+			colorText[] = {1,1,1,1};
+			colorBackground[] = {0,0,0,0};
 		};
 		class LT_RG_List : BB_ListBase
 		{
@@ -63,8 +75,11 @@ class LT_RespawnGroup
 			idcLeft = -1;
 			idcRight = -1;
 			colorBackground[] = {0.07,0.07,0.07,1};
+			colorText[] = {1,1,1,1};
+			colorDisabled[] = {0.7,0.7,0.7,1};
 			colorSelectBackground[] = {0.25,0.25,0.25,1};
 			colorSelectBackground2[] = {0.30,0.30,0.30,1};
+			colorSelect[] = {1,1,1,1};
 			colorSelect2[] = {1,1,1,1};
 			colorShadow[] = {0,0,0,0.5};
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8);

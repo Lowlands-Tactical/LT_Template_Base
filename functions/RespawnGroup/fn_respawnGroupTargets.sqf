@@ -15,7 +15,8 @@ Role rules (role = variable LT_unit_role of the unit):
 - vhgu and vhdr: only vhco.
 - crew: only pilot.
 - All other roles: own group + the leader roles, except vhco and pilot (those are only for the roles above).
-- vhgu, vhdr and crew can't deploy to respawn vehicles or to other players.
+- vhgu, vhdr and crew can't deploy to other players, but they can deploy to vehicles (a respawn vehicle,
+  or the vehicle a vhco/pilot sits in, if there is a free seat).
 
 Settings (optional, set them in the mission with missionNamespace setVariable):
 LT_respawnGroup_blockDist = distance to enemies where deploying is blocked (default 50)
@@ -51,7 +52,7 @@ private [
 	"_label", "_customName", "_players", "_status",
 	"_note", "_dist", "_enemyDist", "_freeSeats",
 	"_myRole", "_role", "_leadRoles", "_gatedRoles",
-	"_vehRoles", "_crewRoles", "_restricted", "_allowed"
+	"_vehRoles", "_crewRoles", "_allowed"
 ];
 
 if (isNull _unit) exitWith {[]};
@@ -73,14 +74,13 @@ _gatedRoles = missionNamespace getVariable ["LT_respawnGroup_gatedRoles", ["vhco
 _vehRoles = missionNamespace getVariable ["LT_respawnGroup_vehRoles", ["vhgu", "vhdr"]];
 _crewRoles = missionNamespace getVariable ["LT_respawnGroup_crewRoles", ["crew"]];
 _myRole = toLower (_unit getVariable ["LT_unit_role", ""]);
-_restricted = (_myRole in _vehRoles) || {_myRole in _crewRoles};
 
 // Check if an entity (man or vehicle with crew) is hostile to the given side
 _isHostile =
 {
 	params ["_entity", "_mySide"];
 	_crew = if (_entity isKindOf "CAManBase") then {[_entity]} else {crew _entity};
-	(_crew findIf {alive _x && {side group _x != civilian} && {_mySide getFriend (side group _x) < 0.6}}) >= 0
+	(_crew findIf {((alive _x) && ((side group _x) != civilian) && ((_mySide getFriend (side group _x)) < 0.6))}) >= 0
 };
 
 // Collect players and own group, if a man sits in a vehicle the vehicle is the target
@@ -88,7 +88,7 @@ _map = createHashMap;
 _headless = entities "HeadlessClient_F";
 {
 	_man = _x;
-	if (_man != _unit && (alive _man) && {!(_man in _headless)} && {side group _man == _side} && {lifeState _man != "INCAPACITATED"} && {!(_man getVariable ["ACE_isUnconscious", false])}) then
+	if ((_man != _unit) && (alive _man) && (!(_man in _headless)) && ((side group _man) == _side) && ((lifeState _man) != "INCAPACITATED") && (!(_man getVariable ["ACE_isUnconscious", false]))) then
 	{
 		_vehicle = vehicle _man;
 		if (_vehicle != vehicle _unit) then
@@ -110,7 +110,7 @@ _headless = entities "HeadlessClient_F";
 				{
 					if (_cat == 1) then
 					{
-						_allowed = (_role in _leadRoles) && {(_myRole in _leadRoles) || {!(_role in _gatedRoles)}};
+						_allowed = ((_role in _leadRoles) && ((_myRole in _leadRoles) || (!(_role in _gatedRoles))));
 					};
 				};
 			};
@@ -119,10 +119,7 @@ _headless = entities "HeadlessClient_F";
 			{
 				_key = netId _vehicle;
 				_previous = _map getOrDefault [_key, [9, objNull]];
-				if (_cat < (_previous select 0)) then
-				{
-					_map set [_key, [_cat, _vehicle]];
-				};
+				if (_cat < (_previous select 0)) then {_map set [_key, [_cat, _vehicle]];};
 			};
 		};
 	};
@@ -131,17 +128,14 @@ _headless = entities "HeadlessClient_F";
 // Add the vehicles that are a respawn point
 {
 	_veh = _x;
-	if ((alive _veh) && (_veh getVariable ["LT_veh_respawnPoint", false])) then
+	if ((alive _veh) && ((_veh getVariable ["LT_veh_respawnPoint", false]) isEqualTo true)) then
 	{
 		_vehSide = _veh getVariable ["LT_veh_side", "Custom"];
-		if (!(_vehSide in ["WEST", "EAST", "GUER"]) || (_vehSide == _sideStr)) then
+		if ((!(_vehSide in ["WEST", "EAST", "GUER"])) || (_vehSide == _sideStr)) then
 		{
 			_key = netId _veh;
 			_previous = _map getOrDefault [_key, [9, objNull]];
-			if (2 < (_previous select 0)) then
-			{
-				_map set [_key, [2, _veh]];
-			};
+			if (2 < (_previous select 0)) then {_map set [_key, [2, _veh]];};
 		};
 	};
 } forEach vehicles;
@@ -159,23 +153,14 @@ _result = [];
 	{
 		_label = name _obj;
 		_role = toUpper (_obj getVariable ["LT_unit_role", ""]);
-		if (_role != "" && {_role != "CUSTOM"}) then
-		{
-			_label = format ["%1 [%2]", _label, _role];
-		};
+		if ((_role != "") && (_role != "CUSTOM")) then {_label = format ["%1 [%2]", _label, _role];};
 	} else
 	{
 		_customName = _obj getVariable ["LT_veh_respawnName", ""];
-		if (_customName == "") then
-		{
-			_customName = getText (configOf _obj >> "displayName");
-		};
+		if (_customName == "") then {_customName = getText (configOf _obj >> "displayName");};
 		_label = _customName;
 		_players = (crew _obj) select {isPlayer _x};
-		if (!_flagged && {_players isNotEqualTo []}) then
-		{
-			_label = format ["%1 (%2)", name (_players select 0), _customName];
-		};
+		if ((!_flagged) && (_players isNotEqualTo [])) then {_label = format ["%1 (%2)", name (_players select 0), _customName];};
 	};
 
 	_status = 0;
@@ -185,39 +170,36 @@ _result = [];
 	// Closest enemy
 	_enemyDist = 1e6;
 	{
-		if ([_x, _side] call _isHostile) then
-		{
-			_enemyDist = _enemyDist min (_obj distance _x);
-		};
+		if ([_x, _side] call _isHostile) then {_enemyDist = _enemyDist min (_obj distance _x);};
 	} forEach (_obj nearEntities [["CAManBase", "LandVehicle", "Air", "Ship"], _warnDist]);
 
 	if (_enemyDist <= _blockDist) then
 	{
 		_status = 2;
-		_note = format ["enemy within %1 m", _blockDist];
+		_note = format ["BLOCKED: Enemy within %1 m", _blockDist];
 	} else
 	{
 		if (_enemyDist <= _warnDist) then
 		{
 			_status = 1;
-			_note = format ["DANGER: enemy within %1 m", _warnDist];
+			_note = format ["DANGER: Enemy within %1 m", _warnDist];
 		};
 	};
 
 	// Vehicles need a free seat, except when deploying by parachute
-	if (!_isMan && {!_paraMode} && {_status < 2}) then
+	if ((!_isMan) && (!_paraMode) && (_status < 2)) then
 	{
 		_freeSeats = count ((fullCrew [_obj, "", true]) select {isNull (_x select 0)});
 		if ((locked _obj) > 1) then
 		{
 			_status = 2;
-			_note = "vehicle is locked";
+			_note = "BLOCKED: Vehicle is locked";
 		} else
 		{
 			if (_freeSeats == 0) then
 			{
 				_status = 2;
-				_note = "no free seat";
+				_note = "BLOCKED: No free seat";
 			} else
 			{
 				if (_note == "") then {_note = format ["%1 free seats", _freeSeats];};

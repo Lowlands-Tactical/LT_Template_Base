@@ -46,7 +46,7 @@ _deny =
 	false
 };
 
-if (isNull _unit || {isNull _target}) exitWith {["Invalid request."] call _deny};
+if ((isNull _unit) || (isNull _target)) exitWith {["Invalid request."] call _deny};
 if ((owner _unit) != _sender) exitWith {["The request does not come from the player."] call _deny};
 if (("lt_respawngroup" call BIS_fnc_getParamValue) != 1) exitWith {["Deploy to group is turned off."] call _deny};
 if (!alive _unit) exitWith {["You are dead."] call _deny};

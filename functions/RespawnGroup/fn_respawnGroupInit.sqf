@@ -41,10 +41,10 @@ if (_mode == "register") exitWith
 		{["open"] call LT_fnc_respawnGroupMenu;},
 		{
 			params ["_target", "_player"];
-			alive _player &&
-			{isNull objectParent _player} &&
-			{serverTime < (_player getVariable ["LT_respawnGroup_until", 0])} &&
-			{!(_player getVariable ["LT_respawnGroup_used", false])}
+			((alive _player) &&
+			(isNull objectParent _player) &&
+			(serverTime < (_player getVariable ["LT_respawnGroup_until", 0])) &&
+			(!(_player getVariable ["LT_respawnGroup_used", false])))
 		}
 	] call ace_interact_menu_fnc_createAction;
 	["CAManBase", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActionToClass;

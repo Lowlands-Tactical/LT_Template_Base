@@ -37,7 +37,7 @@ private [
 
 if (isNull _vehicle) exitWith {false};
 
-_flag = (_isPoint isEqualTo true) || {_isPoint isEqualTo 1};
+_flag = ((_isPoint isEqualTo true) || (_isPoint isEqualTo 1));
 
 _vehicle setVariable ["LT_veh_respawnPoint", _flag, true];
 _vehicle setVariable ["LT_veh_respawnName", _name, true];

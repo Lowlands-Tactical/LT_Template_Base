@@ -45,7 +45,7 @@ if (_mode == "DENY") exitWith
 _unit = player;
 _success = true;
 
-if (isNull _target || {!alive _target}) then
+if ((isNull _target) || (!alive _target)) then
 {
 	_success = false;
 	hint "The target is no longer available. Choose another one.";
@@ -65,7 +65,7 @@ if (isNull _target || {!alive _target}) then
 		[_unit, _chute] spawn
 		{
 			params ["_unit", "_chute"];
-			waitUntil {sleep 0.5; isNull objectParent _unit || {!alive _chute}};
+			waitUntil {sleep 0.5; ((isNull objectParent _unit) || (!alive _chute))};
 			sleep 3;
 			_unit allowDamage true;
 		};
