@@ -4,17 +4,22 @@ File: fn_respawnGroupMenu.sqf
 Author: Lowlands Tactical
 
 Description:
-Menu for "Deploy to group". Opens the dialog LT_RespawnGroup (idd 800), fills the list
-with the targets from LT_fnc_respawnGroupTargets and sends the choice to the server.
+Menu for "Deploy to group". Opens the dialog LT_RespawnGroup (idd 800) with a list of the targets from
+LT_fnc_respawnGroupTargets and sends the choice to the server.
+The dialog keeps updating while it is open: the time left counts down every second and the list is
+refreshed every 2 seconds, so you can see when a target becomes dangerous (yellow) or blocked (red).
+The prefix ([GROUP], [PLAYER], [VEHICLE]) has the colour of your side.
 Entries in yellow have an enemy close by (press Deploy twice to confirm), entries in red are blocked.
+The dialog closes by itself when the time is over.
 
 Modes:
-"open"   = Open the dialog (used by the ACE action)
-"fill"   = Fill the list (used by "open")
+"open"   = Open the dialog and start the update loop (used by the ACE action)
+"update" = Update the countdown and (optional, 2nd parameter true) the list (used by the loop)
 "deploy" = Deploy to the selected entry (used by the Deploy button and double click)
 
 Parameters:
 _this select 0 = Mode (String)
+_this select 1 = Refresh the list (Boolean, only for "update", default true)
 
 Example:
 ["open"] call LT_fnc_respawnGroupMenu;
@@ -24,97 +29,186 @@ True (if handled)
 
 */
 
-params [["_mode", "open", [""]]];
+params [
+	["_mode", "open", [""]],
+	["_refresh", true, [true]]
+];
 
 // Declare all local variables
 private [
 	"_display", "_list", "_info", "_targets",
-	"_prefixes", "_text", "_index", "_how",
-	"_left"
+	"_prefixes", "_sideColour", "_statusColour", "_index",
+	"_how", "_left", "_old", "_selObj",
+	"_row", "_sameList", "_confirm", "_text",
+	"_current", "_sec", "_obj", "_label",
+	"_status", "_note", "_dist", "_cat"
 ];
 
 if (!hasInterface) exitWith {false};
 
-if (_mode == "open") exitWith
+_result = false;
+switch (_mode) do
 {
-	if (serverTime >= (player getVariable ["LT_respawnGroup_until", 0]) || {player getVariable ["LT_respawnGroup_used", false]}) then
+	case "open":
 	{
-		hint "Deploy to group is not available.";
-	} else
-	{
-		createDialog "LT_RespawnGroup";
-		["fill"] call LT_fnc_respawnGroupMenu;
-	};
-	true
-};
-
-if (_mode == "fill") exitWith
-{
-	_display = findDisplay 800;
-	_list = _display displayCtrl 801;
-	_info = _display displayCtrl 804;
-	_targets = [player] call LT_fnc_respawnGroupTargets;
-	_prefixes = ["[GROUP] ", "[PLAYER] ", "[VEHICLE] "];
-
-	uiNamespace setVariable ["LT_respawnGroup_targets", _targets];
-	uiNamespace setVariable ["LT_respawnGroup_confirm", -1];
-	lbClear _list;
-
-	{
-		_x params ["_cat", "_obj", "_label", "_status", "_note", "_dist"];
-		_text = format ["%1%2  -  %3 m", _prefixes select _cat, _label, round _dist];
-		if (_note != "") then {_text = _text + "  -  " + _note;};
-		_index = _list lbAdd _text;
-		_list lbSetColor [
-			_index, switch (_status) do {
-				case 1: {[1, 0.8, 0, 1]};
-				case 2: {[0.75, 0, 0, 1]};
-				default {[1, 1, 1, 1]};
-			}];
-	} forEach _targets;
-
-	if (_targets isEqualTo []) then
-	{
-		_info ctrlSetText "There is no one to deploy to.";
-	} else
-	{
-		_how = if (("lt_respawngroup_mode" call BIS_fnc_getParamValue) == 1) then {"You will parachute in from 100 m."} else {"You will be placed next to the target."};
-		_left = round ((player getVariable ["LT_respawnGroup_until", 0]) - serverTime);
-		_info ctrlSetText format ["%1\nYou have %2 seconds left.", _how, _left];
-		_list lbSetCurSel 0;
-	};
-	true
-};
-
-if (_mode == "deploy") exitWith
-{
-	_list = (findDisplay 800) displayCtrl 801;
-	_index = lbCurSel _list;
-	_targets = uiNamespace getVariable ["LT_respawnGroup_targets", []];
-
-	if (_index < 0 || {_index >= count _targets}) then
-	{
-		hint "Select a target first.";
-	} else
-	{
-		(_targets select _index) params ["_cat", "_obj", "_label", "_status", "_note"];
-		if (_status == 2) then
+		if (serverTime >= (player getVariable ["LT_respawnGroup_until", 0]) || {player getVariable ["LT_respawnGroup_used", false]}) then
 		{
-			hint format ["You can't deploy to %1: %2.", _label, _note];
+			hint "Deploy to group is not available.";
 		} else
 		{
-			if (_status == 1 && {(uiNamespace getVariable ["LT_respawnGroup_confirm", -1]) != _index}) then
+			createDialog "LT_RespawnGroup";
+			uiNamespace setVariable ["LT_respawnGroup_targets", []];
+			uiNamespace setVariable ["LT_respawnGroup_confirm", [objNull, 0]];
+			["update", true] call LT_fnc_respawnGroupMenu;
+
+			// Update loop, stops by itself when the dialog is closed
+			[] spawn
 			{
-				uiNamespace setVariable ["LT_respawnGroup_confirm", _index];
-				hint format ["%1\nPress Deploy again to confirm.", _note];
-			} else
-			{
-				closeDialog 0;
-				[player, _obj] remoteExec ["LT_fnc_respawnGroupRequest", 2];
+				private ["_tick"];
+				_tick = 1;
+				while {!isNull (findDisplay 800)} do
+				{
+					uiSleep 1;
+					["update", (_tick % 2) == 0] call LT_fnc_respawnGroupMenu;
+					_tick = _tick + 1;
+				};
 			};
 		};
+		_result = true;
 	};
-	true
+	case "update":
+	{
+		_display = findDisplay 800;
+		if (isNull _display) exitWith {false};
+
+		_list = _display displayCtrl 801;
+		_info = _display displayCtrl 804;
+		_left = (player getVariable ["LT_respawnGroup_until", 0]) - serverTime;
+
+		// Time over, already deployed or dead: close
+		if (_left <= 0 || {player getVariable ["LT_respawnGroup_used", false]} || {!alive player}) exitWith
+		{
+			closeDialog 0;
+			if (_left <= 0) then {hint "The deploy time is over.";};
+			true
+		};
+
+		if (_refresh) then
+		{
+			_targets = [player] call LT_fnc_respawnGroupTargets;
+			_old = uiNamespace getVariable ["LT_respawnGroup_targets", []];
+			_prefixes = ["[GROUP]", "[PLAYER]", "[VEHICLE]"];
+			_sideColour = switch (side group player) do
+			{
+				case west: {[0.35, 0.6, 1, 1]};
+				case east: {[1, 0.35, 0.35, 1]};
+				case resistance: {[0.4, 0.85, 0.4, 1]};
+				default {[0.8, 0.8, 0.8, 1]};
+			};
+
+			// Remember the selected target
+			_selObj = objNull;
+			_row = lnbCurSelRow _list;
+			if (_row >= 0 && {_row < count _old}) then {_selObj = (_old select _row) select 1;};
+
+			// Same targets in the same order: only update the cells, so selection and scrolling stay as they are
+			_sameList = (_old apply {_x select 1}) isEqualTo (_targets apply {_x select 1});
+			if (!_sameList) then
+			{
+				lnbClear _list;
+				{_list lnbAddRow ["", "", "", ""];} forEach _targets;
+			};
+
+			{
+				_x params ["_cat", "_obj", "_label", "_status", "_note", "_dist"];
+				_statusColour = switch (_status) do
+				{
+					case 1: {[1, 0.8, 0, 1]};
+					case 2: {[0.85, 0.1, 0.1, 1]};
+					default {[1, 1, 1, 1]};
+				};
+				_list lnbSetText [[_forEachIndex, 0], _prefixes select _cat];
+				_list lnbSetText [[_forEachIndex, 1], _label];
+				_list lnbSetText [[_forEachIndex, 2], format ["%1 m", round _dist]];
+				_list lnbSetText [[_forEachIndex, 3], _note];
+				_list lnbSetColor [[_forEachIndex, 0], _sideColour];
+				{_list lnbSetColor [[_forEachIndex, _x], _statusColour];} forEach [1, 2, 3];
+			} forEach _targets;
+
+			// Put the selection back on the same target (or the first one)
+			if (!_sameList) then
+			{
+				_index = _targets findIf {(_x select 1) == _selObj};
+				if (_index < 0 && {_targets isNotEqualTo []}) then {_index = 0;};
+				if (_index >= 0) then {_list lnbSetCurSelRow _index;};
+			};
+
+			uiNamespace setVariable ["LT_respawnGroup_targets", _targets];
+
+			// A confirmation is only valid as long as the status of that target did not change
+			_confirm = uiNamespace getVariable ["LT_respawnGroup_confirm", [objNull, 0]];
+			_index = _targets findIf {(_x select 1) == (_confirm select 0)};
+			if (_index < 0 || {((_targets select _index) select 3) != (_confirm select 1)}) then
+			{
+				uiNamespace setVariable ["LT_respawnGroup_confirm", [objNull, 0]];
+			};
+		};
+
+		// Info text with the time left
+		_targets = uiNamespace getVariable ["LT_respawnGroup_targets", []];
+		if (_targets isEqualTo []) then
+		{
+			_text = "There is no one to deploy to.";
+		} else
+		{
+			_how = if (("lt_respawngroup_mode" call BIS_fnc_getParamValue) == 1) then {"You will parachute in from 100 m."} else {"You will be placed next to the target."};
+			_text = _how;
+
+			// Danger line for the selected target
+			_row = lnbCurSelRow _list;
+			if (_row >= 0 && {_row < count _targets}) then
+			{
+				_current = _targets select _row;
+				if ((_current select 3) > 0) then {_text = format ["%1\n%2: %3", _text, _current select 2, _current select 4];};
+			};
+		};
+		_sec = ceil _left;
+		_info ctrlSetText format ["%1\nTime left: %2:%3%4", _text, floor (_sec / 60), ["", "0"] select ((_sec mod 60) < 10), _sec mod 60];
+		_info ctrlSetTextColor ([[1, 1, 1, 1], [1, 0.3, 0.3, 1]] select (_left < 10));
+		_result = true;
+	};
+	case "deploy":
+	{
+		_list = (findDisplay 800) displayCtrl 801;
+		_index = lnbCurSelRow _list;
+		_targets = uiNamespace getVariable ["LT_respawnGroup_targets", []];
+
+		if (_index < 0 || {_index >= count _targets}) then
+		{
+			hint "Select a target first.";
+		} else
+		{
+			(_targets select _index) params ["_cat", "_obj", "_label", "_status", "_note"];
+			_confirm = uiNamespace getVariable ["LT_respawnGroup_confirm", [objNull, 0]];
+			if (_status == 2) then
+			{
+				hint format ["You can't deploy to %1: %2.", _label, _note];
+			} else
+			{
+				if (_status == 1 && {(_confirm select 0) != _obj}) then
+				{
+					uiNamespace setVariable ["LT_respawnGroup_confirm", [_obj, _status]];
+					hint format ["%1\nPress Deploy again to confirm.", _note];
+				} else
+				{
+					closeDialog 0;
+					[player, _obj] remoteExec ["LT_fnc_respawnGroupRequest", 2];
+				};
+			};
+		};
+		_result = true;
+	};
+	default {_result = _result;};
 };
 
-false
+_result

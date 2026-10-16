@@ -21,17 +21,10 @@ if (lt_vehicleGearIsSet == 1) then
 }else
 {
 	{
-		_spawnPoint = _x getVariable ["LT_veh_respawnPoint",false];
-		if (_spawnPoint OR _spawnPoint isEqualTo 1) then
+		// Vehicles marked as respawn point in Eden (also sets the BIS respawn position)
+		if ((_x getVariable ["LT_veh_respawnPoint", false]) in [true, 1]) then
 		{
-			_name = _x getVariable ["LT_veh_respawnName", ""];
-			_side = switch (_x getVariable ["LT_veh_side","WEST"]) do
-			{
-				case"EAST":{east};
-				case"GUER":{resistance};
-				default{west};
-			};
-			[_side,_x,_name] remoteExec ["BIS_fnc_addRespawnPosition",0];
+			[_x, true, _x getVariable ["LT_veh_respawnName", ""]] call LT_fnc_respawnVehicle;
 		};
 		if (_x isKindOf "ReammoBox_F" OR _x isKindOf "LandVehicle" OR _x isKindOf "Air" OR _x isKindOf "Ship") then 
 		{
