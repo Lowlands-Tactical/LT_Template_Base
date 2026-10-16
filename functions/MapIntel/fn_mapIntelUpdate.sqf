@@ -25,7 +25,7 @@ _previous = missionNamespace getVariable ["LT_mapIntel_records", []];
 _records = [];
 {
     _group = _x;
-    _members = (units _group) select {alive _x};
+    _members = (units _group) select {alive _x && {(!isPlayer _x || {_x getVariable ["LTR_active", !(missionNamespace getVariable ["LTR_enabled", false])]})}};
     if (!(_members isEqualTo [])) then {
         _leader = leader _group;
         _candidates = _members select {

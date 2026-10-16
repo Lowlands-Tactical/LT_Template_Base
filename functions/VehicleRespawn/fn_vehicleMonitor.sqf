@@ -41,12 +41,19 @@ while {true} do {
 					"_ltVehSide",
 					"_ltVehRole",
 					"_UAVCrew",
-					"_maxLoad"
+					"_maxLoad",
+					["_respawnPoint", [false, sideUnknown, ""]]
 				];
 				
 				_respawnCount = _vehicle getVariable ["VRRespawnCount", 0];
 				_respawnLimit = _vehicle getVariable ["VRRespawnLimit", 0];
 				if (_respawnCount > _respawnLimit OR {_vehicle getVariable ["VRStop", false]}) exitWith {};
+				if (missionNamespace getVariable ["LTR_addonOwned", false]) then {
+					// Preserve runtime opt-out/name changes before the wreck is deleted.
+					if (!isNull _vehicle) then {_respawnPoint = [_vehicle] call LTRespawn_fnc_vehicleSettings};
+					_vehicleData set [21, _respawnPoint];
+					[_vehicle] call LTRespawn_fnc_unregisterVehicle;
+				};
 
 				if _deleteWreck then {
 					if (_vehicle distance _position < 100) then {deleteVehicle _vehicle};
@@ -98,7 +105,16 @@ while {true} do {
 				
 				[_newVehicle, _name] remoteExec ["setVehicleVarName", 0, _newVehicle];
 				
+				if (missionNamespace getVariable ["LTR_addonOwned", false]) then {
+					_respawnPoint params ["_pointEnabled", "_pointSide", "_pointName"];
+					_newVehicle setVariable ["LTR_respawnVehicle", _pointEnabled, true];
+					_newVehicle setVariable ["LTR_respawnSide", _pointSide, true];
+					_newVehicle setVariable ["LTR_respawnName", _pointName, true];
+				};
 				_newVehicle call _init;
+				if (missionNamespace getVariable ["LTR_addonOwned", false] && {_newVehicle getVariable ["LTR_respawnVehicle", false]}) then {
+					[_newVehicle] call LTRespawn_fnc_registerVehicle;
+				};
 				
 				TotalVRArray pushBack [_newVehicle, _vehicleData];
 			};

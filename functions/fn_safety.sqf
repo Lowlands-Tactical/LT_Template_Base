@@ -11,7 +11,11 @@ Params are true or false (_this select 0)
 
 */
 
-switch (_this select 0) do
+if (!hasInterface || {isNull player}) exitWith {};
+LT_safetyActive = _this select 0;
+// Safe Start ending must not make a player in LTR holding vulnerable.
+if (player getVariable ["LTR_localWaiting", false]) then {player setVariable ["LTR_restoreDamage", true]};
+switch (LT_safetyActive) do
 {
 	//Turn safety on
 	case true:
@@ -56,7 +60,7 @@ switch (_this select 0) do
 			};
 			player setVariable ["LT_var_safetyVeh",nil];
 		};
-		player allowDamage true;
+		player allowDamage !(player getVariable ["LTR_localWaiting", false]);
 
 		["Safety","Safety False"] call LT_fnc_log;
 	};
