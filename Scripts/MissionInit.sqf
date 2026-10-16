@@ -40,8 +40,7 @@ if (hasinterface) then
 
     if (didJIP) then 
     {
-        _admin = (getPlayerUID player) in (AdminCrew get "Staff");
-        if (_admin) then 
+        if ((getPlayerUID player) in (AdminCrew get "Staff")) then 
         {
             [] call LT_fnc_adminZeusModule;
         };
@@ -102,7 +101,7 @@ if (hasinterface) then
 		];
 	} else 
 	{
-		if (_admin) then 
+		if ((getPlayerUID player) in (AdminCrew get "Staff")) then 
 		{
 			player addMPEventHandler 
 			[
