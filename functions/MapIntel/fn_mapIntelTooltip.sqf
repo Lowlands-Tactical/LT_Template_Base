@@ -33,7 +33,7 @@ _memberCount = 0;
 _vehicleText = "";
 _vehicles = [];
 {
-    if (alive _x) then {
+    if (alive _x && {(!isPlayer _x || {_x getVariable ["LTR_active", !(missionNamespace getVariable ["LTR_enabled", false])]})}) then {
         _memberCount = _memberCount + 1;
         // Honour custom ACE nametag icons; otherwise use ACE's unit-type
         // texture resolver. getName returns text safe for structured text.

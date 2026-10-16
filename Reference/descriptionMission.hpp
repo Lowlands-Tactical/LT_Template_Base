@@ -30,7 +30,9 @@ used in description.ext for the missions template where it is imported as missio
     #define MISSION_TIMER 10
 #endif
 
-class lt_Empty_01 
+#include "respawnParams.hpp"
+
+class lt_Empty_01
 {
     title = "========== Mission setting ==========";
     values[] = {0};

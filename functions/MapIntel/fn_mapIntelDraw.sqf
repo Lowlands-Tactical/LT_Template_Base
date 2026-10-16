@@ -18,7 +18,7 @@ _nearest = 1;
         _leader = leader _group;
         {
             _x params ["_unit", "_texture", "_isFTL"];
-            if (!isNull _unit && {alive _unit} && {group _unit isEqualTo _group} && {!_isFTL || {!(_unit isEqualTo _leader) && {(_unit getVariable ["LT_unit_role", ""]) isEqualTo "ftl"}}}) then {
+            if (!isNull _unit && {alive _unit} && {(!isPlayer _unit || {_unit getVariable ["LTR_active", !(missionNamespace getVariable ["LTR_enabled", false])]})} && {group _unit isEqualTo _group} && {!_isFTL || {!(_unit isEqualTo _leader) && {(_unit getVariable ["LT_unit_role", ""]) isEqualTo "ftl"}}}) then {
                 _position = getPosWorldVisual (vehicle _unit);
                 _screen = _map ctrlMapWorldToScreen _position;
                 _label = groupId _group;

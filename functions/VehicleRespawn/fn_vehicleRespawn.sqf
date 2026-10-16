@@ -87,12 +87,18 @@ if (getNumber (configFile >> "cfgvehicles" >> typeOf _vehicle >> "isUAV") > 0 &&
 };
 
 _maxLoad = maxLoad _vehicle;
+// Eden attributes are already on the object, even if the gear addon called us later.
+private _respawnPoint = [false, sideUnknown, ""];
+if (missionNamespace getVariable ["LTR_addonOwned", false]) then {
+	_respawnPoint = [_vehicle] call LTRespawn_fnc_vehicleSettings;
+	if (_respawnPoint select 0) then {[_vehicle] call LTRespawn_fnc_registerVehicle};
+};
 
 _vehicleData = [
 	_delay, _init, _loadout, vehicleVarName _vehicle, getPosASL _vehicle, 
 	getDir _vehicle, typeOf _vehicle, _inventory, _savePaint, _paint, _parts, 
 	_deleteWreck, _limitEnabled,_savePylon, _pylons, _pylonPaths,
-	_ltDroneSide, _ltVehSide, _ltVehRole, _UAVCrew, _maxLoad
+	_ltDroneSide, _ltVehSide, _ltVehRole, _UAVCrew, _maxLoad, _respawnPoint
 ];
 
 if (isNil "VRMonitor") then {

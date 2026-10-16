@@ -11,6 +11,7 @@ class cfgPatches
 		requiredVersion=LT_REQVR;
 		requiredAddons[]=
 		{
+			"3DEN",
 			"A3_Characters_F_BLUFOR",
 			"cba_main",
 			"ace_main",
@@ -43,6 +44,7 @@ class cfgAddons
 
 class CfgFunctions
 {
+	#include "functions\Respawn\cfgFunctions.hpp"
 	class LT
 	{
 		class MapIntel
@@ -114,10 +116,25 @@ class cfgRemoteExec
 		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
 		class LT_fnc_deleteUnits		{allowedTargets=2;};
 		class LT_fnc_initMapIntel		{allowedTargets=0;};
+		class LTRespawn_fnc_request {allowedTargets=2; jip=0;};
+		class LTRespawn_fnc_reply {allowedTargets=0; jip=0;};
     };
 };
 
 #include "cfg3DEN.hpp"
+#include "functions\Respawn\ui.hpp"
+class CfgRespawnTemplates
+{
+	class LTR_Teammate
+	{
+		displayName="LT command respawn";
+		show=1;
+		isCall=0;
+		onPlayerKilled="LTRespawn_fnc_killed";
+		onPlayerRespawn="LTRespawn_fnc_begin";
+		respawnTypes[]={3};
+	};
+};
 
 // Extended Eventhandlers
 /*Game start
