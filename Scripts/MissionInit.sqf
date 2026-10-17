@@ -46,8 +46,6 @@ if (hasinterface) then
         };
     };
 
-    ["register"] call LT_fnc_respawnGroupInit;
-
     _rankPlayer = rank player;
     switch (_rankPlayer) do 
     {
@@ -57,6 +55,12 @@ if (hasinterface) then
         case "LIEUTENANT": {player assignTeam "YELLOW"};
         default {player assignTeam "MAIN"};
     };
+
+    ["register"] call LT_fnc_respawnGroupInit;
+    ["Mission","Register player for RespawnGroupInit",2] call LT_fnc_log;
+    
+    ["register"] call LT_fnc_afkInit;
+    ["Mission","Register player for AfkInit",2] call LT_fnc_log;
 
     if ("lt_fatigue_onoff" call bis_fnc_getParamValue == 0) then 
     {

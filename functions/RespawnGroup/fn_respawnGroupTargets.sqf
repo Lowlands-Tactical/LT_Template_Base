@@ -88,7 +88,7 @@ _map = createHashMap;
 _headless = entities "HeadlessClient_F";
 {
 	_man = _x;
-	if ((_man != _unit) && (alive _man) && (!(_man in _headless)) && ((side group _man) == _side) && ((lifeState _man) != "INCAPACITATED") && (!(_man getVariable ["ACE_isUnconscious", false]))) then
+	if ((_man != _unit) && (alive _man) && (!(_man in _headless)) && ((side group _man) == _side) && ((lifeState _man) != "INCAPACITATED") && (!(_man getVariable ["ACE_isUnconscious", false])) && (!(_man getVariable ["LT_afk_isClone", false])) && ((_man getVariable ["LT_afk_state", ""]) == "")) then
 	{
 		_vehicle = vehicle _man;
 		if (_vehicle != vehicle _unit) then

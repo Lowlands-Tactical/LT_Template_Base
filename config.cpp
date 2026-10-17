@@ -31,7 +31,7 @@ class cfgAddons
 {
     class PreloadAddons
     {
-        class NAF
+        class LT_Template
         {
             list[]=
             {
@@ -46,6 +46,19 @@ class CfgFunctions
 {
 	class LT
 	{
+		class Afk
+		{
+			file="\lt_template_base\functions\Afk";
+			class afkInit {};
+			class afkRequest {};
+			class afkStart {};
+			class afkEnd {};
+			class afkMonitor {};
+			class afkLocal {};
+			class afkJoinGroup {};
+			class afkNotify {};
+			class afkSetName {};
+		};
 		class MapIntel
 		{
 			file="\lt_template_base\functions\MapIntel";
@@ -121,6 +134,12 @@ class cfgRemoteExec
         // 0= all machines 1= only clients 2= only server
         mode=1;
         jip=1;
+		class LT_fnc_afkStart     		{allowedTargets=2;};
+		class LT_fnc_afkEnd       		{allowedTargets=2;};
+		class LT_fnc_afkLocal     		{allowedTargets=0;};
+		class LT_fnc_afkJoinGroup 		{allowedTargets=0;};
+		class LT_fnc_afkNotify    		{allowedTargets=0;};
+		class LT_fnc_afkSetName   		{allowedTargets=0;};
 		class LT_fnc_log 				{allowedTargets=0;};
 		class LT_fnc_safety				{allowedTargets=0;};
 		class LT_fnc_safeStartLoop		{allowedTargets=0;};

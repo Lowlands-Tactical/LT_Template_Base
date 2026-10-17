@@ -38,6 +38,9 @@ used in description.ext for the missions template where it is imported as missio
 #ifndef MISSION_RESPAWNTIME
     #define MISSION_RESPAWNTIME 120
 #endif
+#ifndef MISSION_AFK
+    #define MISSION_AFK 1
+#endif
 
 class lt_Empty_01
 {
@@ -100,9 +103,9 @@ class lt_param_timer
 };
 class lt_Empty_10
 {
-    title = "========== Respawn setting ==========";
+    title = "========== Respawn/AFK setting ==========";
     values[] = {0};
-    texts[] = {"========== Respawn setting =========="};
+    texts[] = {"========== Respawn/AFK setting =========="};
     default = 0;
 };
 class lt_respawngroup
@@ -125,4 +128,11 @@ class lt_respawngroup_time
     values[] = {30,60,120,300};
     texts[] = {"30 seconds","1 minute","2 minutes","5 minutes"};
     default = MISSION_RESPAWNTIME;
+};
+class lt_afk
+{
+    title = "AFK clone system";
+    values[] = {0,1};
+    texts[] = {"Off","On"};
+    default = MISSION_AFK;
 };
