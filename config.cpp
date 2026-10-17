@@ -114,6 +114,9 @@ class CfgFunctions
 		{
 			file="\lt_template_base\Modules\functions\Convoy";
 			class initConvoy {};
+			class leadSpeedControl {};
+			class linkSpeedControl {};
+			class pathCreator {};
 		};
 	};
 	class FRED
