@@ -1,12 +1,24 @@
 /*
-    Client-only player group markers. Also called by the legacy QS entry point.
+    File: fn_initMapIntel.sqf
+    Author: Lowlands Tactical
+
+    Description:
+    Client-only player group markers. Called from MissionInit.sqf (not postInit),
+    so it only runs in missions that use the template.
     No mission attributes or unit init lines are required. Missing FTL metadata
     simply means the group has one marker. CBA is already a mod dependency.
+
+    Parameters:
+    None
+
+    Return:
+    None
 */
+disableSerialization;
+
 if (!hasInterface) exitWith {};
 if (missionNamespace getVariable ["LT_mapIntel_started", false]) exitWith {};
-if (["lt_markers", 1] call bis_fnc_getParamValue != 1) exitWith {};
-disableSerialization;
+if ((["lt_markers", 1] call BIS_fnc_getParamValue) != 1) exitWith {};
 
 LT_mapIntel_started = true;
 LT_mapIntel_visible = true;
@@ -17,10 +29,12 @@ uiNamespace setVariable ["LT_mapIntel_map", controlNull];
 // Preserve the role only on the new unit's owner, without overriding a role
 // another loadout/respawn system has already supplied.
 LT_mapIntel_respawnEH = addMissionEventHandler ["EntityRespawned", {
+    private ["_role"];
     params ["_unit", "_corpse"];
-    if (!local _unit || {!(_unit isKindOf "CAManBase")}) exitWith {};
+
+    if ((!local _unit) || (!(_unit isKindOf "CAManBase"))) exitWith {};
     if (isNil {_unit getVariable "LT_unit_role"}) then {
-        private _role = _corpse getVariable ["LT_unit_role", "custom"];
+        _role = _corpse getVariable ["LT_unit_role", "custom"];
         _unit setVariable ["LT_unit_role", _role, true];
     };
 }];
@@ -30,6 +44,6 @@ LT_mapIntel_respawnEH = addMissionEventHandler ["EntityRespawned", {
 LT_mapIntel_mapEH = addMissionEventHandler ["Map", {
     [] call LT_fnc_mapIntelUpdate;
 }];
-LT_mapIntel_updatePFH = [{[] call LT_fnc_mapIntelUpdate;}, 1] call cba_fnc_addPerFrameHandler;
+LT_mapIntel_updatePFH = [{[] call LT_fnc_mapIntelUpdate;}, 1] call CBA_fnc_addPerFrameHandler;
 
 ["initMapIntel","Player group marker system initialized",2] call LT_fnc_log;

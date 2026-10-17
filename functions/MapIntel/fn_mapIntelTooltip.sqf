@@ -1,4 +1,18 @@
-/* Whole-group infantry/vehicle information, only for the main marker. */
+/*
+    File: fn_mapIntelTooltip.sqf
+    Author: Lowlands Tactical
+
+    Description:
+    Whole-group infantry/vehicle information, only for the main marker.
+    Rebuilds the content at most once a second per hovered group.
+
+    Parameters:
+    0: CONTROL - Map control
+    1: GROUP   - Hovered group, or grpNull to hide the tooltip
+
+    Return:
+    None
+*/
 disableSerialization;
 
 private ["_tooltip","_mouse","_tooltipPosition","_oldPosition","_footText","_memberCount","_vehicleText","_vehicles","_texture","_name","_color","_vehicle","_panels","_footHeight","_offset","_width","_height","_borderWidth","_borderHeight","_framePositions"];
@@ -21,7 +35,7 @@ if (!(_tooltipPosition isEqualTo _oldPosition)) then {
     _tooltip ctrlSetPosition _tooltipPosition;
     _tooltip ctrlCommit 0;
 };
-if (_group isEqualTo (_map getVariable ["LT_mapIntel_hoverGroup", grpNull]) && {diag_tickTime < (_map getVariable ["LT_mapIntel_tooltipNext", 0])}) exitWith {};
+if ((_group isEqualTo (_map getVariable ["LT_mapIntel_hoverGroup", grpNull])) && (diag_tickTime < (_map getVariable ["LT_mapIntel_tooltipNext", 0]))) exitWith {};
 // Showing a controls group also shows its children. Only do this when
 // rebuilding the content, then hide empty sections below in the same call.
 _tooltip ctrlShow true;
@@ -41,14 +55,15 @@ _vehicles = [];
         if (_texture isEqualTo "") then {_texture = [_x] call ace_common_fnc_getVehicleIcon;};
 
         _name = [_x] call ace_common_fnc_getName;
-        if (_x == leader group _x) then {_name = _name + " [GC]"};
-        if ((_x getVariable ["LT_unit_role",""]) == "ftl") then {_name = _name + " [VTL]"};
+        if (_x isEqualTo (leader (group _x))) then {_name = _name + " [GC]"};
+        if ((_x getVariable ["LT_unit_role", ""]) isEqualTo "ftl") then {_name = _name + " [VTL]"};
         _color = switch (assignedTeam _x) do {
             case "MAIN": {'#FFFFFF'};
             case "RED": {'#FFABAB'};
             case "GREEN": {'#ABFFAB'};
             case "YELLOW": {'#FFFFAB'};
             case "BLUE": {'#ABABFF'};
+            default {'#FFFFFF'};
         };
         _footText = _footText + format ["<img image='%1' shadow='0' size='1.2' color='%2' valign='middle'/> %3<br/>", _texture, _color, _name];
         

@@ -1,4 +1,17 @@
-/* Map UI adapted from Team Map Intel: tooltip panels and visibility checkbox. */
+/*
+    File: fn_mapIntelUI.sqf
+    Author: Lowlands Tactical (adapted from Team Map Intel)
+
+    Description:
+    Builds the map UI: tooltip panels and the visibility checkbox.
+    Removes the controls of a previously tracked map first.
+
+    Parameters:
+    0: CONTROL - Map control (display 12, idc 51)
+
+    Return:
+    None
+*/
 disableSerialization;
 
 private ["_oldMap","_display","_tooltip","_frame","_control","_panels","_panel","_checkbox"];
@@ -57,7 +70,7 @@ _checkbox ctrlCommit 0;
 _checkbox ctrlAddEventHandler ["CheckedChanged", {
     disableSerialization;
     params ["_control", "_checked"];
-    LT_mapIntel_visible = _checked isEqualTo 1;
+    LT_mapIntel_visible = (_checked isEqualTo 1);
     _control ctrlSetTooltip (["Show Unit Markers: OFF", "Show Unit Markers: ON"] select LT_mapIntel_visible);
     if (LT_mapIntel_visible) then {
         [] call LT_fnc_mapIntelUpdate;

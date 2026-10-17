@@ -1,16 +1,30 @@
-/* Reconcile current groups/roles once a second; positions are drawn live. */
-disableSerialization;
-if (isNull player) exitWith {};
+/*
+    File: fn_mapIntelUpdate.sqf
+    Author: Lowlands Tactical
 
-private ["_map","_trackedMap","_groups","_group","_previous","_records","_group","_members","_leader","_candidates","_ftl","_index","_mounted","_iconMembers","_icon","_color","_ftlIcon"];
+    Description:
+    Reconcile current groups/roles once a second; positions are drawn live.
+    Runs from a CBA per-frame handler and from the Map event handler.
+
+    Parameters:
+    None
+
+    Return:
+    None
+*/
+disableSerialization;
+
+private ["_map","_trackedMap","_groups","_group","_previous","_records","_members","_leader","_candidates","_ftl","_index","_mounted","_iconMembers","_icon","_color","_ftlIcon"];
+
+if (isNull player) exitWith {};
 
 // Keep display discovery running, but only reconcile groups while visible.
 _map = (findDisplay 12) displayCtrl 51;
 _trackedMap = uiNamespace getVariable ["LT_mapIntel_map", controlNull];
-if (!isNull _map && {!(_map isEqualTo _trackedMap)}) then {
+if ((!isNull _map) && (!(_map isEqualTo _trackedMap))) then {
     [_map] call LT_fnc_mapIntelUI;
 };
-if (!visibleMap || {!LT_mapIntel_visible}) exitWith {
+if ((!visibleMap) || (!LT_mapIntel_visible)) exitWith {
     if (!isNull _map) then {[_map, grpNull] call LT_fnc_mapIntelTooltip;};
 };
 
@@ -29,7 +43,7 @@ _records = [];
     if (!(_members isEqualTo [])) then {
         _leader = leader _group;
         _candidates = _members select {
-            !(_x isEqualTo _leader) && {(_x getVariable ["LT_unit_role", ""]) isEqualTo "ftl"}
+            (!(_x isEqualTo _leader)) && ((_x getVariable ["LT_unit_role", ""]) isEqualTo "ftl")
         };
 
         _ftl = objNull;
@@ -38,7 +52,7 @@ _records = [];
         if (!(_ftl in _candidates)) then {_ftl = _candidates param [0, objNull];};
 
         _mounted = _members select {vehicle _x != _x};
-        _iconMembers = if (count _mounted > count _members / 2) then {
+        _iconMembers = if ((count _mounted) > ((count _members) / 2)) then {
             _mounted
         } else {
             _members select {vehicle _x == _x}

@@ -1,7 +1,18 @@
 /*
+    File: fn_mapIntelIcon.sqf
+    Author: Lowlands Tactical (classification adapted from teamMapIntel.sqf)
+
+    Description:
     NATO symbol classification adapted from teamMapIntel.sqf.
     Preserve its precedence: support, naval and air override ground symbols.
     Return the texture required by drawIcon, rather than a native group icon.
+
+    Parameters:
+    0: GROUP - Group the icon is for
+    1: ARRAY - Group members to classify
+
+    Return:
+    STRING - Texture path for drawIcon
 */
 private ["_prefix","_type","_vehicles","_types","_supportTypes","_vehicle","_config","_texture"];
 params ["_group", "_members"];
@@ -21,10 +32,10 @@ _supportTypes = [];
     if (_vehicle isEqualTo _x) then {
         _types pushBackUnique "inf";
     } else {
-        if (!(_vehicle in _vehicles) && {alive _vehicle}) then {
+        if ((!(_vehicle in _vehicles)) && (alive _vehicle)) then {
             _vehicles pushBack _vehicle;
             _config = configFile >> "CfgVehicles" >> typeOf _vehicle;
-            switch true do {
+            switch (true) do {
                 case (_vehicle isKindOf "Car"): {_types pushBackUnique "motor_inf"};
                 case (_vehicle isKindOf "Tank"): {_types pushBackUnique "armor"};
                 case (_vehicle isKindOf "Wheeled_APC_F");
@@ -43,10 +54,10 @@ _supportTypes = [];
                 case (getNumber (_config >> "transportFuel") > 0): {_supportTypes pushBackUnique "support"};
                 case (getNumber (_config >> "transportRepair") > 0): {_supportTypes pushBackUnique "maint"};
                 case (getNumber (_config >> "attendant") > 0): {_supportTypes pushBackUnique "med"};
-                //controleer naam markerName
+                // Unclassified vehicle type: fall back to the unknown marker
                 default {
-                    ["MapIntelIcon","Default marker applied",2] call LT_fnc_log;
-                    _types pushBackUnique "unkown";
+                    ["MapIntelIcon",format ["Default marker applied for %1", typeOf _vehicle],2] call LT_fnc_log;
+                    _types pushBackUnique "unknown";
                 };
             };
         };

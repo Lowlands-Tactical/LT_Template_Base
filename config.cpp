@@ -63,7 +63,7 @@ class CfgFunctions
 		class MapIntel
 		{
 			file="\lt_template_base\functions\MapIntel";
-			class initMapIntel {postInit=1;};
+			class initMapIntel {};
 			class mapIntelUpdate {};
 			class mapIntelIcon {};
 			class mapIntelDraw {};
@@ -147,7 +147,6 @@ class cfgRemoteExec
 		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
 		class LT_fnc_deleteUnits		{allowedTargets=2;};
         class LT_fnc_InitPostVeh		{allowedTargets=2;};
-		class LT_fnc_initMapIntel		{allowedTargets=0;};
 		class LT_fnc_respawnGroupRequest{allowedTargets=2;};
 		class LT_fnc_respawnGroupMove   {allowedTargets=1;};
 		class FRED_fnc_vehicleRespawn	{allowedTargets=2;};
