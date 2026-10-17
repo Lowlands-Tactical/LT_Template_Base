@@ -33,6 +33,9 @@ switch (_this select 0) do
 		};
 		player allowDamage false;
 
+		// ACE: no throwing of grenades and other throwables during the safety time
+		if (!isNil "ace_common_fnc_statusEffect_set") then {[player, "blockThrow", "LT_safety", true] call ace_common_fnc_statusEffect_set};
+
 		["Safety","Safety True"] call LT_fnc_log;
 	};
 
@@ -57,6 +60,8 @@ switch (_this select 0) do
 			player setVariable ["LT_var_safetyVeh",nil];
 		};
 		player allowDamage true;
+
+		if (!isNil "ace_common_fnc_statusEffect_set") then {[player, "blockThrow", "LT_safety", false] call ace_common_fnc_statusEffect_set};
 
 		["Safety","Safety False"] call LT_fnc_log;
 	};
