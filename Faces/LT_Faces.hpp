@@ -19,7 +19,7 @@ class cfgPatches
 
 		//CBA versioning
 		version = VERSION;
-		versionStr = STR(VERSION_STR);
+		versionStr = QUOTE(VERSION_STR);
 		versionAR[] = {VERSION_AR};
 	};
 };*/
