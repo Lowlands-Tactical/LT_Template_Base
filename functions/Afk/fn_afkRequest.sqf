@@ -50,7 +50,7 @@ switch (_mode) do
 
 	case "back":
 	{
-		if (_state in ["CLONE", "HOST", "WAIT"]) then
+		if (_state in ["HOST", "WAIT"]) then
 		{
 			[player] remoteExec ["LT_fnc_afkEnd", 2];
 			_result = true;

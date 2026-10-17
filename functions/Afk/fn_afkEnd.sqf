@@ -4,11 +4,11 @@ File: fn_afkEnd.sqf
 Author: Lowlands Tactical
 
 Description:
-Server side: a player comes back from AFK.
-The player is visible again and placed next to the unit he was attached to. For a delay (default 5 seconds, variable
-LT_afk_backDelay) he can walk around but is invulnerable, so he can orientate and move to cover.
-After the delay the clone is removed and the player is a normal player again.
-If the player was group leader before he goes AFK, he gets the lead back.
+Server side: a player wants to come back from AFK.
+- Host on foot (or no host): the player comes back right away (LT_fnc_afkRelease).
+- Host in a vehicle with a free seat: the player is put in the vehicle.
+- Host in a vehicle without a free seat (or locked): the player keeps waiting. LT_fnc_afkMonitor lets him come back as soon
+  as the host has left the vehicle.
 
 Parameters:
 _this select 0 = The player (Object)
@@ -17,7 +17,7 @@ Example:
 [player] remoteExec ["LT_fnc_afkEnd", 2];
 
 Return value:
-True (if done), false (if refused)
+True (if handled), false (if refused)
 
 */
 
@@ -25,7 +25,8 @@ params [["_unit", objNull, [objNull]]];
 
 // Declare all local variables
 private [
-	"_sender", "_error", "_delay", "_host", "_clone"
+	"_sender", "_error", "_host", "_vehicle",
+	"_seat"
 ];
 
 if (!isServer) exitWith {false};
@@ -40,7 +41,8 @@ switch (true) do
 	case (isNull _unit): {_error = "Invalid request."};
 	case ((owner _unit) != _sender): {_error = "The request does not come from the player."};
 	case (!alive _unit): {_error = "You are dead."};
-	case (!((_unit getVariable ["LT_afk_state", ""]) in ["CLONE", "HOST", "WAIT"])): {_error = "You are not AFK."};
+	case (!((_unit getVariable ["LT_afk_state", ""]) in ["HOST", "WAIT"])): {_error = "You are not AFK."};
+	case (_unit getVariable ["LT_afk_pending", false]): {_error = "You are waiting until your host leaves the vehicle."};
 	default {};
 };
 
@@ -51,35 +53,25 @@ if (_error != "") exitWith
 	false
 };
 
-_delay = missionNamespace getVariable ["LT_afk_backDelay", 5];
 _host = _unit getVariable ["LT_afk_host", objNull];
-_clone = _unit getVariable ["LT_afk_clone", objNull];
+_vehicle = objNull;
+if ((!isNull _host) && (!isNull objectParent _host)) then {_vehicle = objectParent _host};
 
-_unit setVariable ["LT_afk_state", "BACK", true];
-_unit setVariable ["LT_afk_backUntil", serverTime + _delay, true];
-_unit hideObjectGlobal false;
-["release", _unit, _host] remoteExec ["LT_fnc_afkLocal", _unit];
-
-if ((_unit getVariable ["LT_afk_wasLeader", false]) && (!isNull _clone)) then
+if (isNull _vehicle) then
 {
-	["lead", group _unit, _unit] remoteExec ["LT_fnc_afkJoinGroup", groupOwner (group _unit)];
-};
-
-// After the delay: remove the clone and clear the state
-[_unit, _clone, _delay] spawn
+	[_unit, objNull] call LT_fnc_afkRelease;
+} else
 {
-	params ["_unit", "_clone", "_delay"];
-	sleep (_delay + 0.5);
-	if (!isNull _clone) then {deleteVehicle _clone};
-	if (!isNull _unit) then
+	_seat = (((count ((fullCrew [_vehicle, "", true]) select {isNull (_x select 0)})) > 0) && ((locked _vehicle) < 2));
+	if (_seat) then
 	{
-		_unit setVariable ["LT_afk_state", "", true];
-		_unit setVariable ["LT_afk_host", objNull, true];
-		_unit setVariable ["LT_afk_clone", objNull, true];
-		_unit setVariable ["LT_afk_wasLeader", false, true];
+		[_unit, _vehicle] call LT_fnc_afkRelease;
+	} else
+	{
+		_unit setVariable ["LT_afk_pending", true, true];
+		["No free seat in the vehicle. You come back when your host leaves it."] remoteExec ["LT_fnc_afkNotify", _sender];
+		["Afk", format ["%1 waits for the vehicle of %2", name _unit, name _host]] call LT_fnc_log;
 	};
 };
-
-["Afk", format ["%1 is back from AFK", name _unit]] call LT_fnc_log;
 
 true

@@ -53,11 +53,12 @@ class CfgFunctions
 			class afkRequest {};
 			class afkStart {};
 			class afkEnd {};
+			class afkRelease {};
 			class afkMonitor {};
 			class afkLocal {};
-			class afkJoinGroup {};
 			class afkNotify {};
-			class afkSetName {};
+			class afkFindHost {};
+			class afkUsable {};
 		};
 		class MapIntel
 		{
@@ -137,9 +138,7 @@ class cfgRemoteExec
 		class LT_fnc_afkStart     		{allowedTargets=2;};
 		class LT_fnc_afkEnd       		{allowedTargets=2;};
 		class LT_fnc_afkLocal     		{allowedTargets=0;};
-		class LT_fnc_afkJoinGroup 		{allowedTargets=0;};
 		class LT_fnc_afkNotify    		{allowedTargets=0;};
-		class LT_fnc_afkSetName   		{allowedTargets=0;};
 		class LT_fnc_log 				{allowedTargets=0;};
 		class LT_fnc_safety				{allowedTargets=0;};
 		class LT_fnc_safeStartLoop		{allowedTargets=0;};

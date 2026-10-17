@@ -14,7 +14,8 @@ Role rules (role = variable LT_unit_role of the unit):
 - Leader roles (default com, sql, ftl, vhco, pilot): own group + all leader roles of the same side.
 - vhgu and vhdr: only vhco.
 - crew: only pilot.
-- All other roles: own group + the leader roles, except vhco and pilot (those are only for the roles above).
+- All other roles: in the own group only the roles sql and ftl (the leader roles deploy on the whole group), plus the
+  leader roles of other groups (sql, ftl, com), except vhco and pilot (those are only for the roles above).
 - vhgu, vhdr and crew can't deploy to other players, but they can deploy to vehicles (a respawn vehicle,
   or the vehicle a vhco/pilot sits in, if there is a free seat).
 
@@ -25,6 +26,7 @@ LT_respawnGroup_leadRoles = roles that can deploy on each other (default ["com",
 LT_respawnGroup_gatedRoles = leader roles that normal roles can't deploy to (default ["vhco","pilot"])
 LT_respawnGroup_vehRoles = roles that can only deploy to LT_respawnGroup_vehTargets (default ["vhgu","vhdr"] -> ["vhco"])
 LT_respawnGroup_crewRoles = roles that can only deploy to LT_respawnGroup_crewTargets (default ["crew"] -> ["pilot"])
+LT_respawnGroup_groupRoles = roles in the own group that normal roles can deploy to (default ["sql","ftl"])
 
 Parameters:
 _this select 0 = Unit that wants to deploy (Object)
@@ -52,7 +54,7 @@ private [
 	"_label", "_customName", "_players", "_status",
 	"_note", "_dist", "_enemyDist", "_freeSeats",
 	"_myRole", "_role", "_leadRoles", "_gatedRoles",
-	"_vehRoles", "_crewRoles", "_allowed"
+	"_vehRoles", "_crewRoles", "_groupRoles", "_allowed"
 ];
 
 if (isNull _unit) exitWith {[]};
@@ -73,6 +75,7 @@ _leadRoles = missionNamespace getVariable ["LT_respawnGroup_leadRoles", ["com", 
 _gatedRoles = missionNamespace getVariable ["LT_respawnGroup_gatedRoles", ["vhco", "pilot"]];
 _vehRoles = missionNamespace getVariable ["LT_respawnGroup_vehRoles", ["vhgu", "vhdr"]];
 _crewRoles = missionNamespace getVariable ["LT_respawnGroup_crewRoles", ["crew"]];
+_groupRoles = missionNamespace getVariable ["LT_respawnGroup_groupRoles", ["sql", "ftl"]];
 _myRole = toLower (_unit getVariable ["LT_unit_role", ""]);
 
 // Check if an entity (man or vehicle with crew) is hostile to the given side
@@ -88,7 +91,7 @@ _map = createHashMap;
 _headless = entities "HeadlessClient_F";
 {
 	_man = _x;
-	if ((_man != _unit) && (alive _man) && (!(_man in _headless)) && ((side group _man) == _side) && ((lifeState _man) != "INCAPACITATED") && (!(_man getVariable ["ACE_isUnconscious", false])) && (!(_man getVariable ["LT_afk_isClone", false])) && ((_man getVariable ["LT_afk_state", ""]) == "")) then
+	if ((_man != _unit) && (alive _man) && (!(_man in _headless)) && ((side group _man) == _side) && ((lifeState _man) != "INCAPACITATED") && (!(_man getVariable ["ACE_isUnconscious", false])) && ((_man getVariable ["LT_afk_state", ""]) == "")) then
 	{
 		_vehicle = vehicle _man;
 		if (_vehicle != vehicle _unit) then
@@ -111,6 +114,10 @@ _headless = entities "HeadlessClient_F";
 					if (_cat == 1) then
 					{
 						_allowed = ((_role in _leadRoles) && ((_myRole in _leadRoles) || (!(_role in _gatedRoles))));
+					} else
+					{
+						// Own group: normal roles can only deploy to the group roles (sql, ftl), the leader roles can deploy to everyone
+						if (!(_myRole in _leadRoles)) then {_allowed = (_role in _groupRoles)};
 					};
 				};
 			};

@@ -4,43 +4,35 @@ File: fn_afkMonitor.sqf
 Author: Lowlands Tactical
 
 Description:
-Server side loop (started by LT_fnc_afkStart, spawn it) that keeps an AFK player with his team.
-Every second: when the unit he is attached to (first the clone) is dead or down, the player is attached to the
-nearest usable teammate of his group (no clones, no other AFK players). When there is no one, the player stays
-where he is (state "WAIT") until a teammate is up again or respawned.
-The loop stops when the player comes back (LT_fnc_afkEnd), dies or disconnects.
+Server side loop (started by LT_fnc_afkStart, spawn it) that keeps an AFK player with his team. Every second:
+- When the host is dead, down or AFK himself, the player is attached to a new host (the leader, or the nearest teammate).
+  When the leader is up again the player is attached to the leader again.
+- When the whole team is down the player stays where he is (state "WAIT") until a teammate is up or respawned.
+- When the player asked to come back but the host sits in a vehicle without a free seat (LT_afk_pending), it waits until the
+  host has left the vehicle and then lets the player come back (LT_fnc_afkRelease). Not when a seat becomes free, because
+  then the host has usually just arrived and gets out.
+The loop stops when the player comes back, dies or disconnects.
 
 Parameters:
 _this select 0 = The AFK player (Object)
-_this select 1 = The clone (Object)
 
 Example:
-[_unit, _clone] spawn LT_fnc_afkMonitor;
+[_unit] spawn LT_fnc_afkMonitor;
 
 Return value:
 True (when the loop is done)
 
 */
 
-params [
-	["_unit", objNull, [objNull]],
-	["_clone", objNull, [objNull]]
-];
+params [["_unit", objNull, [objNull]]];
 
 // Declare all local variables
 private [
-	"_usable", "_run", "_state", "_host",
-	"_cands", "_new"
+	"_run", "_state", "_host", "_best",
+	"_switch"
 ];
 
 if (!isServer) exitWith {false};
-
-// A unit is usable as host when it is alive and not down
-_usable =
-{
-	params ["_obj"];
-	((!isNull _obj) && (alive _obj) && ((lifeState _obj) != "INCAPACITATED") && (!(_obj getVariable ["ACE_isUnconscious", false])))
-};
 
 _run = true;
 while {_run} do
@@ -53,7 +45,6 @@ while {_run} do
 	if ((isNull _unit) || (!alive _unit) || (!isPlayer _unit)) then
 	{
 		// Player is dead or gone: clean up
-		if (!isNull _clone) then {deleteVehicle _clone};
 		if ((!isNull _unit) && (alive _unit)) then
 		{
 			detach _unit;
@@ -61,29 +52,35 @@ while {_run} do
 			_unit allowDamage true;
 			_unit setCaptive false;
 			_unit setVariable ["LT_afk_state", "", true];
+			_unit setVariable ["LT_afk_pending", false, true];
 		};
-		["Afk", "AFK player gone or dead, clone removed"] call LT_fnc_log;
+		["Afk", "AFK player gone or dead"] call LT_fnc_log;
 		_run = false;
 	} else
 	{
-		if (!(_state in ["CLONE", "HOST", "WAIT"])) then
+		if (!(_state in ["HOST", "WAIT"])) then
 		{
 			// Back or not AFK anymore
 			_run = false;
 		} else
 		{
 			_host = _unit getVariable ["LT_afk_host", objNull];
+			_best = [_unit] call LT_fnc_afkFindHost;
+
+			// New host when the current one is not usable, or when the leader is usable and we are not with him
+			if (!([_host] call LT_fnc_afkUsable)) then
+			{
+				_switch = true;
+			} else
+			{
+				_switch = ((!isNull _best) && (_best == (leader (group _unit))) && (_host != _best));
+			};
 
 			// Read the state again right before changing anything, so a player who just came back is never attached again
 			_state = _unit getVariable ["LT_afk_state", ""];
-			if ((!([_host] call _usable)) && (_state in ["CLONE", "HOST", "WAIT"])) then
+			if (_switch && (_state in ["HOST", "WAIT"])) then
 			{
-				_cands = (units (group _unit)) select
-				{
-					((_x != _unit) && ([_x] call _usable) && (!(_x getVariable ["LT_afk_isClone", false])) && ((_x getVariable ["LT_afk_state", ""]) == ""))
-				};
-
-				if (_cands isEqualTo []) then
+				if (isNull _best) then
 				{
 					// Whole team is down: wait where we are
 					if (_state != "WAIT") then
@@ -95,12 +92,21 @@ while {_run} do
 					};
 				} else
 				{
-					_cands = [_cands, [], {_unit distance _x}, "ASCEND"] call BIS_fnc_sortBy;
-					_new = _cands select 0;
 					_unit setVariable ["LT_afk_state", "HOST", true];
-					_unit setVariable ["LT_afk_host", _new, true];
-					["attach", _unit, _new] remoteExec ["LT_fnc_afkLocal", _unit];
-					["Afk", format ["%1 is attached to %2", name _unit, name _new]] call LT_fnc_log;
+					_unit setVariable ["LT_afk_host", _best, true];
+					["attach", _unit, _best] remoteExec ["LT_fnc_afkLocal", _unit];
+					["Afk", format ["%1 is attached to %2", name _unit, name _best]] call LT_fnc_log;
+				};
+			};
+
+			// Waiting for the host to leave his vehicle (or for no host at all)
+			if (_unit getVariable ["LT_afk_pending", false]) then
+			{
+				_host = _unit getVariable ["LT_afk_host", objNull];
+				if ((isNull _host) || (isNull objectParent _host)) then
+				{
+					[_unit, objNull] call LT_fnc_afkRelease;
+					_run = false;
 				};
 			};
 		};

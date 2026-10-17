@@ -53,14 +53,14 @@ switch (_mode) do
 				{["back"] call LT_fnc_afkRequest},
 				{
 					params ["_target", "_player"];
-					((_player getVariable ["LT_afk_state", ""]) in ["CLONE", "HOST", "WAIT"])
+					((_player getVariable ["LT_afk_state", ""]) in ["HOST", "WAIT"])
 				}
 			] call ace_interact_menu_fnc_createAction;
 			["CAManBase", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActionToClass;
 
 			if (!isNil "CBA_fnc_addKeybind") then
 			{
-				["Lowlands Tactical", "lt_afk_go", ["Go AFK", "Go AFK: you get a clone and you are hidden"],
+				["Lowlands Tactical", "lt_afk_go", ["Go AFK", "Go AFK: you are hidden, invulnerable and attached to your leader"],
 					{["go"] call LT_fnc_afkRequest; true}, {}, [0, [false, false, false]]
 				] call CBA_fnc_addKeybind;
 				["Lowlands Tactical", "lt_afk_back", ["Back from AFK", "Come back from AFK (5 seconds protection)"],

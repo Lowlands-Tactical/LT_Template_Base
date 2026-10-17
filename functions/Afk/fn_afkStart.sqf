@@ -5,11 +5,10 @@ Author: Lowlands Tactical
 
 Description:
 Server side: a player goes AFK.
-- An AI clone with the same loadout (without ACRE radios) and the name "CLONE <name>" is created in the group of the player.
-- The player is hidden and attached to the clone (see LT_fnc_afkLocal).
-- LT_fnc_afkMonitor watches the clone. When the clone is down or dead the player is attached to the nearest
-  teammate of his group. When the whole team is down the player waits until someone is up or respawned.
-State of the player (variable LT_afk_state): "" = not AFK, "CLONE", "HOST" (with a teammate), "WAIT", "BACK" (the 5 seconds after coming back).
+The player is hidden (hideObjectGlobal), invulnerable and captive and attached (a little behind) to the leader of his group
+(see LT_fnc_afkFindHost and LT_fnc_afkLocal). LT_fnc_afkMonitor keeps him attached to someone who is up.
+State of the player (variable LT_afk_state): "" = not AFK, "HOST" (attached), "WAIT" (the whole team is down, stays where he is),
+"BACK" (the seconds after coming back). Variable LT_afk_pending is true while he waits for a seat in a vehicle.
 
 Parameters:
 _this select 0 = The player (Object)
@@ -26,8 +25,7 @@ params [["_unit", objNull, [objNull]]];
 
 // Declare all local variables
 private [
-	"_sender", "_error", "_group", "_wasLeader",
-	"_cloneGroup", "_clone", "_name", "_loadout"
+	"_sender", "_error", "_host"
 ];
 
 if (!isServer) exitWith {false};
@@ -56,37 +54,16 @@ if (_error != "") exitWith
 	false
 };
 
-_group = group _unit;
-_wasLeader = ((leader _group) == _unit);
+_host = [_unit] call LT_fnc_afkFindHost;
 
-// The clone is created in its own group on the server and joins the group of the player where that group is local
-_cloneGroup = createGroup [side _group, true];
-_clone = _cloneGroup createUnit [typeOf _unit, getPosATL _unit, [], 0, "NONE"];
-_clone setDir (getDir _unit);
-_loadout = getUnitLoadout _unit;
-_clone setUnitLoadout _loadout;
-
-// ACRE radios have a unique id, so the clone does not get them
-{_clone removeItem _x} forEach ((items _clone) select {((_x select [0, 5]) == "ACRE_")});
-
-_clone setFace (face _unit);
-_clone setRank (rank _unit);
-_name = format ["CLONE %1", name _unit];
-[netId _clone, _name] remoteExec ["LT_fnc_afkSetName", 0, _clone];
-
-_clone setVariable ["LT_afk_isClone", true, true];
-_clone setVariable ["LT_afk_owner", _unit, true];
-["join", _group, _unit, _clone] remoteExec ["LT_fnc_afkJoinGroup", groupOwner _group];
-
-_unit setVariable ["LT_afk_clone", _clone, true];
-_unit setVariable ["LT_afk_host", _clone, true];
-_unit setVariable ["LT_afk_wasLeader", _wasLeader, true];
-_unit setVariable ["LT_afk_state", "CLONE", true];
+_unit setVariable ["LT_afk_host", _host, true];
+_unit setVariable ["LT_afk_pending", false, true];
+_unit setVariable ["LT_afk_state", (if (isNull _host) then {"WAIT"} else {"HOST"}), true];
 _unit hideObjectGlobal true;
-["attach", _unit, _clone] remoteExec ["LT_fnc_afkLocal", _unit];
+["attach", _unit, _host] remoteExec ["LT_fnc_afkLocal", _unit];
 
-[_unit, _clone] spawn LT_fnc_afkMonitor;
+[_unit] spawn LT_fnc_afkMonitor;
 
-["Afk", format ["%1 is AFK, clone: %2", name _unit, _name]] call LT_fnc_log;
+["Afk", format ["%1 is AFK, host: %2", name _unit, (if (isNull _host) then {"none"} else {name _host})]] call LT_fnc_log;
 
 true
