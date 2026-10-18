@@ -59,6 +59,7 @@ class CfgFunctions
 			class afkNotify {};
 			class afkFindHost {};
 			class afkUsable {};
+			class afkAlone {};
 		};
 		class MapIntel
 		{

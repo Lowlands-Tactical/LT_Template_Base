@@ -49,7 +49,7 @@ switch (_mode) do
 		_unit setVariable ["ace_medical_allowDamage", false];
 		_unit setCaptive true;
 		detach _unit;
-		if (!isNull _target) then {_unit attachTo [_target, [0, -0.5, 0]]};
+		if (!isNull _target) then {_unit attachTo [_target, [0, -1.5, 0]]};
 
 		// Block shooting and throwing while AFK (ACE has no blockFire effect, so the projectile is deleted in a Fired event handler)
 		if ((_unit getVariable ["LT_afk_firedEH", -1]) < 0) then

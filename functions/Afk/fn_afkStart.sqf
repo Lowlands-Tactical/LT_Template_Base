@@ -44,6 +44,7 @@ switch (true) do
 	case ((_unit getVariable ["LT_afk_state", ""]) != ""): {_error = "You are already AFK."};
 	case (!isNull objectParent _unit): {_error = "Leave the vehicle first."};
 	case (((lifeState _unit) == "INCAPACITATED") || (_unit getVariable ["ACE_isUnconscious", false])): {_error = "You can't go AFK while you are unconscious."};
+	case ([_unit] call LT_fnc_afkAlone): {_error = "You are alone in your group, there is no one to go AFK with."};
 	default {};
 };
 
