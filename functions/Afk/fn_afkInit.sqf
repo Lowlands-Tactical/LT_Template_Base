@@ -5,8 +5,8 @@ Author: Lowlands Tactical
 
 Description:
 Sets up the AFK system on the client (call once, next to ["register"] call LT_fnc_respawnGroupInit).
-Adds the ACE self interaction actions "Go AFK" and "Back from AFK" and the CBA keybinds
-(Options > Controls > Configure Addons > Lowlands Tactical). The keybinds have no default key.
+Adds the ACE self interaction actions "Go AFK" and "Back from AFK" (in the menu Lowlands Tactical)
+and the CBA keybinds (Options > Controls > Configure Addons > Lowlands Tactical). The keybinds have no default key.
 Nothing is added when the parameter lt_afk is off.
 
 Modes:
@@ -40,23 +40,25 @@ switch (_mode) do
 	{
 		if (("lt_afk" call BIS_fnc_getParamValue) == 1) then
 		{
-			_action = ["lt_afk_go", "Go AFK", "\lt_template_base\logos\lowtac.paa",
+			["main"] call LT_fnc_menuInit;
+
+			_action = ["lt_afk_go", "Go AFK", "\a3\ui_f\data\gui\rsc\rscpendinginvitation\connectionqualitybad_ca.paa",
 				{["go"] call LT_fnc_afkRequest},
 				{
 					params ["_target", "_player"];
 					(((_player getVariable ["LT_afk_state", ""]) == "") && (alive _player) && (isNull objectParent _player))
 				}
 			] call ace_interact_menu_fnc_createAction;
-			["CAManBase", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActionToClass;
+			["CAManBase", 1, ["ACE_SelfActions", "lt_main"], _action, true] call ace_interact_menu_fnc_addActionToClass;
 
-			_action = ["lt_afk_back", "Back from AFK", "\lt_template_base\logos\lowtac.paa",
+			_action = ["lt_afk_back", "Back from AFK", "\a3\ui_f\data\igui\cfg\holdactions\holdaction_connect_ca.paa",
 				{["back"] call LT_fnc_afkRequest},
 				{
 					params ["_target", "_player"];
 					((_player getVariable ["LT_afk_state", ""]) in ["HOST", "WAIT"])
 				}
 			] call ace_interact_menu_fnc_createAction;
-			["CAManBase", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActionToClass;
+			["CAManBase", 1, ["ACE_SelfActions", "lt_main"], _action, true] call ace_interact_menu_fnc_addActionToClass;
 
 			if (!isNil "CBA_fnc_addKeybind") then
 			{

@@ -77,6 +77,7 @@ class CfgFunctions
 			class deleteUnits {};
 			class initPostVeh {};
 			class log {};
+			class menuInit {};
 			class safeStartLoop {};
 			class safety {};
 			class setFog {};
