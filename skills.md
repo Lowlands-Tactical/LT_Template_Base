@@ -15,7 +15,9 @@ The team maintains an Arma 3 mod pair, LT_Template_Base and LT_Template_Gear, pl
 9. **Networking:** only use the broadcast flag of `setVariable` when other machines read it. Custom functions that are `remoteExec`'d must be in `CfgRemoteExec` (mode 1 whitelist) with the right `allowedTargets`; `BIS_fnc_*` and commands need no entry.
 10. **Do not use `postInit=1`** in `CfgFunctions` for things that belong in the mission. Mission setup is done from `MissionInit.sqf` (guarded by the mission parameters) so the mod does nothing in missions that do not use the template.
 11. Mission options go through `description.ext` params (`Reference/descriptionMission.hpp`) and are read with `BIS_fnc_getParamValue`.
-12. Keep CRLF line endings and tabs/spaces as the file already has them.
+12. **ACE actions and keybinds:** every player action goes under the ACE self-interaction menu "Lowlands Tactical" (parent path `["ACE_SelfActions", "lt_main"]`). Call `["main"] call LT_fnc_menuInit` first (idempotent) so the parent exists. Add them as class actions with `ace_interact_menu_fnc_addActionToClass ["CAManBase", 1, ...]`, not `addActionToObject` on `player` (that is lost after a respawn). Use a fitting vanilla icon from the unpacked game data (`\a3\ui_f\data\...`), check that the .paa exists before using it, and keep `lowtac.paa` for the main menu. Every action also gets a CBA keybind via `CBA_fnc_addKeybind` in the category "Lowlands Tactical", without a default key (`[0, [false, false, false]]`), with the same condition as the action and silent when the player is not allowed. Two opposite actions (go AFK / back from AFK) share one toggle keybind: the same key on two keybinds gives a warning in CBA.
+13. **CBA versioning:** a mod only shows up in the CBA version check with a block `CfgSettings >> CBA >> Versioning >> <Name> {main_addon = "<CfgPatches class>"; removed[] = {};}` next to `version`, `versionStr` and `versionAR` in CfgPatches. `main_addon` must be the name of a CfgPatches class. Base and Gear share one version, so only Base has the block (`LT_Template`).
+14. Keep CRLF line endings and tabs/spaces as the file already has them.
 
 ## Arma/ACE/CBA facts that bit us
 
@@ -25,6 +27,8 @@ The team maintains an Arma 3 mod pair, LT_Template_Base and LT_Template_Gear, pl
 - In `listnbox` controls, set `colorText` (white) and `colorSelect` in the config, then colour cells with `lnbSetColor`/`lnbSetColorRight`.
 - Code that uses `sleep` must be scheduled (`spawn`). FSM code is unscheduled: wait with a time condition, never `sleep`.
 - Check ACE/CBA claims against the source before stating them.
+- `sgn` does not exist in SQF. Use `[-1, 1] select (_x >= 0)`.
+- A client with a different mod version than the server is caught by CBA versioning only when the mod has the Versioning block (rule 13).
 
 ## Working method
 
@@ -35,3 +39,6 @@ The team maintains an Arma 3 mod pair, LT_Template_Base and LT_Template_Gear, pl
 - For a new feature also give: config snippets (`CfgFunctions`, `CfgRemoteExec`, params), a short test plan (single player, dedicated server, JIP, respawn) and known risks.
 - Credit the original author of external code (for example the convoy scripts are by negas) and keep the licence information.
 - Never invent features of Arma, ACE or CBA: verify, or say that it is untested.
+- After writing a file to the user's drive through the device bridge, check the result: list the folder and compare the size and modification time with what was written. A "written" reply is not proof, and the user may have the file open in an editor (tell them to reload it). Before overwriting, use the modification time of the last read as a guard, and read the file again first when the user may have changed it.
+- When an RPT is attached, search it for script errors and for the lines that show whether a feature loaded (for example `VERSIONING:`), instead of reading it whole.
+- Test plan after a change: single player, dedicated server, JIP and respawn; say plainly what was not tested in the game.
