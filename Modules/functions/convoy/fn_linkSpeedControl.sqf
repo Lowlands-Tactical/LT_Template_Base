@@ -17,7 +17,7 @@
 */
 private [
     "_leaderVeh","_convoyLength","_convSeparation","_speedFrequecy","_stiffnessLinkCoeff","_speedMode",
-    "_vehicle","_vehicleInFront","_distLink","_linkRelaxation","_linkSpeed"
+    "_vehicle","_vehicleInFront","_distLink","_linkRelaxation","_linkSign","_linkSpeed"
 ];
 params [["_logic", objNull, [objNull]], ["_groupVehicles", [], [[]]]];
 
@@ -42,9 +42,10 @@ while {!(_leaderVeh getVariable ["convoy_terminate", false])} do
         _distLink = (position _vehicle) distance (position _vehicleInFront);
         _linkRelaxation = _distLink - _convSeparation;
 
-        // sgn returns 0 when the distance is exactly the separation (no division by zero)
+        // Sign of the relaxation without dividing by it (no division by zero when the distance equals the separation)
+        _linkSign = [-1, 1] select (_linkRelaxation >= 0);
         _linkSpeed = [
-            (speed _vehicleInFront) + (_stiffnessLinkCoeff * (sgn _linkRelaxation) * ((abs _linkRelaxation) ^ 1.5)),
+            (speed _vehicleInFront) + (_stiffnessLinkCoeff * _linkSign * ((abs _linkRelaxation) ^ 1.5)),
             0,
             100000
         ] call BIS_fnc_clamp;
