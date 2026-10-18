@@ -128,7 +128,7 @@ class Cfg3DEN
 						control = "Checkbox";
 						expression = "_this setVariable ['LT_veh_respawnPoint',_value,true];";
 						defaultValue = "false";
-						condition = "objectVehicle + objectHasInventoryCargo";
+						condition = "objectVehicle";
 						typeName = "BOOL";
 					};
 					class LT_veh_respawnName
@@ -139,7 +139,7 @@ class Cfg3DEN
 						control = "Edit";
 						expression = "_this setVariable ['LT_veh_respawnName',_value,true];";
 						defaultValue = "''";
-						condition = "objectVehicle + objectHasInventoryCargo";
+						condition = "objectVehicle";
 						typeName = "STRING";
 					};
 					class LT_drone_side
