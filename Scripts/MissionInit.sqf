@@ -25,10 +25,10 @@ if (isServer) then
     [] execVM "\lt_template_base\Scripts\server_debug.sqf";
 
     ["Mission","loading Zeus Modules",2] call LT_fnc_log;
-    [] call LT_fnc_adminZeusModule;
+    [] remoteExec ["LT_fnc_adminZeusModule",2];
     //[] execVM "\lt_template_base\Scripts\setLowtacFaces.sqf";
     ["Mission","loading vehicle gear",2] call LT_fnc_log;
-    [] call LT_fnc_InitPostVeh;
+    [] remoteExec ["LT_fnc_InitPostVeh"];
 };
 
 if (hasinterface) then 
