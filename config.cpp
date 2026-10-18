@@ -27,6 +27,22 @@ class cfgPatches
 	};
 };
 
+// CBA versioning: without this block CBA does not list the mod and does not compare versions between server and clients
+class CfgSettings
+{
+	class CBA
+	{
+		class Versioning
+		{
+			class LT_Template_Base
+			{
+				main_addon="lt_template_base";
+				removed[]={};
+			};
+		};
+	};
+};
+
 class cfgAddons
 {
     class PreloadAddons
