@@ -6,7 +6,7 @@ Author: Lowlands Tactical
 Description:
 Sets up the AFK system on the client (call once, next to ["register"] call LT_fnc_respawnGroupInit).
 Adds the ACE self interaction actions "Go AFK" and "Back from AFK" (in the menu Lowlands Tactical)
-and the CBA keybinds (Options > Controls > Configure Addons > Lowlands Tactical). The keybinds have no default key.
+and one CBA keybind "Toggle AFK" (Options > Controls > Configure Addons > Lowlands Tactical) that goes AFK or comes back. The keybind has no default key.
 Nothing is added when the parameter lt_afk is off.
 
 Modes:
@@ -62,11 +62,27 @@ switch (_mode) do
 
 			if (!isNil "CBA_fnc_addKeybind") then
 			{
-				["Lowlands Tactical", "lt_afk_go", ["Go AFK", "Go AFK: you are hidden, invulnerable and attached to your leader"],
-					{["go"] call LT_fnc_afkRequest; true}, {}, [0, [false, false, false]]
-				] call CBA_fnc_addKeybind;
-				["Lowlands Tactical", "lt_afk_back", ["Back from AFK", "Come back from AFK (5 seconds protection)"],
-					{["back"] call LT_fnc_afkRequest; true}, {}, [0, [false, false, false]]
+				// One keybind for both: goes AFK or comes back, depending on your state. Silent when not allowed.
+				["Lowlands Tactical", "lt_afk_toggle", ["Toggle AFK", "Go AFK (hidden, invulnerable, attached to your leader) or come back from AFK (5 seconds protection)"],
+					{
+						private ["_state", "_handled"];
+						_handled = false;
+						_state = player getVariable ["LT_afk_state", ""];
+						if (_state in ["HOST", "WAIT"]) then
+						{
+							["back"] call LT_fnc_afkRequest;
+							_handled = true;
+						}
+						else
+						{
+							if ((_state == "") && (alive player) && (isNull objectParent player)) then
+							{
+								["go"] call LT_fnc_afkRequest;
+								_handled = true;
+							};
+						};
+						_handled
+					}, {}, [0, [false, false, false]]
 				] call CBA_fnc_addKeybind;
 			};
 			_result = true;
