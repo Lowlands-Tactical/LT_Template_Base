@@ -131,7 +131,7 @@ class lt_respawngroup_time
 };
 class lt_afk
 {
-    title = "AFK clone system";
+    title = "AFK system";
     values[] = {0,1};
     texts[] = {"Off","On"};
     default = MISSION_AFK;
