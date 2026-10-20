@@ -4,10 +4,10 @@ File: fn_afkMonitor.sqf
 Author: Lowlands Tactical
 
 Description:
-Server side loop (started by LT_fnc_afkStart, spawn it) that keeps an AFK player with his team. Every second:
-- When the host is dead, down or AFK himself, the player is attached to a new host (the leader, or the nearest teammate).
-  When the leader is up again the player is attached to the leader again.
-- When the whole team is down the player stays where he is (state "WAIT") until a teammate is up or respawned.
+Server side loop (started by LT_fnc_afkStart, spawn it) that keeps an AFK player with a player of his side. Every second:
+- When the host is dead, down, AFK himself or gone, the player is attached to a new host: the nearest usable player of
+  his side within range (see LT_fnc_afkFindHost). The group does not matter.
+- When there is no such player the player stays where he is (state "WAIT") until one comes within range.
 - When the player asked to come back but the host sits in a vehicle without a free seat (LT_afk_pending), it waits until the
   host has left the vehicle and then lets the player come back (LT_fnc_afkRelease). Not when a seat becomes free, because
   then the host has usually just arrived and gets out.
@@ -65,16 +65,11 @@ while {_run} do
 		} else
 		{
 			_host = _unit getVariable ["LT_afk_host", objNull];
-			_best = [_unit] call LT_fnc_afkFindHost;
+			_best = objNull;
 
-			// New host when the current one is not usable, or when the leader is usable and we are not with him
-			if (!([_host] call LT_fnc_afkUsable)) then
-			{
-				_switch = true;
-			} else
-			{
-				_switch = ((!isNull _best) && (_best == (leader (group _unit))) && (_host != _best));
-			};
+			// New host only when the current one is not usable anymore (also the case while waiting without a host)
+			_switch = (!([_host] call LT_fnc_afkUsable));
+			if (_switch) then {_best = [_unit] call LT_fnc_afkFindHost};
 
 			// Read the state again right before changing anything, so a player who just came back is never attached again
 			_state = _unit getVariable ["LT_afk_state", ""];
@@ -82,13 +77,13 @@ while {_run} do
 			{
 				if (isNull _best) then
 				{
-					// Whole team is down: wait where we are
+					// No usable player in range: wait where we are
 					if (_state != "WAIT") then
 					{
 						_unit setVariable ["LT_afk_state", "WAIT", true];
 						_unit setVariable ["LT_afk_host", objNull, true];
 						["free", _unit] remoteExec ["LT_fnc_afkLocal", _unit];
-						["Afk", format ["%1 waits: the whole team is down", name _unit]] call LT_fnc_log;
+						["Afk", format ["%1 waits: no usable player in range", name _unit]] call LT_fnc_log;
 					};
 				} else
 				{

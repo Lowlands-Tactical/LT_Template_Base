@@ -89,7 +89,7 @@ Alle acties staan onder het hoofdmenu **Lowlands Tactical** (ACE self-interactio
 | Show Tablet | staff en als server-admin ingelogde spelers | `intel_ca` |
 | Show Crew Tablet | crew en ingelogde admins | `intel_ca` |
 | Teleport Group | groepsleiders, zodra de teleport door een admin is ingeschakeld | `lowtac` |
-| Go AFK | spelers die niet AFK zijn en niet alleen in hun groep zitten | `connectionqualitybad_ca` |
+| Go AFK | spelers die niet AFK zijn en binnen 7 m van een speler van hun eigen kant staan | `connectionqualitybad_ca` |
 | Back from AFK | spelers die AFK zijn | `holdaction_connect_ca` |
 | Deploy to group | spelers met een open deploy-venster na een respawn | `meet_ca` |
 
@@ -104,11 +104,13 @@ Alle keybinds staan in CBA onder *Opties > Besturing > Configure Addons > Lowlan
 | Toggle AFK | gaat AFK of komt terug, afhankelijk van je status |
 
 ### AFK-systeem
-Parameter `lt_afk`. Wie AFK gaat is verborgen, onkwetsbaar, kan niet schieten of gooien en hangt 1,5 m achter een teamgenoot (de host).
+Parameter `lt_afk`. Wie AFK gaat is verborgen, onkwetsbaar, kan niet schieten of gooien en hangt 1,5 m achter een andere speler (de host).
 
-- Niet mogelijk als je alleen in je groep zit (AI-units tellen mee als groepsgenoot), in een voertuig zit, dood of bewusteloos bent.
-- Host: de leider van je groep als die bruikbaar is. Is de leider zelf AFK, dan de dichtstbijzijnde bruikbare teamgenoot. Bruikbaar is levend, niet bewusteloos en niet zelf AFK. Valt de host uit, dan wordt automatisch een nieuwe gekozen. Het leiderschap van de groep verandert niet.
-- Is het hele team uitgevallen, dan blijf je staan waar je bent tot er weer iemand bruikbaar is.
+- Alleen mogelijk binnen 7 m van een andere speler van je eigen kant (west, east, resistance of civilian). De groep maakt niet uit. De actie is anders verborgen en de keybind doet niets. De server controleert dit opnieuw, dus afstand overbruggen via AFK kan niet. De afstand is aan te passen met de variabele `LT_afk_radius` (standaard 7).
+- Niet mogelijk in een voertuig, als je dood of bewusteloos bent.
+- Host: de dichtstbijzijnde bruikbare speler van je kant binnen die afstand. Bruikbaar is een levende speler die niet bewusteloos en niet zelf AFK is. AI-units zijn geen host. Valt de host uit, dan kiest de server automatisch de dichtstbijzijnde bruikbare speler binnen 7 m van waar je op dat moment staat.
+- Is er niemand binnen bereik, dan blijf je staan waar je bent tot er iemand binnen 7 m komt.
+- Bij het AFK gaan krijgen alle spelers van jouw kant een korte chatmelding met je naam ("Naam went AFK"). Het is een chatbericht en geen hint, zodat de melding binnen de eigen kant blijft.
 - Terugkomen: je komt in het voertuig van de host als er een plek is, anders naast hem. Daarna ben je nog 5 seconden onkwetsbaar. Zit de host in een voertuig zonder vrije plek, dan kom je terug zodra hij uitstapt.
 - Server-side: `LT_fnc_afkStart` en `LT_fnc_afkEnd` controleren alles opnieuw; de client vraagt alleen aan.
 

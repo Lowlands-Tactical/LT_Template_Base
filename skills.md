@@ -28,6 +28,7 @@ The team maintains an Arma 3 mod pair, LT_Template_Base and LT_Template_Gear, pl
 - Code that uses `sleep` must be scheduled (`spawn`). FSM code is unscheduled: wait with a time condition, never `sleep`.
 - Check ACE/CBA claims against the source before stating them.
 - `sgn` does not exist in SQF. Use `[-1, 1] select (_x >= 0)`.
+- `side _unit` returns civilian for a captive unit (such as an AFK player). Use `side (group _unit)` when you compare sides.
 - A client with a different mod version than the server is caught by CBA versioning only when the mod has the Versioning block (rule 13).
 
 ## Working method

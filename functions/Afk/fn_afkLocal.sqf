@@ -87,7 +87,7 @@ switch (_mode) do
 								_extra = "";
 							};
 						};
-						case "WAIT": {_text = "Waiting: your whole team is down."};
+						case "WAIT": {_text = "Waiting: no player of your side is close."};
 						case "BACK":
 						{
 							_text = format ["Welcome back! Protected for %1 more seconds.", ((ceil ((player getVariable ["LT_afk_backUntil", 0]) - serverTime)) max 0)];
