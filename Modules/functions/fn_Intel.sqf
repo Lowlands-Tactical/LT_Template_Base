@@ -19,11 +19,7 @@ _intel = _objects select 0;
 
 if (isNil "_intel") exitWith
 {
-    Diag_log "[LT] (Intel) _intel == nil (JIP ErrorCatcher)";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Intel) _intel == nil (JIP ErrorCatcher)";
-    };
+    ["Intel","_intel == nil (JIP ErrorCatcher)",3] call LT_fnc_log;
 };
 
 removeAllActions _intel;
@@ -36,7 +32,7 @@ if (isServer) then
 {
     _intel setVariable ["RscAttributeOwners", [west,east,resistance,civilian], true];
     _intel setVariable ["RscAttributeDiaryRecord_texture", _picture, true];
-    [_intel, "RscAttributeDiaryRecord", [_titel, _text]] call BIS_fnc_setServerVariable;
+    [_intel, "RscAttributeDiaryRecord", [_titel, _text]] call bis_fnc_setServerVariable;
     [
         _intel, "IntelObjectFound", 
         {
@@ -44,7 +40,7 @@ if (isServer) then
             private _msg = format ["Intel found by %1", name _foundBy];
             _msg remoteExec ["systemChat", 0];
         }
-    ] call BIS_fnc_addScriptedEventHandler;
+    ] call bis_fnc_addScriptedEventHandler;
 };
 
 if (hasInterface) then 

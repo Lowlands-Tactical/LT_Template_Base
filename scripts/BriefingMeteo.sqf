@@ -120,3 +120,5 @@ _briefMeteo = format['
 ];
 
 player createDiaryRecord ["LT Briefing", ["Meteo", _briefMeteo]];
+
+["BriefingMeteo","Briefing finished",2] call LT_fnc_log;

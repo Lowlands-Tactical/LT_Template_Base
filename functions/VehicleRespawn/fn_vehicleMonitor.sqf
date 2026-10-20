@@ -15,7 +15,7 @@ while {true} do {
 	{
 		if !(alive (_x select 0)) then {
 			_x spawn {
-				private ["_newVehicle"];
+				private ["_newVehicle", "_rpPoint", "_rpName"];
 				params [
 					["_vehicle", objNull, [objNull]],
 					["_vehicleData", [], [[]]]
@@ -46,6 +46,8 @@ while {true} do {
 				
 				_respawnCount = _vehicle getVariable ["VRRespawnCount", 0];
 				_respawnLimit = _vehicle getVariable ["VRRespawnLimit", 0];
+				_rpPoint = _vehicle getVariable ["LT_veh_respawnPoint", false];
+				_rpName = _vehicle getVariable ["LT_veh_respawnName", ""];
 				if (_respawnCount > _respawnLimit OR {_vehicle getVariable ["VRStop", false]}) exitWith {};
 
 				if _deleteWreck then {
@@ -61,6 +63,7 @@ while {true} do {
 
 				_newVehicle setVariable ["LT_veh_side", _ltVehSide];
 				_newVehicle setVariable ["LT_veh_role", _ltVehRole];
+				if (_rpPoint) then {[_newVehicle, _rpPoint, _rpName] call LT_fnc_respawnVehicle;};
 				[_newVehicle, _maxLoad] remoteExec ["LT_fnc_resetMaxLoad"];
 
 				if _loadout then {[_newVehicle, _inventory] call FRED_fnc_vehicleLoadout};

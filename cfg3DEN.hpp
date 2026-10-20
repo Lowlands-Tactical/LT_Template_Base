@@ -119,6 +119,29 @@ class Cfg3DEN
 						condition = "objectVehicle";
 						typeName = "NUMBER";
 					};
+					
+					class LT_veh_respawnPoint
+					{
+						displayName = "Respawn point for players";
+						tooltip = "Players can deploy to this vehicle with 'Deploy to group' (needs a free seat)";
+						property = "LT_veh_respawnPoint_ID";
+						control = "Checkbox";
+						expression = "_this setVariable ['LT_veh_respawnPoint',_value,true];";
+						defaultValue = "false";
+						condition = "objectVehicle";
+						typeName = "BOOL";
+					};
+					class LT_veh_respawnName
+					{
+						displayName = "Respawn point name";
+						tooltip = "Name in the deploy list (empty = name of the vehicle)";
+						property = "LT_veh_respawnName_ID";
+						control = "Edit";
+						expression = "_this setVariable ['LT_veh_respawnName',_value,true];";
+						defaultValue = "''";
+						condition = "objectVehicle";
+						typeName = "STRING";
+					};
 					class LT_drone_side
 					{
 						displayName = "Select drone side";

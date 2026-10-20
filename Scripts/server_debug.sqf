@@ -21,10 +21,7 @@ while {true} do {
   _allUnits = count (allUnits);
   _allPlayers = count (call BIS_fnc_listPlayers);
   _dbMRK setMarkerText format ["FPS:%1; allUnits:%2; Players:%3; AI_local:%4;", diag_fps, _allUnits, _allPlayers, (_allUnits - _allPlayers)];
-  Diag_log format["[LT] (Debug) Server Debug Cycle| FPS:%1 allUnits:%2 Players:%3 AI:%4", diag_fps, _allUnits, _allPlayers, (_allUnits - _allPlayers)];
-  if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-  {
-    systemChat format["[LT] (Debug) Server Debug Cycle| FPS:%1 allUnits:%2 Players:%3 AI:%4", diag_fps, _allUnits, _allPlayers, (_allUnits - _allPlayers)];
-  };
+  
+  ["Debug",format ["Server Debug Cycle| FPS:%1 allUnits:%2 Players:%3 AI:%4", diag_fps, _allUnits, _allPlayers, (_allUnits - _allPlayers)],2] call LT_fnc_log;
   uisleep 60;
 };

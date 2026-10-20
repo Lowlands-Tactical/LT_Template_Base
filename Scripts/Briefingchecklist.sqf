@@ -59,8 +59,4 @@ player createDiaryRecord ["LT Briefing", ["Checklist", '
     <br/><font color="#D7DBD5">• De missie wordt gecalld. </font>
 ']];
 
-Diag_log "[LT] (BriefingCheckList) briefing finished";
-if (["lt_debug",0] call bis_fnc_getParamValue == 1) then 
-{
-    systemchat "[LT] (BriefingCheckList) briefing finished";
-};
+["BriefingCheckList","Briefing finished",2] call LT_fnc_log;

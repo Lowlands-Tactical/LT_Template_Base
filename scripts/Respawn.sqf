@@ -28,7 +28,7 @@ private _insignia = [_corpse] call BIS_fnc_getUnitInsignia;
 	params ["_unit", "_insignia"];
 	sleep 1;
 	_unit setVariable ["BIS_fnc_setUnitInsignia_class", nil];
-	[_unit, _insignia] call BIS_fnc_setUnitInsignia;
+	[_unit, _insignia] call bis_fnc_setUnitInsignia;
 };
 
 _team = assignedTeam _corpse;
@@ -41,18 +41,17 @@ if ("lt_fatigue_onoff" call bis_fnc_getParamValue == 0) then
 };
 player addAction [
 	"<t color='#FF0000'>Parachute</t>", 
-	"\lt_template_base\scripts\paradrop.sqf", 
+	"\lt_template_base\Scripts\paradrop.sqf", 
 	"", 1, false, true, "", 
 	"((vehicle player) isKindOf ""Air"") && (((position player) select 2) > 100) && (player != driver (vehicle player))"
 ];
 
 // Readd zeus module
-Diag_log "[LT] (Respawn) Reload zeus modules";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
+if ((getPlayerUID player) in (AdminCrew get "Staff")) then
 {
-	systemChat "[LT] (Respawn) Reload zeus modules";
+	["Respawn","Reload zeus modules",2] call LT_fnc_log;
+	[] call LT_fnc_AdminZeusModule;
 };
-[] remoteExec ["LT_fnc_AdminZeusModule", 2];
 
 // After respawn reassign all radios and channels
 waitUntil {([] call acre_api_fnc_isInitialized)};
@@ -81,18 +80,10 @@ if (_hasRadio) then
 		} forEach _oldRadios;
 	}forEach _allRadios;
 
-	diag_log "[LT] (Respawn) player radio('s) have been reset";
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemChat "[LT] (Respawn) player radio('s) have been reset";
-	};
+	["Respawn","Player radio('s) have been reset",2] call LT_fnc_log;
 }else
 {
-	diag_log "[LT] (Respawn) player has no radio";
-	if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-	{
-		systemChat "[LT] (Respawn) player has no radio";
-	};
+	["Respawn","Player has no radio",2] call LT_fnc_log;
 };
 
 // Reset unit gear load with extra space
@@ -108,3 +99,5 @@ _unit setUnitTrait ["loadCoef", 0.5];
 (removeAllWeapons _corpse);
 //(removeAllAssignedItems _corpse);
 (deleteVehicle (nearestObject [_corpse, "WeaponHolderSimulated"]));
+
+["unit", _unit] call LT_fnc_respawnGroupInit;

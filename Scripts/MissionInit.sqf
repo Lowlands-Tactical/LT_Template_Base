@@ -10,11 +10,7 @@ Also sets the briefing for everyone.
 */
 
 // Stuff common to all our missions!
-Diag_log "[LT] (Mission) init Loading";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemChat "[LT] (Mission) init Loading";
-};
+["Mission","init Loading",2] call LT_fnc_log;
 
 // Eject headless client
 if (!hasInterface && !isDedicated) exitWith {};
@@ -25,26 +21,14 @@ ace_dragging_canMoveDead = false;
 
 if (isServer) then 
 {
-    Diag_log "[LT] (Mission) loading Server Debug";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Mission) loading Server Debug";
-    };
-    [] execVM "\lt_template_base\scripts\server_debug.sqf";
+    ["Mission","loading Server Debug",2] call LT_fnc_log;
+    [] execVM "\lt_template_base\Scripts\server_debug.sqf";
 
-    Diag_log "[LT] (Mission) loading Zeus Modules";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Mission) loading Zeus Modules";
-    };
-    [] remoteExec ["LT_fnc_adminZeusModule", 2];
-    //[] execVM "\lt_template_base\scripts\setLowtacFaces.sqf";
-    Diag_log "[LT] (Mission) loading vehicle gear";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Mission) loading vehicle gear";
-    };
-    [] remoteExec ["LT_fnc_InitPostVeh", 2];
+    ["Mission","loading Zeus Modules",2] call LT_fnc_log;
+    [] remoteExec ["LT_fnc_adminZeusModule",2];
+    //[] execVM "\lt_template_base\Scripts\setLowtacFaces.sqf";
+    ["Mission","loading vehicle gear",2] call LT_fnc_log;
+    [] remoteExec ["LT_fnc_InitPostVeh"];
 };
 
 if (hasinterface) then 
@@ -54,14 +38,11 @@ if (hasinterface) then
     // Because we want to start with the weapon lowered
     if (vehicle player == player) then {player switchMove "AmovPercMstpSrasWrflDnon_AmovPercMstpSlowWrflDnon";};
 
-    _uid = getPlayerUID player;
-    _admin = _uid in (AdminCrew get "Staff");
-    
     if (didJIP) then 
     {
-        if (_admin) then 
+        if ((getPlayerUID player) in (AdminCrew get "Staff")) then 
         {
-            [] remoteExec ["LT_fnc_adminZeusModule", 2];
+            [] call LT_fnc_adminZeusModule;
         };
     };
 
@@ -75,46 +56,36 @@ if (hasinterface) then
         default {player assignTeam "MAIN"};
     };
 
+    ["register"] call LT_fnc_respawnGroupInit;
+    ["Mission","Register player for RespawnGroupInit",2] call LT_fnc_log;
+    
+    ["register"] call LT_fnc_afkInit;
+    ["Mission","Register player for AfkInit",2] call LT_fnc_log;
+
     if ("lt_fatigue_onoff" call bis_fnc_getParamValue == 0) then 
     {
         player enableFatigue false;
 
-        Diag_log "[LT] (Mission) Fatigue off";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Mission) Fatigue off";
-        };
+        ["Mission","Fatigue off",2] call LT_fnc_log;
     };
-    if ("lt_markers" call bis_fnc_getParamValue == 1) then 
+    if (["lt_markers", 1] call bis_fnc_getParamValue == 1) then
     {
-        [[],"\lt_template_base\scripts\QS_icons.sqf"] remoteExec ["BIS_fnc_execVM", player];
+        [] call LT_fnc_initMapIntel;
         
-        Diag_log "[LT] (Mission) QS markers are enabled";
-        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-        {
-            systemChat "[LT] (Mission) QS markers are enabled";
-        };
+        ["Mission","Player group markers are enabled",2] call LT_fnc_log;
     };
-    Diag_log "[LT] (Mission) Loading EvenHandlers";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (Mission) Loading EvenHandlers";
-    };
+    ["Mission","Loading EvenHandlers"] call LT_fnc_log;
     player addAction 
     [
         "<t color='#FF0000'>Parachute</t>", 
-        "\lt_template_base\scripts\paradrop.sqf", 
+        "\lt_template_base\Scripts\paradrop.sqf", 
         "", 1, false, true, "", 
         "((vehicle player) isKindOf 'Air') && (((position player) select 2) > 100) && (player != driver (vehicle player))"
     ];
 
     // Check PermaDeath and add respawn eventHandlers acordingly
     LT_PermaDeath = getMissionConfigValue ["LT_PermaDeath_ID", 0];
-    Diag_log format ["[LT] (Mission) PermaDeath = %2 is pubvarred at %1", time, LT_PermaDeath];
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat format ["[LT] (Mission) PermaDeath = %2 is pubvarred at %1", time, LT_PermaDeath];
-    };
+    ["Mission",format ["PermaDeath = %2 is pubvarred at %1", time, LT_PermaDeath],2] call LT_fnc_log;
 
     if (LT_PermaDeath == 1) then 
 	{
@@ -123,11 +94,7 @@ if (hasinterface) then
 			"MPkilled",
 			{
 				params ["_unit", "_killer"];
-				diag_log format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
-				if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-				{
-					systemChat format ["[LT] (PermaDeath) %1 died and now is spectating", name _unit];
-				};
+                ["PremaDeath",format ["%1 died and now is spectating", name _unit],2] call LT_fnc_log;
 				//Because MPEventHandler MPKilled is executed globaly AND on evey client this makes sure its only on the client that died
 				if (local _unit) then 
 				{
@@ -140,7 +107,7 @@ if (hasinterface) then
 		];
 	} else 
 	{
-		if (_admin) then 
+		if ((getPlayerUID player) in (AdminCrew get "Staff")) then 
 		{
 			player addMPEventHandler 
 			[
@@ -164,7 +131,10 @@ if (hasinterface) then
 			"MPRespawn",
 			{
 				params ["_unit","_corpse"];
-				[_unit, _corpse] execVM "lt_template_base\scripts\Respawn.sqf";
+                if (local _unit) then
+                {
+				    [_unit, _corpse] execVM "lt_template_base\Scripts\Respawn.sqf";
+                };
 			}
 		];
         player addEventHandler 
@@ -205,45 +175,31 @@ if (hasinterface) then
                             _pack addItemCargoGlobal [_x, _ammoAmt select _forEachIndex];
                         }forEach _ammo;
                         
-                        diag_log format ["[LT] (Parachute) %1 landed backpack:%2 has been spawned", name _unit,_pack];
-                        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-                        {
-                            systemChat format ["[LT] (Parachute) %1 landed backpack:%2 has been spawned", name _unit,_pack];
-                        };
+                        ["Parachute",["%1 landed backpack:%2 has been spawned", name _unit,_pack],2] call LT_fnc_log;
                     }else
                     {
-                        diag_log format ["[LT] (Parachute) %1 landed but gets no backpack", name _unit];
-                        if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-                        {
-                            systemChat format ["[LT] (Parachute) %1 landed but gets no backpack", name _unit];
-                        };
+                        ["Parachute",["%1 landed but gets no backpack", name _unit],2] call LT_fnc_log;
                     };
                 };
 			}
 		];
 	};
 
-    Diag_log "[LT] (Mission) Loading briefing";
-    if !(player diarySubjectExists "LT_Briefing") then
-    {
-        player createDiarySubject ["LT Briefing", "LT Briefing"];
-    };
-    _meBrief = [] execVM "\lt_template_base\scripts\BriefingMeteo.sqf";
+    ["Mission","Loading briefing"] call LT_fnc_log;
+    
+    player removeDiarySubject "Diary";
+    _meBrief = [] execVM "\lt_template_base\Scripts\BriefingMeteo.sqf";
     waitUntil {uiSleep 0.5; scriptDone _meBrief};
-    _chBrief = [] execVM "\lt_template_base\scripts\Briefingchecklist.sqf";
+    _chBrief = [] execVM "\lt_template_base\Scripts\Briefingchecklist.sqf";
     waitUntil {uiSleep 0.5; scriptDone _chBrief};
-    _adBrief = [] execVM "\lt_template_base\scripts\BriefingAdmin.sqf";
+    _adBrief = [] execVM "\lt_template_base\Scripts\BriefingAdmin.sqf";
     waitUntil {uiSleep 0.5; scriptDone _adBrief};
     
     if ("lt_debug" call bis_fnc_getParamValue == 1) exitWith 
     {
-        _dbBrief = [] execVM "\lt_template_base\scripts\BriefingDebug.sqf";
+        _dbBrief = [] execVM "\lt_template_base\Scripts\BriefingDebug.sqf";
         waitUntil {uiSleep 0.5; scriptDone _dbBrief};
     };
 };
 
-Diag_log "[LT] (Mission) Mission init finished";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemChat "[LT] (Mission) init finished";
-};
+["Mission","init finished",2] call LT_fnc_log;

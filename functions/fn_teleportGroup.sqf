@@ -24,7 +24,7 @@ player setPos _pos;
 _count = 0;
 {
   if (_x != player) then {
-    _x setPos ( [player, 4, (360/(count (units player)) * _count)] call BIS_fnc_relPos );
+    _x setPos ( [player, 4, (360/(count (units player)) * _count)] call bis_fnc_relPos );
     _count = _count + 1;
   };
 } foreach (units player);

@@ -11,6 +11,7 @@ class cfgPatches
 		requiredVersion=LT_REQVR;
 		requiredAddons[]=
 		{
+			"3DEN",
 			"A3_Characters_F_BLUFOR",
 			"cba_main",
 			"ace_main",
@@ -21,8 +22,24 @@ class cfgPatches
 
 		//CBA versioning
 		version = VERSION;
-		versionStr = STR(VERSION_STR);
+		versionStr = QUOTE(VERSION_STR);
 		versionAR[] = {VERSION_AR};
+	};
+};
+
+// CBA versioning: without this block CBA does not list the mod and does not compare versions between server and clients
+class CfgSettings
+{
+	class CBA
+	{
+		class Versioning
+		{
+			class LT_Template_Base
+			{
+				main_addon="lt_template_base";
+				removed[]={};
+			};
+		};
 	};
 };
 
@@ -30,7 +47,7 @@ class cfgAddons
 {
     class PreloadAddons
     {
-        class NAF
+        class LT_Template
         {
             list[]=
             {
@@ -45,11 +62,38 @@ class CfgFunctions
 {
 	class LT
 	{
+		class Afk
+		{
+			file="\lt_template_base\functions\Afk";
+			class afkInit {};
+			class afkRequest {};
+			class afkStart {};
+			class afkEnd {};
+			class afkRelease {};
+			class afkMonitor {};
+			class afkLocal {};
+			class afkNotify {};
+			class afkFindHost {};
+			class afkUsable {};
+		};
+		class MapIntel
+		{
+			file="\lt_template_base\functions\MapIntel";
+			class initMapIntel {};
+			class mapIntelUpdate {};
+			class mapIntelIcon {};
+			class mapIntelDraw {};
+			class mapIntelUI {};
+			class mapIntelTooltip {};
+		};
 		class template_base
 		{
 			file="\lt_template_base\functions";
 			class adminZeusModule {};
 			class deleteUnits {};
+			class initPostVeh {};
+			class log {};
+			class menuInit {};
 			class safeStartLoop {};
 			class safety {};
 			class setFog {};
@@ -63,6 +107,16 @@ class CfgFunctions
 			class resupplyRequest {};
 			class resupplyDrop {};
 		};
+		class RespawnGroup
+		{
+			file="\lt_template_base\functions\RespawnGroup";
+			class respawnGroupInit {};
+			class respawnGroupTargets {};
+			class respawnGroupMenu {};
+			class respawnGroupRequest {};
+			class respawnGroupMove {};
+			class respawnVehicle {};
+		};
 		class Modules
         {
             file="\lt_template_base\Modules\functions";
@@ -70,12 +124,16 @@ class CfgFunctions
             class Intel {};
             class Resupply {};
             class Defense {};
+			class SpawnWaves {};
             class UnitSpawner {};
         };
 		class Convoy
 		{
 			file="\lt_template_base\Modules\functions\Convoy";
 			class initConvoy {};
+			class leadSpeedControl {};
+			class linkSpeedControl {};
+			class pathCreator {};
 		};
 	};
 	class FRED
@@ -95,14 +153,23 @@ class cfgRemoteExec
     class Functions
     {
         // 0= all machines 1= only clients 2= only server
-        mode=2;
+        mode=1;
         jip=1;
+		class LT_fnc_afkStart     		{allowedTargets=2;};
+		class LT_fnc_afkEnd       		{allowedTargets=2;};
+		class LT_fnc_afkLocal     		{allowedTargets=0;};
+		class LT_fnc_afkNotify    		{allowedTargets=0;};
+		class LT_fnc_log 				{allowedTargets=0;};
 		class LT_fnc_safety				{allowedTargets=0;};
 		class LT_fnc_safeStartLoop		{allowedTargets=0;};
 		class LT_fnc_adminZeusModule	{allowedTargets=2;};
-		class LT_fnv_initConvoy			{allowedTargets=2;};
+		class LT_fnc_initConvoy			{allowedTargets=2;};
 		class LT_fnc_ResupplyRequest	{allowedTargets=2;};
 		class LT_fnc_deleteUnits		{allowedTargets=2;};
+        class LT_fnc_InitPostVeh		{allowedTargets=2;};
+		class LT_fnc_respawnGroupRequest{allowedTargets=2;};
+		class LT_fnc_respawnGroupMove   {allowedTargets=1;};
+		class FRED_fnc_vehicleRespawn	{allowedTargets=2;};
     };
 };
 
@@ -130,19 +197,20 @@ class Extended_PreInit_EventHandlers
 {
 	class LT_Template_Base_Pre
 	{
-		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PreInit.sqf'";
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_preInit.sqf'";
 	};
 };
 class Extended_PostInit_EventHandlers
 {
 	class LT_Template_Base_Post
 	{
-		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_PostInit.sqf'";
+		init="call compile preprocessFileLineNumbers '\lt_template_base\XEH_postInit.sqf'";
 	};
 };
 
 #include "Tablet\LT_Tablet_Base.hpp"
-#include "Modules\LT_modules.hpp"
+#include "RespawnGroup\LT_RespawnGroup.hpp"
+#include "Modules\LT_Modules.hpp"
 #include "Faces\LT_Faces.hpp"
 
 // Main menu 'join server' option

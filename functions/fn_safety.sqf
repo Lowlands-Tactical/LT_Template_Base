@@ -33,11 +33,10 @@ switch (_this select 0) do
 		};
 		player allowDamage false;
 
-		Diag_log "[LT] (Safety) Safety True";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) Safety True";
-		};
+		// ACE: no throwing of grenades and other throwables during the safety time
+		if (!isNil "ace_common_fnc_statusEffect_set") then {[player, "blockThrow", "LT_safety", true] call ace_common_fnc_statusEffect_set};
+
+		["Safety","Safety True"] call LT_fnc_log;
 	};
 
 	//Turn safety off
@@ -62,10 +61,8 @@ switch (_this select 0) do
 		};
 		player allowDamage true;
 
-		Diag_log "[LT] (Safety) Safety False";
-		if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-		{
-			systemChat "[LT] (Safety) Safety False";
-		};
+		if (!isNil "ace_common_fnc_statusEffect_set") then {[player, "blockThrow", "LT_safety", false] call ace_common_fnc_statusEffect_set};
+
+		["Safety","Safety False"] call LT_fnc_log;
 	};
 };

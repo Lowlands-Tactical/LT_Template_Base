@@ -12,6 +12,10 @@ to be included in description.ext for edit ease
 onLoadIntroTime=0;
 
 //Respawn/Revive
+respawn=3;
+respawnDelay=5;
+respawnTemplates[]={"MenuPosition"};
+ModuleRespawnPosition_F=3;
 respawnVehicleDelay=10;
 respawnOnStart=-1;
 
@@ -38,7 +42,7 @@ showUAVFeed=1;
 
 //Corpse and Wrack Management
 corpseManagerMode=3;
-coprseLimit=20;
+corpseLimit=20;
 corpseRemovalMinTime=30;
 coprseRemovalMaxTime=300;
 disposalCheckPeriod=20;
@@ -54,7 +58,7 @@ minPlayerDistance[]=
 weaponholderLimit=50;
 weaponholderRemovalMinTime=60;
 weaponholderRemovalMaxTime=600;
-wrackManagerMode=0;
+wreckManagerMode=0;
 
 //Mission Settings
 aiKills=0;

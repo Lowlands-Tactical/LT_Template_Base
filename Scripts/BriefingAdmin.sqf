@@ -11,8 +11,7 @@ See Admin.sqf for the list.
 
 if !(hasInterface) exitWith {};
 
-_uid = getPlayerUID player;
-_admin = _uid in (AdminCrew get "Staff");
+_admin = (getPlayerUID player) in (AdminCrew get "Staff");
 if !(_admin OR serverCommandAvailable "kick") exitWith {};
 
 // ADMIN BRIEFING
@@ -62,12 +61,8 @@ _briefing = _briefing + format['
 
 
 // Create array of tasks
-_tasks = player call BIS_fnc_tasksUnit;
-diag_log format["[LT] (BriefingAdmin) Taskarray: %1", _tasks];
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemchat format["[LT] (BriefingAdmin) Taskarray: %1", _tasks];
-};
+_tasks = player call bis_fnc_tasksUnit;
+["BriefingAdmin",format ["Taskarray: %1", _tasks],2] call LT_fnc_log;
 
 // Get side of player so taskState will be remoteExec only to that side.
 _side = side player;
@@ -76,7 +71,7 @@ LT_fnc_setTaskState = {
     _taskindex = _this select 0;
     _state = _this select 1;
     _side = _this select 2;
-    _taskArray = player call BIS_fnc_tasksUnit;
+    _taskArray = player call bis_fnc_tasksUnit;
     _task = _taskArray select _taskindex;
     [_task, _state, true] remoteExec ['BIS_fnc_tasksetState', _side, true];
 };
@@ -87,8 +82,8 @@ if (count _tasks > 0) then
 {
     {
         _taskID = _x;
-        _taskindex = (player call BIS_fnc_tasksUnit) find _x;
-        _taskDescriptionArray = _taskID call BIS_fnc_taskDescription;
+        _taskindex = (player call bis_fnc_tasksUnit) find _x;
+        _taskDescriptionArray = _taskID call bis_fnc_taskDescription;
         _taskDescription = _taskDescriptionArray select 1;
         _briefing = _briefing + format 
         ["
@@ -103,7 +98,7 @@ if (count _tasks > 0) then
     } forEach _tasks;
 } else 
 {
-    _briefing = _briefing + "   No tasks specified at beginning<br/><br/>";
+    _briefing = _briefing + "<br/>   No tasks specified at beginning<br/><br/>";
 };
 
 // SAFE START SECTION
@@ -119,8 +114,6 @@ _briefing = _briefing + "
 // CREATE DIARY Entry
 player createDiaryRecord ["LT Briefing", ["(Admin) Menu", _briefing]];
 
-Diag_log "[LT] (BriefingAdmin) briefing finished";
-if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-{
-    systemchat "[LT] (BriefingAdmin) briefing finished";
-};
+["BriefingAdmin","Briefing finished",2] call LT_fnc_log;
+
+_briefing

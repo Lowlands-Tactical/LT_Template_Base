@@ -19,7 +19,7 @@ if (!isServer) exitWith {};
 
 _staffArray = AdminCrew get "Staff";
 {
-    _staffObject = _x call BIS_fnc_getUnitByUID;
+    _staffObject = _x call bis_fnc_getUnitByUID;
     _staffName = name _staffObject;
     
     if (isNull (getAssignedCuratorLogic _staffObject)) then 
@@ -27,11 +27,7 @@ _staffArray = AdminCrew get "Staff";
         // if staff member is not online exit function
         if (_staffName == "Error: No vehicle") exitWith
         {
-            Diag_log "[LT] (ZeusModule) this staffmember is not online";
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat "[LT] (ZeusModule) this staffmember is not online";
-            };
+            ["ZeusModule","this staffmember is not online",2] call LT_fnc_log;
         };
 
         // Check if not already created and assign it else create new module
@@ -40,12 +36,7 @@ _staffArray = AdminCrew get "Staff";
             {
                 _staffObject assignCurator _x;
                 
-
-                Diag_log format["[LT] (ZeusModule) ZEUS assigned to %1.", _staffName];
-                if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-                {
-                    systemChat format["[LT] (ZeusModule) ZEUS assigned to %1.", _staffName];
-                };
+                ["ZeusModule",format ["ZEUS assigned to %1.", _staffName],2] call LT_fnc_log;
             };
         }forEach allCurators;
 
@@ -55,14 +46,11 @@ _staffArray = AdminCrew get "Staff";
             _curModule = _curLogicGrp createunit ["ModuleCurator_F", [90, 90],[],0.5,"NONE"];
             _staffObject assignCurator _curModule;
 
-            Diag_log format["[LT] (ZeusModule) ZEUS assigned to %1.", _staffName];
-            if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-            {
-                systemChat format["[LT] (ZeusModule) ZEUS assigned to %1.", _staffName];
-            };
+            ["ZeusModule",format ["ZEUS assigned to %1.", _staffName],2] call LT_fnc_log;
         };
     } else 
     {
+        ["ZeusModule",format ["ZEUS already assigned to %1.", _staffName],1] call LT_fnc_log;
         Diag_log format["[LT] (ZeusModule) ZEUS already assigned to %1.", _staffName];
         if ("lt_debug" call bis_fnc_getParamValue == 1) then 
         {

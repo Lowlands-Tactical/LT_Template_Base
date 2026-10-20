@@ -105,11 +105,7 @@ if (isNil "_showTriggers") then
     // CREATE DIARY Entry
     _debugBriefing = player createDiaryRecord ["LT Briefing", ["(Debug) Menu", _briefing]];
 
-    Diag_log "[LT] (BriefingDebug) Briefing Triggers Reveal Finish";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (BriefingDebug) Briefing Triggers Reveal Finish";
-    };
+    ["BriefingDebug","Briefing Triggers Reveal Finish",2] call LT_fnc_log;
 }else 
 {
     _records = (player allDiaryRecords "LT Briefing");
@@ -128,9 +124,5 @@ if (isNil "_showTriggers") then
         };
     }forEach _allMarkers;
 
-    Diag_log "[LT] (BriefingDebug) Briefing Triggers Delete Finish";
-    if ("lt_debug" call bis_fnc_getParamValue == 1) then 
-    {
-        systemChat "[LT] (BriefingDebug) Briefing Triggers Delete Finish";
-    };
+    ["BriefingDebug","Briefing Triggers Delete Finish",2] call LT_fnc_log;
 };

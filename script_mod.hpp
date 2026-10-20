@@ -4,6 +4,9 @@
 #define VERSION_STR MAJOR.MINOR.BUILD
 #define VERSION_AR  MAJOR,MINOR,BUILD
 
+// Stringify helper (same as CBA), used for versionStr in CfgPatches
+#define QUOTE(var1) #var1
+
 // Defaults
 #define LT_AUTHOR "Lowlands Tactical"
 #define LT_AUTHORS "Lowlands Tactical","Brainless_Ben"

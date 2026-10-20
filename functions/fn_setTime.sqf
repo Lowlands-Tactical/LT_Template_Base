@@ -8,4 +8,4 @@ _date = date;
 _date set [3,_timeOfDay];
 _date set [4,0];
 
-[_date,true,false] call BIS_fnc_setDate;
+[_date,true,false] call bis_fnc_setDate;
