@@ -23,7 +23,8 @@ AdminCrew = createHashMapFromArray [
 		//"76561198010219180",	// PingWing
 		"76561198047657052",	// DM3002X
 		"76561198103175891",	// RaiderNL
-		"76561198192823433"		// Bearfingers
+		"76561198192823433",	// Bearfingers
+		"76561198047491445"		// Pek
 	]]
 ];
 publicVariable "AdminCrew";
