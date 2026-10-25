@@ -4,9 +4,9 @@
 	Author: Lowlands Tactical
 
 	Description:
-	Central log function for the template. Writes a line to the RPT and, when the
-	mission parameter lt_debug is on, also shows it in the system chat of the
-	machine that runs it. Replaces the repeated diag_log + systemChat blocks.
+	Central log function for the template. Writes a line to the RPT and also shows it in the system chat of the machine that runs it:
+	always for warnings (level 1) and errors (level 3), other levels only when the mission
+	parameter lt_debug is on. Replaces the repeated diag_log + systemChat blocks.
 	On a dedicated server there is no chat, so the line only ends up in the RPT.
 
 	Parameters:
@@ -48,7 +48,7 @@ _line = format ["[LT] (%1) %2%3", _tag, _prefix, _message];
 
 Diag_log _line;
 
-if (hasInterface && {("lt_debug" call bis_fnc_getParamValue) == 1}) then
+if (hasInterface && {(("lt_debug" call BIS_fnc_getParamValue) == 1) || (_level in [1,3])}) then
 {
 	systemChat _line;
 };
