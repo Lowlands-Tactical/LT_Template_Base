@@ -11,7 +11,7 @@ Defines more global variables and hashmaps used in the template.
 _ltMission = getMissionConfigValue "LT_Loadout_ID";
 if (isNil "_ltMission") exitWith
 {
-	Diag_log format ["[LT] (XEH) %1 Eject is not mission template", __FILE__];
+	Diag_log format ["[LT] (XEH_Base) %1 Eject is not mission template", __FILE__];
 };
 
 // Compulsary missions start banner
