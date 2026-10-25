@@ -36,8 +36,15 @@ if (lt_vehicleGearIsSet == 1) then
 				[_x, _vehside, _vehLoadout] spawn
 				{
 					params ["_vehicle","_vehside","_vehLoadout"];
-					waitUntil {sleep 0.2;((((westWeapons get "Rifle") get "Weapon")#0) != "")};
-					[_vehicle, _vehside, _vehLoadout] remoteExec ["LT_fnc_VehicleLoadout"];
+					_until = diag_tickTime + 60;
+					waitUntil {sleep 0.2; ((missionNamespace getVariable ["LT_gear_ready", false]) || (diag_tickTime > _until))};
+					if (missionNamespace getVariable ["LT_gear_ready", false]) then
+					{
+						[_vehicle, _vehside, _vehLoadout] remoteExec ["LT_fnc_VehicleLoadout"];
+					}else
+					{
+						["initPostVeh", format ["gear tables not ready, no loadout for %1", name _vehicle], 3] call LT_fnc_log;
+					};
 				};
 			}else
 			{
