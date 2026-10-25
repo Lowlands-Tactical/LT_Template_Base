@@ -57,7 +57,7 @@ In `Reference/` staan twee bestanden om in de `description.ext` van een missie o
 | --- | --- |
 | `lt_fatigue_onoff` | Vermoeidheid aan/uit |
 | `lt_markers` | Groepsmarkers (MapIntel) aan/uit |
-| `lt_debug` | Debugberichten in de chat en RPT |
+| `lt_debug` | Alle logberichten in de chat en RPT (waarschuwingen en fouten staan altijd in de chat) |
 | `lt_param_timeOfDay` | Tijdstip (24 = missie-instelling) |
 | `lt_param_weather` | Weer (9 = missie-instelling) |
 | `lt_param_fog` | Mist |
@@ -132,7 +132,7 @@ De lijsten met Steam64-ID's staan in `XEH_preInit.sqf` (`_lt_staff` en `_lt_crew
 
 ## Debuggen
 
-Zet de parameter `lt_debug` op `True`. Alle berichten beginnen met `[LT]` en staan ook in het RPT-bestand. De server toont met een marker FPS en aantal units.
+Zet de parameter `lt_debug` op `True` om alle logberichten in de chat te zien. Waarschuwingen (`WARNING:`) en fouten (`ERROR:`) staan ook zonder `lt_debug` altijd in de chat van de speler bij wie ze optreden. Alle berichten beginnen met `[LT]` en staan ook in het RPT-bestand. De server toont met een marker FPS en aantal units.
 
 ## CBA-versioning
 

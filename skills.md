@@ -10,7 +10,7 @@ The team maintains an Arma 3 mod pair, LT_Template_Base and LT_Template_Gear, pl
 4. **Parameters:** `params` with defaults and type checks, for example `params [["_logic", objNull, [objNull]]]`. Never `_this select n`.
 5. **Conditions:** use full parentheses instead of lazy `{}`: `if ((_a) && (_b)) then {...}`, `_restricted = ((_x in _a) || (_x in _b));`. Only use a nested `if` where eager evaluation would raise an error (for example `alive _veh` on a variable that may be nil).
 6. **Several modes:** use `switch (_mode) do` that fills a `_result` variable, with a `default` that logs. Not a chain of `if ... exitWith`.
-7. **Logging:** `["Name", "message", 2] call LT_fnc_log;` instead of `diag_log`/`systemChat`. Do not log in per-frame or per-second loops.
+7. **Logging:** `["Name", "message", 2] call LT_fnc_log;` instead of `diag_log`/`systemChat`. Level 1 (warning) and 3 (error) always show in the system chat of machines with an interface, other levels only with `lt_debug`. Do not log in per-frame or per-second loops.
 8. **getVariable defaults** match the type that is expected (`false` for booleans, not `-1`).
 9. **Networking:** only use the broadcast flag of `setVariable` when other machines read it. Custom functions that are `remoteExec`'d must be in `CfgRemoteExec` (mode 1 whitelist) with the right `allowedTargets`; `BIS_fnc_*` and commands need no entry.
 10. **Do not use `postInit=1`** in `CfgFunctions` for things that belong in the mission. Mission setup is done from `MissionInit.sqf` (guarded by the mission parameters) so the mod does nothing in missions that do not use the template.
@@ -29,6 +29,10 @@ The team maintains an Arma 3 mod pair, LT_Template_Base and LT_Template_Gear, pl
 - Check ACE/CBA claims against the source before stating them.
 - `sgn` does not exist in SQF. Use `[-1, 1] select (_x >= 0)`.
 - `side _unit` returns civilian for a captive unit (such as an AFK player). Use `side (group _unit)` when you compare sides.
+- A variable that is first assigned inside a nested scope (`case`, `call`, an include in a `switch`) is lost after that scope. Declare it with a placeholder in the outer scope first (see the variable block in the Gear `XEH_postInit.sqf`).
+- `isNil {code}` returns true when the code returns nothing or fails: it guards against script errors, but it does not tell success from failure. Use validation plus a logged fallback for that.
+- A class check for gear needs the slot type too: weapons `type` 1 primary, 2 handgun, 4 launcher; items `ItemInfo >> type` 801 uniform, 701 vest, 605 helmet, 616 NVG; backpacks `isBackpack = 1`.
+- `systemChat` cannot be coloured. Coloured custom chat channels (`radioChannelCreate`/`customChat`) go to all channel members and need a radio item, so they do not suit local log lines. CBA has no chat channel function, only chat commands.
 - A client with a different mod version than the server is caught by CBA versioning only when the mod has the Versioning block (rule 13).
 
 ## Working method
