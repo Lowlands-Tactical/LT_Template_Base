@@ -14,8 +14,6 @@ onLoadIntroTime=0;
 //Respawn/Revive
 respawn=3;
 respawnDelay=5;
-respawnTemplates[]={"MenuPosition"};
-ModuleRespawnPosition_F=3;
 respawnVehicleDelay=10;
 respawnOnStart=-1;
 
