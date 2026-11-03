@@ -41,7 +41,9 @@ while {true} do {
 					"_ltVehSide",
 					"_ltVehRole",
 					"_UAVCrew",
-					"_maxLoad"
+					"_maxLoad",
+					"_textures",
+					"_materials"
 				];
 				
 				_respawnCount = _vehicle getVariable ["VRRespawnCount", 0];
@@ -68,6 +70,9 @@ while {true} do {
 
 				if _loadout then {[_newVehicle, _inventory] call FRED_fnc_vehicleLoadout};
 				if _savePaint then {[_newVehicle, _paint, _parts] call BIS_fnc_initVehicle};
+				// Custom textures/materials (setObjectTextureGlobal) after the paintjob, so they are not overwritten by it
+				{_newVehicle setObjectTextureGlobal _x;} forEach _textures;
+				{_newVehicle setObjectMaterialGlobal _x;} forEach _materials;
 				if _savePylon then {
 					{ 
 					(_newVehicle) removeWeaponGlobal getText (configFile >> "CfgMagazines" >> _x >> "pylonWeapon") 

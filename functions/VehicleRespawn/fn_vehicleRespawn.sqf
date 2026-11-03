@@ -32,13 +32,17 @@
 		7 : BOOLEAN (OPTIONAL)
 				- Custom Pylons. Saves the current pylon on the vehicle and applies it on respawn. 
 					(Default: true)
+		8 : BOOLEAN (OPTIONAL)
+				- Custom Textures. Saves textures/materials that were set with setObjectTextureGlobal /
+				setObjectMaterialGlobal and applies them again on respawn.
+					(Default: true)
 	
 	Example:
 		[this, 5, {_this allowDamage false;}, false] call FRED_fnc_vehicleRespawn;
 */
 
 if (!isServer) exitWith {};
-private ["_inventory", "_paint", "_parts", "_vehicleData", "_pylons", "_pylonPaths","_ltDroneSide", "_ltVehSide", "_ltVehRole", "_UAVCrew", "_maxLoad"];
+private ["_inventory", "_paint", "_parts", "_vehicleData", "_pylons", "_pylonPaths","_ltDroneSide", "_ltVehSide", "_ltVehRole", "_UAVCrew", "_maxLoad", "_textures", "_materials", "_cfg", "_default"];
 params [
 	["_vehicle", objNull, [objNull]],
 	["_delay", 5, [0]],
@@ -47,7 +51,8 @@ params [
 	["_deleteWreck", true, [true]],
 	["_loadout", true, [true]],
 	["_savePaint", true, [true]],
-	["_savePylon", true, [true]]
+	["_savePylon", true, [true]],
+	["_saveTextures", true, [true]]
 ];
 
 _limitEnabled = false;
@@ -78,6 +83,26 @@ if _savePylon then {
 	 {_pylonPaths pushBack (_x select 2);} forEach (getAllPylonsInfo _vehicle);
 };
 
+// Custom textures and materials are not part of BIS_fnc_getVehicleCustomization, so they are saved separately.
+// Only the selections that differ from the config default are stored: [[selection index, texture/material], ...]
+_textures = [];
+_materials = [];
+if (_saveTextures) then {
+	_cfg = configFile >> "CfgVehicles" >> typeOf _vehicle;
+	_default = (getArray (_cfg >> "hiddenSelectionsTextures")) apply {toLower (_x regexReplace ["^\\", ""])};
+	{
+		if ((_x != "") && {(toLower (_x regexReplace ["^\\", ""])) != (_default param [_forEachIndex, ""])}) then {
+			_textures pushBack [_forEachIndex, _x];
+		};
+	} forEach (getObjectTextures _vehicle);
+	_default = (getArray (_cfg >> "hiddenSelectionsMaterials")) apply {toLower (_x regexReplace ["^\\", ""])};
+	{
+		if ((_x != "") && {(toLower (_x regexReplace ["^\\", ""])) != (_default param [_forEachIndex, ""])}) then {
+			_materials pushBack [_forEachIndex, _x];
+		};
+	} forEach (getObjectMaterials _vehicle);
+};
+
 _UAVCrew = false;
 _ltDroneSide = _vehicle getVariable ["LT_drone_side", "WEST"];
 _ltVehSide = _vehicle getVariable ["LT_veh_side", "WEST"];
@@ -92,7 +117,7 @@ _vehicleData = [
 	_delay, _init, _loadout, vehicleVarName _vehicle, getPosASL _vehicle, 
 	getDir _vehicle, typeOf _vehicle, _inventory, _savePaint, _paint, _parts, 
 	_deleteWreck, _limitEnabled,_savePylon, _pylons, _pylonPaths,
-	_ltDroneSide, _ltVehSide, _ltVehRole, _UAVCrew, _maxLoad
+	_ltDroneSide, _ltVehSide, _ltVehRole, _UAVCrew, _maxLoad, _textures, _materials
 ];
 
 if (isNil "VRMonitor") then {
