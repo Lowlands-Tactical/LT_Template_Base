@@ -62,10 +62,6 @@ wreckManagerMode=0;
 aiKills=0;
 briefing=1;
 debriefing=1;
-class DifficultyOverride
-{
-	tacticalPing=0;
-};
 disableChannels[]=
 {
 	2,4,5
