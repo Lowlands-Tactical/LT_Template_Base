@@ -1,3 +1,3 @@
 #define MAJOR 5
-#define MINOR 27
-#define BUILD 50
+#define MINOR 28
+#define BUILD 52
