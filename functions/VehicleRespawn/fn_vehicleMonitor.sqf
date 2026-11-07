@@ -66,7 +66,7 @@ while {true} do {
 				_newVehicle setVariable ["LT_veh_side", _ltVehSide];
 				_newVehicle setVariable ["LT_veh_role", _ltVehRole];
 				if (_rpPoint) then {[_newVehicle, _rpPoint, _rpName] call LT_fnc_respawnVehicle;};
-				[_newVehicle, _maxLoad] remoteExec ["LT_fnc_resetMaxLoad"];
+				[_newVehicle, _maxLoad] remoteExec ["LT_fnc_resetMaxLoad", 2];
 
 				if _loadout then {[_newVehicle, _inventory] call FRED_fnc_vehicleLoadout};
 				if _savePaint then {[_newVehicle, _paint, _parts] call BIS_fnc_initVehicle};

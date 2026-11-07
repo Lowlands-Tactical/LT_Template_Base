@@ -46,11 +46,11 @@ player addAction [
 	"((vehicle player) isKindOf ""Air"") && (((position player) select 2) > 100) && (player != driver (vehicle player))"
 ];
 
-// Readd zeus module
+// Readd zeus module (the function only runs on the server, so it has to be remoteExec'd to it)
 if ((getPlayerUID player) in (AdminCrew get "Staff")) then
 {
 	["Respawn","Reload zeus modules",2] call LT_fnc_log;
-	[] call LT_fnc_AdminZeusModule;
+	[] remoteExec ["LT_fnc_adminZeusModule", 2];
 };
 
 // After respawn reassign all radios and channels
@@ -87,9 +87,9 @@ if (_hasRadio) then
 };
 
 // Reset unit gear load with extra space
-[(uniformContainer _unit), (ceil(loadabs (uniformContainer _unit))) +50] remoteExec ["LT_fnc_resetMaxLoad"];
-[(vestContainer _unit), (ceil(loadabs (vestContainer _unit))) +200] remoteExec ["LT_fnc_resetMaxLoad"];
-[(backpackContainer _unit), (ceil(loadabs (backpackContainer _unit))) +500] remoteExec ["LT_fnc_resetMaxLoad"];
+[(uniformContainer _unit), (ceil(loadabs (uniformContainer _unit))) +50] remoteExec ["LT_fnc_resetMaxLoad", 2];
+[(vestContainer _unit), (ceil(loadabs (vestContainer _unit))) +200] remoteExec ["LT_fnc_resetMaxLoad", 2];
+[(backpackContainer _unit), (ceil(loadabs (backpackContainer _unit))) +500] remoteExec ["LT_fnc_resetMaxLoad", 2];
 
 _unit setUnitTrait ["audibleCoef", 0.2];
 _unit setUnitTrait ["camouflageCoef", 0.2];

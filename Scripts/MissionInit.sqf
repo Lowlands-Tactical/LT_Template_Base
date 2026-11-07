@@ -28,7 +28,7 @@ if (isServer) then
     [] remoteExec ["LT_fnc_adminZeusModule",2];
     //[] execVM "\lt_template_base\Scripts\setLowtacFaces.sqf";
     ["Mission","loading vehicle gear",2] call LT_fnc_log;
-    [] remoteExec ["LT_fnc_InitPostVeh"];
+    [] remoteExec ["LT_fnc_InitPostVeh", 2];
 };
 
 if (hasinterface) then 
@@ -42,7 +42,7 @@ if (hasinterface) then
     {
         if ((getPlayerUID player) in (AdminCrew get "Staff")) then 
         {
-            [] call LT_fnc_adminZeusModule;
+            [] remoteExec ["LT_fnc_adminZeusModule", 2];
         };
     };
 

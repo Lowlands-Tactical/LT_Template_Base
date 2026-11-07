@@ -152,9 +152,6 @@ class cfgRemoteExec
 {
     class Functions
     {
-        // 0= all machines 1= only clients 2= only server
-        mode=1;
-        jip=1;
 		class LT_fnc_afkStart     		{allowedTargets=2;};
 		class LT_fnc_afkEnd       		{allowedTargets=2;};
 		class LT_fnc_afkLocal     		{allowedTargets=0;};

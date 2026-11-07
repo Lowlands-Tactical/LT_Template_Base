@@ -246,7 +246,7 @@ switch (_code) do
             _load = (lbData [621, lbCurSel 621]);
             _vehicle setVariable ["LT_veh_side", _side, true];
             _vehicle setVariable ["LT_veh_role", _load, true];
-            [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout"];
+            [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout", 2];
 
             ["Tablet",format ["%1 is being filled with %2", _vehicle, _load],2] call LT_fnc_log;
         };
@@ -497,7 +497,7 @@ switch (_code) do
             _load = (lbData [723, lbCurSel 723]);
             _vehicle setVariable ["LT_veh_side", _side, true];
             _vehicle setVariable ["LT_veh_role", _load, true];
-            [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout"];
+            [_vehicle, _side, _load] remoteExec ["LT_fnc_VehicleLoadout", 2];
 
             ["Tablet Crew",format ["%1 is being filled with %2", _vehicle, _load],2] call LT_fnc_log;
         };
